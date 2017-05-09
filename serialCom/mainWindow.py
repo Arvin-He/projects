@@ -7,7 +7,7 @@ from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
 import utils
-
+import serialCommunication as serCom
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -19,10 +19,10 @@ class MainWindow(QDialog):
         self.initUI()
 
     def initUI(self):
-        port = utils.read_config(os.path.abspath("config.ini"), "serial", "port")
-        baud_rate = utils.read_config(os.path.abspath("config.ini"), "serial", "baudrate")
-        self.portEdit.setText(port)
-        self.baudrateEdit.setText(baud_rate)
+        self.port = utils.read_config(os.path.abspath("config.ini"), "serial", "port")
+        self.baud_rate = utils.read_config(os.path.abspath("config.ini"), "serial", "baudrate")
+        self.portEdit.setText(self.port)
+        self.baudrateEdit.setText(self.baud_rate)
         self.openBtn.clicked.connect(self.on_openCom)
         self.closeBtn.clicked.connect(self.on_closeCom)
         self.portEdit.editingFinished.connect(self.on_EditPortName)
@@ -33,18 +33,18 @@ class MainWindow(QDialog):
         self.tightAngleEdit.textChanged.connect(self.on_showTightAngle)
 
     def on_EditPortName(self):
-        port = self.portEdit.text()
-        utils.write_config(os.path.abspath("config.ini"), "serial", "port", port)
+        self.port = self.portEdit.text()
+        utils.write_config(os.path.abspath("config.ini"), "serial", "port", self.port)
 
     def on_EditBaudrate(self):
-        baud_rate = self.baudrateEdit.text()
-        utils.write_config(os.path.abspath("config.ini"), "serial", "baudrate", baud_rate)
+        self.baud_rate = self.baudrateEdit.text()
+        utils.write_config(os.path.abspath("config.ini"), "serial", "baudrate", self.baud_rate)
 
     def on_openCom(self):
-        pass
+        serCom.openCom(self.port, self.baud_rate)
 
     def on_closeCom(self):
-        pass
+        serCom.closeCom()
 
     def on_showRecvHex(self):
         pass
