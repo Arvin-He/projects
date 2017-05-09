@@ -13,12 +13,25 @@ class MainWindow(QDialog):
     def __init__(self):
         super(MainWindow, self).__init__()
         uic.loadUi(os.path.join(os.path.dirname(__file__), "res/serialCom.ui"), self)
-        # self.initUI()
+        self.initUI()
 
     def initUI(self):
-        self.setGeometry(300, 150, 600, 600)
-        self.setWindowTitle("Value Reader")
-        self.show()
+        recvHexEdit.textChanged.connect(self.on_showRecvHex)
+        transValEdit.textChanged.connect(self.on_showTranformData)
+        tightTorqueEdit.textChanged.connect(self.on_showTightTorque)
+        tightAngleEdit.textChanged.connect(self.on_showTightAngle)
+
+    def on_showRecvHex(self):
+        pass
+
+    def on_showTranformData(self):
+        pass
+
+    def on_showTightTorque(self):
+        pass
+
+    def on_showTightAngle(self):
+        pass
 
 
 if __name__ == "__main__":
