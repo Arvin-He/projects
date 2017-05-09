@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import os
+import csv
 import serial
 
 ser = None
@@ -47,7 +48,19 @@ def transformData(data):
     new_data_str = data_str[14:21]
 
 
+# 保存到csv文件,csv文件可以导入到excel中去
 def saveData():
-    pass
+    with open("data.csv", "w", newline="") as datacsv:
+        # dialect为打开csv文件的方式，默认是excel，delimiter="\t"参数指写入的时候的分隔符
+        csvwriter = csv.writer(datacsv, dialect=("excel"))
+        # csv文件插入一行数据，把下面列表中的每一项放入一个单元格（可以用循环插入多行）
+        csvwriter.writerow(["序号", "标志位", "力矩", "角度"])
 
 
+# 读取csv文件
+def readData():
+    with open("data.csv", "r", encoding="utf-8") as csvfile:
+        # 读取csv文件，返回的是迭代类型
+        read = csv.reader(csvfile)
+        for i in read:
+            print(i)
