@@ -3,6 +3,7 @@
 
 import sys
 import os
+import time
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
@@ -25,6 +26,8 @@ class MainWindow(QDialog):
         self.baudrateEdit.setText(self.baud_rate)
         self.openBtn.clicked.connect(self.on_openCom)
         self.closeBtn.clicked.connect(self.on_closeCom)
+        self.startReadBtn.clicked.connect(self.on_startRead)
+        self.stopReadBtn.clicked.connect(self.on_stopRead)
         self.portEdit.editingFinished.connect(self.on_EditPortName)
         self.baudrateEdit.editingFinished.connect(self.on_EditBaudrate)
         self.recvHexEdit.textChanged.connect(self.on_showRecvHex)
@@ -46,8 +49,18 @@ class MainWindow(QDialog):
     def on_closeCom(self):
         serCom.closeCom()
 
+    def on_startRead(self):
+        serCom.writeData()
+        # time.sleep(1)
+        # serCom.readData()
+
+
+    def on_stopRead(self):
+        serCom.readData()
+
     def on_showRecvHex(self):
-        pass
+        data = serCom.readData()
+        self.recvHexEdit.setText(str(data))
 
     def on_showTranformData(self):
         pass

@@ -83,19 +83,6 @@
      <string>整合数值(int):</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>140</y>
-      <width>150</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="tightTorqueEdit">
     <property name="geometry">
      <rect>
@@ -178,9 +165,9 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>10</y>
-     <width>531</width>
+     <width>541</width>
      <height>111</height>
     </rect>
    </property>
@@ -190,7 +177,7 @@
    <widget class="QPushButton" name="openBtn">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>310</x>
       <y>20</y>
       <width>100</width>
       <height>30</height>
@@ -229,7 +216,7 @@
    <widget class="QPushButton" name="closeBtn">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>310</x>
       <y>60</y>
       <width>100</width>
       <height>30</height>
@@ -263,6 +250,32 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stopReadBtn">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>60</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>停止读取</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="startReadBtn">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>20</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>开始读取</string>
     </property>
    </widget>
   </widget>
