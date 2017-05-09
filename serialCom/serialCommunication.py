@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
+import os
+import configparser
 
-import serial
 
-
-def initCom(com, baudrate):
-    ser = serial.Serial(com, baudrate, timeout=1)
+def initCom(port, baud_rate):
+    ser = serial.Serial(port, baud_rate)
 
 
 def readData():
@@ -17,4 +17,5 @@ def transformData():
 
 def saveData():
     pass
-    
+
+
