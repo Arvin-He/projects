@@ -8,7 +8,7 @@ from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
 import utils
-import serialCommunication as serCom
+import serialComm as serCom
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -50,13 +50,20 @@ class MainWindow(QDialog):
         serCom.closeCom()
 
     def on_startRead(self):
-        serCom.writeData()
+        # serCom.writeData()
         # time.sleep(1)
-        # serCom.readData()
-
+        recv_data = serCom.readData()
+        self.recvHexEdit.setText(recv_data)
+        trans_data = serCom.transformData(recv_data)
+        self.transValEdit.setText(trans_data)
+        process_data = serCom.processData(trans_data)
+        self.tightTorqueEdit.setText(serCom.getTightTorque(process_data))
+        self.tightAngleEdit.setText(serCom.getTightAngle(process_data))
+        data = [1, 123, 123, 123]
+        serCom.saveCSV(data)
 
     def on_stopRead(self):
-        serCom.readData()
+        pass
 
     def on_showRecvHex(self):
         data = serCom.readData()
