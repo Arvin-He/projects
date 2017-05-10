@@ -4,7 +4,7 @@
 import sys
 import os
 import time
-from PyQt5 import uic, QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
 from serialCom_ui import Ui_serialDlg as serialDlg
@@ -17,8 +17,6 @@ app = QtWidgets.QApplication(sys.argv)
 class MainWindow(QDialog, serialDlg):
     def __init__(self):
         super(MainWindow, self).__init__()
-        # uic.loadUi(os.path.join(os.path.dirname(__file__), "res/serialCom.ui"), self)
-        # self.ui = serialDlg()
         self.setupUi(self)
         self.initUI()
         self.timer = QtCore.QTimer()
