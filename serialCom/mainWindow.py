@@ -54,17 +54,27 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        # serCom.writeData()
-        # time.sleep(1)
+        serCom.writeData()
+        time.sleep(0.005)
         recv_data = serCom.readData()
         self.recvHexEdit.setText(recv_data)
+        # 转换收到的数据
         trans_data = serCom.transformData(recv_data)
         self.transValEdit.setText(trans_data)
+
         process_data = serCom.processData(trans_data)
-        self.tightTorqueEdit.setText(serCom.getTightTorque(process_data))
-        self.tightAngleEdit.setText(serCom.getTightAngle(process_data))
-        data = [1, 123, 123, 123]
-        serCom.saveCSV(data)
+        tightTorque = serCom.getTightTorque(process_data)
+        self.tightTorqueEdit.setText(tightTorque)
+        tightAngle = serCom.getTightAngle(process_data)
+        self.tightAngleEdit.setText(tightAngle)
+
+        flagBit= serCom.getFlagBit(process_data)
+        # print("flagBit = {}".format(flagBit))
+        # if flagBit == "2" or flagBit == "3":
+        csv_data = [flagBit, tightTorque, tightAngle]
+        serCom.saveCSV(csv_data)
+        # data = [1, 123, 123, 123]
+        # serCom.saveCSV(data)
 
     def on_stopRead(self):
         # 关掉定时器
