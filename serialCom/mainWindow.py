@@ -7,6 +7,7 @@ import time
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
+
 import utils
 import serialComm as serCom
 
@@ -18,6 +19,8 @@ class MainWindow(QDialog):
         super(MainWindow, self).__init__()
         uic.loadUi(os.path.join(os.path.dirname(__file__), "res/serialCom.ui"), self)
         self.initUI()
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.on_readData)
 
     def initUI(self):
         self.port = utils.read_config(os.path.abspath("config.ini"), "serial", "port")
@@ -30,10 +33,6 @@ class MainWindow(QDialog):
         self.stopReadBtn.clicked.connect(self.on_stopRead)
         self.portEdit.editingFinished.connect(self.on_EditPortName)
         self.baudrateEdit.editingFinished.connect(self.on_EditBaudrate)
-        self.recvHexEdit.textChanged.connect(self.on_showRecvHex)
-        self.transValEdit.textChanged.connect(self.on_showTranformData)
-        self.tightTorqueEdit.textChanged.connect(self.on_showTightTorque)
-        self.tightAngleEdit.textChanged.connect(self.on_showTightAngle)
 
     def on_EditPortName(self):
         self.port = self.portEdit.text()
@@ -50,6 +49,11 @@ class MainWindow(QDialog):
         serCom.closeCom()
 
     def on_startRead(self):
+        # 启动定时器
+        self.timer.start(50)
+
+    # 定时写数据读数据
+    def on_readData(self):
         # serCom.writeData()
         # time.sleep(1)
         recv_data = serCom.readData()
@@ -63,20 +67,8 @@ class MainWindow(QDialog):
         serCom.saveCSV(data)
 
     def on_stopRead(self):
-        pass
-
-    def on_showRecvHex(self):
-        data = serCom.readData()
-        self.recvHexEdit.setText(str(data))
-
-    def on_showTranformData(self):
-        pass
-
-    def on_showTightTorque(self):
-        pass
-
-    def on_showTightAngle(self):
-        pass
+        # 关掉定时器
+        self.timer.stop()
 
 
 if __name__ == "__main__":

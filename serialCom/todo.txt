@@ -1,0 +1,9 @@
+1. csv数据存储还没做好
+1 不存储
+2,3 存储
+
+2. 缺少icon
+
+3. py2exe打包python,pyqt5,pyserial成exe
+
+4. nsni打包最终的exe

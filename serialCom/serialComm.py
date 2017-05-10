@@ -42,7 +42,12 @@ def writeData():
 def readData():
     global ser
     # assert ser.is_open
-    # data = ser.read(13)
+    try:
+        # data = ser.read(13)
+        pass
+    except Exception as e:
+        print("读取数据失败!")
+        return
     # data = bytes.fromhex('53 0b 01 01 04 30 02 00 00 00 00 c2 45')
     data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
     # 将bytes的内容转16进制表示的bytes
@@ -73,7 +78,8 @@ def getFlagBit(data):
 
 def getTightTorque(data):
     data2 = data[1:5]
-    return data2
+    data3 = int(data2)*0.001
+    return "{:.3f}".format(data3)
 
 
 def getTightAngle(data):
