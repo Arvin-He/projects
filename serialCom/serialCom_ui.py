@@ -13,10 +13,12 @@ class Ui_serialDlg(object):
     def setupUi(self, serialDlg):
         serialDlg.setObjectName("serialDlg")
         serialDlg.resize(590, 450)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(serialDlg.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            serialDlg.sizePolicy().hasHeightForWidth())
         serialDlg.setSizePolicy(sizePolicy)
         self.groupBox = QtWidgets.QGroupBox(serialDlg)
         self.groupBox.setGeometry(QtCore.QRect(20, 170, 541, 251))
@@ -105,4 +107,3 @@ class Ui_serialDlg(object):
         self.label_8.setText(_translate("serialDlg", "波特率:"))
         self.stopReadBtn.setText(_translate("serialDlg", "停止读取"))
         self.startReadBtn.setText(_translate("serialDlg", "开始读取"))
-
