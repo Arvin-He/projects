@@ -30,7 +30,7 @@ def closeCom():
         logger.info("串口已经关闭!")
         return True
     else:
-        logger.info("串口没有打开!")
+        logger.info("串口没有打开,不需要关闭!")
         return False
 
 
@@ -40,6 +40,7 @@ def writeData():
         # 16进制转bytes
         data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
         ser.write(data)
+        logger.info("发送数据:{}".format(binascii.hexlify(data)))
         return True
     else:
         logger.info("串口没有打开!")
@@ -50,12 +51,14 @@ def writeData():
 def readData():
     global ser
     if ser and ser.is_open:
+        logger.info("串口已经打开,开始读取数据...")
         if ser.in_waiting == 13:
             data = ser.read(13)
             # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
             # 将bytes的内容转16进制表示的bytes
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
+            logger.info("读取到的日志信息:{}".format(data2.decode('utf-8')))
             return data2.decode('utf-8')
     else:
         logger.info("串口没有打开!")
@@ -65,6 +68,7 @@ def readData():
 # 读到的数据字符串"53 0B  01 01 04 30 02 B2 4A 58 09 6B 45",取其中的第8~11个16进制数
 # 然后将取到的16进制数作为一个整体,转换成10进制数,并返回
 def transformData(data):
+    logger.info("转换前的数据:{}".format(data))
     if data:
         data.replace(" ", "")
         data2 = data[14:22]
@@ -74,6 +78,7 @@ def transformData(data):
 
 # 将16进制的字符串转换成10进制字符串
 def processData(data):
+    logger.info("转换后的数据:{}".format(data))
     if data:
         data2 = str(int(data, 16)).zfill(8)
         return data2
