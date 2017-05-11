@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_serialDlg(object):
     def setupUi(self, serialDlg):
         serialDlg.setObjectName("serialDlg")

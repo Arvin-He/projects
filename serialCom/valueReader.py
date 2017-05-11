@@ -49,10 +49,16 @@ class MainWindow(QDialog, serialDlg):
                            "serial", "baudrate", self.baud_rate)
 
     def on_openCom(self):
-        serCom.openCom(self.port, self.baud_rate)
+        if serCom.openCom(self.port, self.baud_rate):
+            self.infoLabel.setText("信息:{}串口已经被打开!".format(self.port))
+        else:
+            self.infoLabel.setText("信息:串口{}打开失败!".format(self.port))
 
     def on_closeCom(self):
-        serCom.closeCom()
+        if serCom.closeCom():
+            self.infoLabel.setText("信息:串口已经关闭!")
+        else:
+            self.infoLabel.setText("信息:串口没有打开!")
 
     def on_startRead(self):
         # 启动定时器
