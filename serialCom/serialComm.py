@@ -19,6 +19,7 @@ def openCom(port, baud_rate):
             return False
     else:
         logger.info("{}串口已经被打开!".format(port))
+    logger.info("{}串口打开成功!".format(port))
     return True
 
 
