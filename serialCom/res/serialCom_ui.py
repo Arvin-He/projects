@@ -108,4 +108,3 @@ class Ui_serialDlg(object):
         self.label_8.setText(_translate("serialDlg", "波特率:"))
         self.stopReadBtn.setText(_translate("serialDlg", "停止读取"))
         self.startReadBtn.setText(_translate("serialDlg", "开始读取"))
-
