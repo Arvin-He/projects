@@ -7,9 +7,9 @@ import time
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
-from serialCom_ui import Ui_serialDlg as serialDlg
 import utils
 import serialComm as serCom
+from serialCom_ui import Ui_serialDlg as serialDlg
 
 app = QtWidgets.QApplication(sys.argv)
 
