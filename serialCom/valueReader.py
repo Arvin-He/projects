@@ -59,24 +59,26 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        serCom.writeData()
-        time.sleep(0.005)
-        recv_data = serCom.readData()
-        self.recvHexEdit.setText(recv_data)
-        # 转换收到的数据
-        trans_data = serCom.transformData(recv_data)
-        self.transValEdit.setText(trans_data)
+        if serCom.writeData():
+            time.sleep(0.005)
+            recv_data = serCom.readData()
+            self.recvHexEdit.setText(recv_data)
+            # 转换收到的数据
+            trans_data = serCom.transformData(recv_data)
+            self.transValEdit.setText(trans_data)
 
-        process_data = serCom.processData(trans_data)
-        tightTorque = serCom.getTightTorque(process_data)
-        self.tightTorqueEdit.setText(tightTorque)
-        tightAngle = serCom.getTightAngle(process_data)
-        self.tightAngleEdit.setText(tightAngle)
+            process_data = serCom.processData(trans_data)
+            tightTorque = serCom.getTightTorque(process_data)
+            self.tightTorqueEdit.setText(tightTorque)
+            tightAngle = serCom.getTightAngle(process_data)
+            self.tightAngleEdit.setText(tightAngle)
 
-        flagBit = serCom.getFlagBit(process_data)
-        if flagBit == "2" or flagBit == "3":
-            csv_data = [flagBit, tightTorque, tightAngle]
-            serCom.saveCSV(csv_data)
+            flagBit = serCom.getFlagBit(process_data)
+            if flagBit == "2" or flagBit == "3":
+                csv_data = [flagBit, tightTorque, tightAngle]
+                serCom.saveCSV(csv_data)
+        else:
+            self.timer.stop()
 
     def on_stopRead(self):
         # 关掉定时器

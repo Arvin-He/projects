@@ -33,8 +33,10 @@ def writeData():
         # 16进制转bytes
         data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
         ser.write(data)
+        return True
     else:
         print("串口没有打开!")
+        return False
 
 
 # 读取字节并转换成16进制字符串
