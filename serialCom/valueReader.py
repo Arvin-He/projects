@@ -8,6 +8,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
 import utils
+from logger import logger
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
 

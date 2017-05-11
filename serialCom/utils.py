@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import configparser
+from logger import logger
 
 
 # 读配置文件
@@ -10,7 +11,7 @@ def read_config(config_path, field, key):
             cf.read_file(f)
         result = cf.get(field, key)
     except Exception as e:
-        print("read_config", config_path, field, key, e)
+        logger.info("read_config {} {} {} {}".format(config_path, field, key, e))
         return ""
     return result
 
@@ -25,6 +26,6 @@ def write_config(config_path, field, key, value):
         cf.set(field, key, value)
         cf.write(open(config_path, "w", encoding="utf-8"))
     except Exception as e:
-        print(e)
+        logger.error(e)
         return False
     return True

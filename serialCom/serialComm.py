@@ -4,6 +4,8 @@ import csv
 import serial
 import binascii
 
+from logger import logger
+
 ser = None
 
 
@@ -13,18 +15,18 @@ def openCom(port, baud_rate):
         try:
             ser = serial.Serial(port, baud_rate)
         except serial.serialutil.SerialException as e:
-            print(e)
+            logger.error("串口{}打开失败! 错误:{}".format(port, e))
     else:
-        print("{}端口已经被打开!".format(port))
+        logger.info("{}端口已经被打开!".format(port))
 
 
 def closeCom():
     global ser
     if ser and ser.is_open:
         ser.close()
-        print("串口已经关闭!")
+        logger.info("串口已经关闭!")
     else:
-        print("串口没有打开!")
+        logger.info("串口没有打开!")
 
 
 def writeData():
@@ -35,16 +37,14 @@ def writeData():
         ser.write(data)
         return True
     else:
-        print("串口没有打开!")
+        logger.info("串口没有打开!")
         return False
 
 
 # 读取字节并转换成16进制字符串
 def readData():
     global ser
-    # assert ser.is_open
     if ser and ser.is_open:
-        # print("in_waiting = {}".format(ser.in_waiting))
         if ser.in_waiting == 13:
             data = ser.read(13)
             # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
@@ -53,7 +53,7 @@ def readData():
             # 将bytes转字符串,并返回
             return data2.decode('utf-8')
     else:
-        print("串口没有打开!")
+        logger.info("串口没有打开!")
 
 
 # 读到的数据字符串"53 0B  01 01 04 30 02 B2 4A 58 09 6B 45",取其中的第8~11个16进制数

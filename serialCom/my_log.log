@@ -1,0 +1,5 @@
+2017-05-11 09:17:03,808 - C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py - ERROR - 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)- [serialComm.py:18]
+2017-05-11 09:17:06,427 - C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py - INFO - 串口没有打开!- [serialComm.py:29]
+2017-05-11 09:17:48,360 - C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py - ERROR - 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)- [serialComm.py:18]
+2017-05-11 09:17:49,378 - C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py - INFO - 串口没有打开!- [serialComm.py:29]
+2017-05-11 09:17:50,251 - C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py - INFO - 串口没有打开!- [serialComm.py:40]
