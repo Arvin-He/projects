@@ -23,6 +23,7 @@ class MainWindow(QDialog, serialDlg):
         self.timer.timeout.connect(self.on_readData)
 
     def initUI(self):
+        self.infoLabel.setText("信息:")
         self.port = utils.read_config(
             os.path.abspath("config.ini"), "serial", "port")
         self.baud_rate = utils.read_config(

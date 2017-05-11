@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'res\serialCom.ui'
+# Form implementation generated from reading ui file 'serialCom.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -8,20 +8,17 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_serialDlg(object):
     def setupUi(self, serialDlg):
         serialDlg.setObjectName("serialDlg")
         serialDlg.resize(590, 450)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            serialDlg.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(serialDlg.sizePolicy().hasHeightForWidth())
         serialDlg.setSizePolicy(sizePolicy)
         self.groupBox = QtWidgets.QGroupBox(serialDlg)
-        self.groupBox.setGeometry(QtCore.QRect(20, 170, 541, 251))
+        self.groupBox.setGeometry(QtCore.QRect(20, 140, 541, 251))
         self.groupBox.setObjectName("groupBox")
         self.recvHexEdit = QtWidgets.QLineEdit(self.groupBox)
         self.recvHexEdit.setGeometry(QtCore.QRect(130, 40, 380, 30))
@@ -86,6 +83,10 @@ class Ui_serialDlg(object):
         self.startReadBtn = QtWidgets.QPushButton(self.groupBox_2)
         self.startReadBtn.setGeometry(QtCore.QRect(420, 20, 100, 30))
         self.startReadBtn.setObjectName("startReadBtn")
+        self.infoLabel = QtWidgets.QLabel(serialDlg)
+        self.infoLabel.setGeometry(QtCore.QRect(20, 410, 541, 30))
+        self.infoLabel.setText("")
+        self.infoLabel.setObjectName("infoLabel")
 
         self.retranslateUi(serialDlg)
         QtCore.QMetaObject.connectSlotsByName(serialDlg)
@@ -107,3 +108,4 @@ class Ui_serialDlg(object):
         self.label_8.setText(_translate("serialDlg", "波特率:"))
         self.stopReadBtn.setText(_translate("serialDlg", "停止读取"))
         self.startReadBtn.setText(_translate("serialDlg", "开始读取"))
+

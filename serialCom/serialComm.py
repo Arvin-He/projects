@@ -14,11 +14,6 @@ def openCom(port, baud_rate):
             ser = serial.Serial(port, baud_rate)
         except serial.serialutil.SerialException as e:
             print(e)
-            return
-        if ser.is_open:
-            print("{}端口打开成功!".format(port))
-        else:
-            print("{}端口打开失败!".format(port))
     else:
         print("{}端口已经被打开!".format(port))
 
@@ -28,6 +23,8 @@ def closeCom():
     if ser and ser.is_open:
         ser.close()
         print("串口已经关闭!")
+    else:
+        print("串口没有打开!")
 
 
 def writeData():
@@ -38,7 +35,6 @@ def writeData():
         ser.write(data)
     else:
         print("串口没有打开!")
-        return
 
 
 # 读取字节并转换成16进制字符串
@@ -54,11 +50,8 @@ def readData():
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
             return data2.decode('utf-8')
-        else:
-            return
     else:
         print("串口没有打开!")
-        return
 
 
 # 读到的数据字符串"53 0B  01 01 04 30 02 B2 4A 58 09 6B 45",取其中的第8~11个16进制数
