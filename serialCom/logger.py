@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 import os
 import time
+import datetime
 import logging
+import logging.handlers
 
 # 创建一个logger
 logger = logging.getLogger(__file__)
@@ -14,17 +16,16 @@ _logFileName = os.path.join(
     _logPath, "{}{}{}".format(_prepend, time.strftime("%Y%m%d"), _suffix))
 
 # 创建一个handler，用于写入日志文件
-fh = logging.FileHandler(_logFileName, "a", "utf-8")
-fh.setLevel(logging.DEBUG)
+# fh = logging.FileHandler(_logFileName, "a", "utf-8")
+# fh.setLevel(logging.DEBUG)
 
 # timed rotating
-# fh = logging.handlers.TimedRotatingFileHandler(
-#     _logFileName,
-#     when=_config["log"]["when"],
-#     interval=int(_config["log"]["interval"]),
-#     backupCount=int(_config["log"]["backupCount"]),
-#     encoding="utf-8")
-# fh.setLevel(logging.DEBUG)
+fh = logging.handlers.TimedRotatingFileHandler(filename=_logFileName,
+                                               when="midnight",
+                                               interval=1,
+                                               backupCount=60,
+                                               encoding="utf-8")
+fh.setLevel(logging.DEBUG)
 
 # 再创建一个handler，用于输出到控制台
 ch = logging.StreamHandler()
@@ -56,9 +57,8 @@ logger.addHandler(ch)
 #         return super(MyHandler, self).shouldFlush(record)
 
 
-# _memoryHandler = MyHandler(int(_config["Handler"]["capacity"]),
-#                            flushLevel=logging._checkLevel(
-#                                _config["Handler"]["flushLevel"]),
+# _memoryHandler = MyHandler(1,
+#                            flushLevel=logging._checkLevel("ERROR"),
 #                            target=fh)
 
 # logging.getLogger().addHandler(_memoryHandler)

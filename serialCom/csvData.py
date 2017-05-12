@@ -28,7 +28,8 @@ class RotatingFileOpener():
         return self._day != time.localtime().tm_mday
 
     def _format_filename(self):
-        return os.path.join(self._path, "{}{}{}".format(self._prepend, time.strftime("%Y%m%d"), self._append))
+        return os.path.join(self._path, "{}{}{}".format(
+            self._prepend, time.strftime("%Y%m%d"), self._append))
 
     def write(self, *args):
         if self._day_changed():
