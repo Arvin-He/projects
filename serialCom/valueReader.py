@@ -4,6 +4,7 @@
 import os
 import sys
 import time
+from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
@@ -66,30 +67,31 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        logger.info("准备发送指令...")
+        # logger.info("准备发送指令...")
         if serCom.writeData():
             time.sleep(0.005)
-            logger.info("准备读取数据...")
+            # logger.info("准备读取数据...")
             recv_data = serCom.readData()
             self.recvHexEdit.setText(recv_data)
             # 转换收到的数据
             trans_data = serCom.transformData(recv_data)
-            logger.info("trans_data = {}".format(trans_data))
+            # logger.info("trans_data = {}".format(trans_data))
             self.transValEdit.setText(trans_data)
 
             process_data = serCom.processData(trans_data)
-            logger.info("process_data = {}".format(process_data))
+            # logger.info("process_data = {}".format(process_data))
             tightTorque = serCom.getTightTorque(process_data)
-            logger.info("tightTorque = {}".format(tightTorque))
+            # logger.info("tightTorque = {}".format(tightTorque))
             self.tightTorqueEdit.setText(tightTorque)
             tightAngle = serCom.getTightAngle(process_data)
-            logger.info("tightAngle = {}".format(tightAngle))
+            # logger.info("tightAngle = {}".format(tightAngle))
             self.tightAngleEdit.setText(tightAngle)
 
             flagBit = serCom.getFlagBit(process_data)
-            logger.info("flagBit = {}".format(flagBit))
+            # logger.info("flagBit = {}".format(flagBit))
+
             if flagBit == "2" or flagBit == "3":
-                csv_data = [flagBit, tightTorque, tightAngle]
+                csv_data = [flagBit, tightTorque, tightAngle, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
                 serCom.saveCSV(csv_data)
         else:
             logger.info("发送指令失败,定时器关闭...")

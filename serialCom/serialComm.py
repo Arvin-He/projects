@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 import os
-import csv
 import serial
 import binascii
 
@@ -40,7 +39,7 @@ def writeData():
         # 16进制转bytes
         data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
         ser.write(data)
-        logger.info("发送数据:{}".format(binascii.hexlify(data)))
+        # logger.info("发送数据:{}".format(binascii.hexlify(data)))
         return True
     else:
         logger.info("串口没有打开!")
@@ -51,14 +50,14 @@ def writeData():
 def readData():
     global ser
     if ser and ser.is_open:
-        logger.info("串口已经打开,开始读取数据...")
+        # logger.info("串口已经打开,开始读取数据...")
         if ser.in_waiting == 13:
             data = ser.read(13)
             # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
             # 将bytes的内容转16进制表示的bytes
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
-            logger.info("读取到的日志信息:{}".format(data2.decode('utf-8')))
+            # logger.info("读取到的日志信息:{}".format(data2.decode('utf-8')))
             return data2.decode('utf-8')
     else:
         logger.info("串口没有打开!")
@@ -110,16 +109,3 @@ def getTightAngle(data):
         else:
             logger.info("转换后的数据长度为:{}".format(len(data)))
 
-
-# 保存到csv文件,csv文件可以直接用excel打开
-def saveCSV(data):
-    if not os.path.exists(os.path.abspath("serialdata.csv")):
-        with open("serialdata.csv", "w", newline="", encoding="utf-8") as csv_file:
-            header = ["[Flag Bit]", "[Tight Torque]", "[Tight Angle]"]
-            writer = csv.writer(csv_file, dialect=("excel"))
-            writer.writerow(header)
-            csv_file.close()
-
-    with open("serialdata.csv", "a", newline="", encoding="utf-8") as csv_file:
-        writer = csv.writer(csv_file, dialect=("excel"))
-        writer.writerow(data)
