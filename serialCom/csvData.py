@@ -60,7 +60,7 @@ def hasHeader(filename, header):
 
 # 保存到csv文件,csv 文件可以直接用excel打开
 def saveCSV(data):
-    with RotatingFileOpener(os.path.abspath("."), prepend="valReader-", append=".csv") as csv_file:
+    with RotatingFileOpener(os.path.abspath("."), prepend="data-", append=".csv") as csv_file:
         header = ["[Flag Bit]", "[Tight Torque]",
                   "[Tight Angle]", "[Date Time]"]
         writer = csv.writer(csv_file, dialect=("excel"))

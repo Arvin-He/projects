@@ -1,8 +1,0 @@
-2017-05-12 18:29:13,528 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(17): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
-2017-05-12 18:29:15,308 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(45): 串口没有打开!
-2017-05-12 18:29:15,308 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(98): 发送指令失败,定时器关闭...
-2017-05-12 18:29:16,569 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(32): 串口没有打开,不需要关闭!
-2017-05-12 18:29:25,369 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(45): 串口没有打开!
-2017-05-12 18:29:25,369 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(98): 发送指令失败,定时器关闭...
-2017-05-12 18:29:27,031 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(32): 串口没有打开,不需要关闭!
-2017-05-12 18:29:27,569 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(17): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
