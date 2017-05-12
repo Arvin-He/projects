@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
 
 import utils
+import csvData
 from logger import logger
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
@@ -92,7 +93,7 @@ class MainWindow(QDialog, serialDlg):
 
             if flagBit == "2" or flagBit == "3":
                 csv_data = [flagBit, tightTorque, tightAngle, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
-                serCom.saveCSV(csv_data)
+                csvData.saveCSV(csv_data)
         else:
             logger.info("发送指令失败,定时器关闭...")
             self.timer.stop()
