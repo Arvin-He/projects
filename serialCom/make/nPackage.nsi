@@ -65,6 +65,7 @@ RequestExecutionLevel user
 !define PRODUCT_UNINST_KEY  "${UNINST_KEY}\${PRODUCT_NAME} ${PRODUCT_VERSION}.${SUPPORT_VERSION}"
 
 #!system '"StampVer" -o4 -k -nopad -f"${PRODUCT_VERSION}" -p"${PRODUCT_VERSION}" "${MAKE_DIR}\GFD-${PRODUCT_NAME}.exe"'
+
 ; MUI 设置
 !define MUI_WELCOMEPAGE_TITLE "　${PRODUCT_NAME} ${PRODUCT_VERSION}安装向导"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\orange.bmp"
