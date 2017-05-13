@@ -57,7 +57,7 @@ class MainWindow(QDialog, serialDlg):
 
     def on_closeCom(self):
         if serCom.closeCom():
-            self.infoLabel.setText("信息:串口已经关闭!")
+            self.infoLabel.setText("信息:串口关闭!")
         else:
             self.infoLabel.setText("信息:串口没有打开,不需要关闭!")
 
@@ -91,6 +91,7 @@ class MainWindow(QDialog, serialDlg):
             self.timer.stop()
 
     def on_stopRead(self):
+        self.infoLabel.setText("信息:停止串口读取数据!")
         # 关掉定时器
         self.timer.stop()
 
