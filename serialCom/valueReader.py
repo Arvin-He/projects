@@ -96,9 +96,8 @@ class MainWindow(QDialog, serialDlg):
 
     def done(self, result):
         super(MainWindow, self).done(result)
-        # logger.info("close application")
+        logger.info("close application")
         fh.flush()
-        # ch.close()
         fh.close()
         self.close()
         app.closeAllWindows()

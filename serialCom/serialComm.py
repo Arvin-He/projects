@@ -78,22 +78,25 @@ def processData(data):
 
 
 def getFlagBit(data):
-    if data:
-        if len(data) == 9:
-            return data[0]
+    if data and len(data) > 0:
+        return data[0]
+    else:
+        logger.error("getFlagBit wrong data, data = {}".format(data))
 
 
 def getTightTorque(data):
-    if data:
-        if len(data) == 9:
-            data2 = data[1:5]
-            data3 = int(data2) * 0.001
-            return "{:.3f}".format(data3)
+    if data and len(data) > 5:
+        data2 = data[1:5]
+        data3 = int(data2) * 0.001
+        return "{:.3f}".format(data3)
+    else:
+        logger.error("getTightTorque wrong data, data = {}".format(data))
 
 
 def getTightAngle(data):
-    if data:
-        if len(data) == 9:
-            data2 = data[5:]
-            return data2
+    if data and len(data) > 5:
+        data2 = data[5:]
+        return data2
+    else:
+        logger.error("getTightAngle wrong data, data = {}".format(data))
 
