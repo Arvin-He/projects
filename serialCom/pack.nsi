@@ -50,7 +50,7 @@ Section "Installer Section"
 	
 	SetOutPath $INSTDIR
 
-	File /r /x "*.nsi" /x "*.bat" /x "*.pyc" /x ".\dist\*"
+	File /r /x "*.nsi" /x "*.bat" /x "*.pyc" ".\dist\*"
 	File /r "log"
 	File /r "platforms"
 	File "config.ini"

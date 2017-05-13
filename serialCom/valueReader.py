@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QDialog
 
 import utils
 import csvData
-from logger import logger
+from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
 
@@ -93,6 +93,15 @@ class MainWindow(QDialog, serialDlg):
     def on_stopRead(self):
         # 关掉定时器
         self.timer.stop()
+
+    def done(self, result):
+        super(MainWindow, self).done(result)
+        # logger.info("close application")
+        fh.flush()
+        # ch.close()
+        fh.close()
+        self.close()
+        app.closeAllWindows()
 
 
 if __name__ == "__main__":

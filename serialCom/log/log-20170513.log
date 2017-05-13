@@ -1,0 +1,12 @@
+2017-05-13 16:56:40,805 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(16): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2017-05-13 16:56:41,924 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(99): close application
+2017-05-13 16:58:42,127 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(16): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2017-05-13 16:58:42,947 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(99): close application
+2017-05-13 16:59:00,983 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(16): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2017-05-13 16:59:01,981 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(31): 串口没有打开,不需要关闭!
+2017-05-13 16:59:02,930 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(43): 串口没有打开!
+2017-05-13 16:59:02,930 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(90): 发送指令失败,定时器关闭...
+2017-05-13 16:59:04,854 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(99): close application
+2017-05-13 16:59:52,005 E C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(16): 串口COM3打开失败! 错误:could not open port 'COM3': FileNotFoundError(2, '系统找不到指定的文件。', None, 2)
+2017-05-13 16:59:52,583 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py serialComm.py(31): 串口没有打开,不需要关闭!
+2017-05-13 16:59:53,334 I C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\logger.py valueReader.py(99): close application
