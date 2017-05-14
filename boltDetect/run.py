@@ -1,6 +1,7 @@
 # usr/bin/python3
 # -*- coding:utf-8 -*-
-from boltdetect import BoltDetectDlg
+
+from boltdetectdlg import BoltDetectDlg
 
 
 if __name__ == "__main__":

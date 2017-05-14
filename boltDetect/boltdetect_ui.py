@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'boltdetect.ui'
+# Form implementation generated from reading ui file 'F:\projects\boltDetect\res\boltdetect.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -49,15 +49,23 @@ class Ui_boltDetectDlg(object):
         self.label_6.setObjectName("label_6")
         self.sumEdit = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit.setGeometry(QtCore.QRect(130, 40, 120, 30))
+        self.sumEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.sumEdit.setReadOnly(True)
         self.sumEdit.setObjectName("sumEdit")
         self.goodNumEdit = QtWidgets.QLineEdit(self.groupBox)
         self.goodNumEdit.setGeometry(QtCore.QRect(130, 100, 120, 30))
+        self.goodNumEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.goodNumEdit.setReadOnly(True)
         self.goodNumEdit.setObjectName("goodNumEdit")
         self.badNumEdit = QtWidgets.QLineEdit(self.groupBox)
         self.badNumEdit.setGeometry(QtCore.QRect(130, 170, 120, 30))
+        self.badNumEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.badNumEdit.setReadOnly(True)
         self.badNumEdit.setObjectName("badNumEdit")
         self.goodPercentEdit = QtWidgets.QLineEdit(self.groupBox)
         self.goodPercentEdit.setGeometry(QtCore.QRect(130, 240, 120, 30))
+        self.goodPercentEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.goodPercentEdit.setReadOnly(True)
         self.goodPercentEdit.setObjectName("goodPercentEdit")
         self.statusLabel = QtWidgets.QLabel(boltDetectDlg)
         self.statusLabel.setGeometry(QtCore.QRect(0, 730, 1024, 38))
@@ -130,6 +138,10 @@ class Ui_boltDetectDlg(object):
         self.label_4.setText(_translate("boltDetectDlg", "检测合格数目(个):"))
         self.label_5.setText(_translate("boltDetectDlg", "检测排除数目(个):"))
         self.label_6.setText(_translate("boltDetectDlg", "检测合格率(%):"))
+        self.sumEdit.setText(_translate("boltDetectDlg", "0"))
+        self.goodNumEdit.setText(_translate("boltDetectDlg", "0"))
+        self.badNumEdit.setText(_translate("boltDetectDlg", "0"))
+        self.goodPercentEdit.setText(_translate("boltDetectDlg", "0.000"))
         self.groupBox_2.setTitle(_translate("boltDetectDlg", "控制参数"))
         self.label_12.setText(_translate("boltDetectDlg", "连续排除数(个):"))
         self.label_13.setText(_translate("boltDetectDlg", "吹气时间 (毫秒):"))

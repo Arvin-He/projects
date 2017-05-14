@@ -1,1 +1,0 @@
-pyqtuic5.exe boltdetect.ui -o ../boltdetect_ui.py

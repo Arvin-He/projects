@@ -6,6 +6,8 @@ import time
 from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog
+
+import utils
 from boltdetect_ui import Ui_boltDetectDlg as boltDetectDlg
 
 app = QtWidgets.QApplication(sys.argv)
