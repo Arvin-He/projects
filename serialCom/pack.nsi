@@ -30,6 +30,13 @@ BrandingText "http://www.microbit.com/"
 OutFile "${OUT_DIR}\${OUT_FILE_NAME}"
 ; 安装路径
 InstallDir "C:\${PRODUCT_NAME}"
+;安装显示图标及图片
+!define MUI_ICON "favor.ico"
+;卸载图标
+!define MUI_UNICON "uninst.ico"
+
+;Icon "favor.ico"
+;UninstallIcon "uninst.ico"
 
 Page custom nsDialogsPage nsDialogsPageLeave
 ; 安装页面
@@ -53,16 +60,18 @@ Section "Installer Section"
 	File /r "log"
 	File /r "platforms"
 	File "config.ini"
+	File "favor.ico"
+	File "uninst.ico"
 
 	WriteUninstaller "uninstall.exe"
 
-	CreateShortCut "$SMSTARTUP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
-	
+  ;CreateShortCut "$SMSTARTUP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" 
+
 	CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
-	CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_VERSION}"
-	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_VERSION}\卸载 ${PRODUCT_NAME}.lnk" "$INSTDIR\Uninstall.exe"
+	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\卸载 ${PRODUCT_NAME}.lnk" "$INSTDIR\Uninstall.exe"
 	
-	CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "$INSTDIR\favor.ico"
+	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\favor.ico"
+	CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\favor.ico"
 	
 	WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME}"
 	WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\${PRODUCT_NAME}.exe"

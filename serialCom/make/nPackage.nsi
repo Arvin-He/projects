@@ -126,7 +126,9 @@ Section "Installer Section"
 	
 	CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
 	CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_VERSION}"
+
 	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_VERSION}\GFD-${PRODUCT_NAME}${TEST__STR}.lnk" "$INSTDIR\GFD-${PRODUCT_NAME}.exe"
+	
 	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_VERSION}\卸载 ${PRODUCT_NAME}${TEST__STR}.lnk" "$INSTDIR\Uninstall.exe"
 	
 	CreateShortCut "$DESKTOP\GFD-${PRODUCT_FULL_NAME}.lnk" "$INSTDIR\GFD-${PRODUCT_NAME}.exe"
