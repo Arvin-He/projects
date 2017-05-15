@@ -9,6 +9,8 @@ logger = logging.getLogger(__file__)
 logger.setLevel(logging.DEBUG)
 
 _logPath = os.path.abspath("log")
+if not os.path.exists("log"):
+    os.mkdir("log")
 _prepend = "log-"
 _suffix = ".log"
 _logFileName = os.path.join(
