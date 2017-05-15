@@ -32,8 +32,8 @@
   <widget class="QPushButton" name="paramSettingBtn">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>550</y>
+     <x>530</x>
+     <y>70</y>
      <width>170</width>
      <height>50</height>
     </rect>
@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>610</y>
+     <y>560</y>
      <width>170</width>
      <height>50</height>
     </rect>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>670</y>
+     <y>640</y>
      <width>170</width>
      <height>50</height>
     </rect>
@@ -84,8 +84,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
-      <width>120</width>
+      <y>20</y>
+      <width>100</width>
       <height>30</height>
      </rect>
     </property>
@@ -97,8 +97,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
-      <width>120</width>
+      <y>65</y>
+      <width>100</width>
       <height>30</height>
      </rect>
     </property>
@@ -110,8 +110,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>120</y>
-      <width>120</width>
+      <y>115</y>
+      <width>100</width>
       <height>30</height>
      </rect>
     </property>
@@ -124,7 +124,7 @@
      <rect>
       <x>20</x>
       <y>160</y>
-      <width>120</width>
+      <width>100</width>
       <height>30</height>
      </rect>
     </property>
@@ -136,7 +136,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>40</y>
+      <y>20</y>
       <width>120</width>
       <height>30</height>
      </rect>
@@ -145,7 +145,7 @@
      <string>0</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -155,7 +155,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>80</y>
+      <y>65</y>
       <width>120</width>
       <height>30</height>
      </rect>
@@ -164,7 +164,7 @@
      <string>0</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -174,7 +174,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>120</y>
+      <y>115</y>
       <width>120</width>
       <height>30</height>
      </rect>
@@ -183,7 +183,7 @@
      <string>0</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -202,7 +202,7 @@
      <string>0.000</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -229,9 +229,9 @@
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>10</y>
+     <y>139</y>
      <width>500</width>
-     <height>500</height>
+     <height>371</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -244,9 +244,9 @@
   <widget class="QPushButton" name="loadImageBtn">
    <property name="geometry">
     <rect>
-     <x>940</x>
-     <y>560</y>
-     <width>81</width>
+     <x>950</x>
+     <y>10</y>
+     <width>65</width>
      <height>31</height>
     </rect>
    </property>
@@ -257,8 +257,8 @@
   <widget class="QLineEdit" name="imagePathEdit">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>560</y>
+     <x>600</x>
+     <y>10</y>
      <width>340</width>
      <height>30</height>
     </rect>
@@ -267,8 +267,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>560</y>
+     <x>530</x>
+     <y>10</y>
      <width>60</width>
      <height>30</height>
     </rect>
@@ -280,10 +280,10 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>610</y>
-     <width>501</width>
-     <height>111</height>
+     <x>520</x>
+     <y>530</y>
+     <width>491</width>
+     <height>191</height>
     </rect>
    </property>
    <property name="title">
@@ -302,24 +302,30 @@
      <string>Min</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="minEdit">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>30</y>
-      <width>100</width>
+      <width>90</width>
       <height>30</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="maxEdit">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>70</y>
-      <width>100</width>
+      <width>90</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -335,20 +341,23 @@
      <string>Max</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="meanEdit">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>210</x>
       <y>30</y>
-      <width>100</width>
+      <width>90</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>170</x>
       <y>30</y>
       <width>40</width>
       <height>30</height>
@@ -358,20 +367,23 @@
      <string>Mean</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="diffEdit">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>210</x>
       <y>70</y>
-      <width>100</width>
+      <width>90</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>170</x>
       <y>70</y>
       <width>40</width>
       <height>30</height>
@@ -381,14 +393,17 @@
      <string>Diff</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="evaluateEdit">
     <property name="geometry">
      <rect>
       <x>390</x>
       <y>30</y>
-      <width>100</width>
+      <width>90</width>
       <height>30</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -401,9 +416,73 @@
      </rect>
     </property>
     <property name="text">
-     <string>Eevaluate</string>
+     <string>Evaluate</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>60</y>
+     <width>100</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>边缘宽度上限:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="upLimitEdit">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>60</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="downLimitEdit">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>100</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>100</y>
+     <width>100</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>边缘宽度下限:</string>
+   </property>
   </widget>
  </widget>
  <resources/>
