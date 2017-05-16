@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import os
 import configparser
 from logger import logger
 
@@ -30,3 +31,12 @@ def write_config(config_path, field, key, value):
         logger.error(e)
         return False
     return True
+
+
+# 获取图像路径
+def getImageList(image_path):
+    image_list = []
+    for img in os.listdir(image_path):
+        if img.endswith(".bmp") or img.endswith(".png"):
+            image_list.append(os.path.join(image_path, img))
+    return image_list

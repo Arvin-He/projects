@@ -7,12 +7,14 @@ import cv2
 from matplotlib import pyplot as plt
 import pylab as pl
 
+
 def get_images():
     image_path_list = []
     for img in os.listdir(os.path.abspath("res")):
         if img.endswith(".bmp") or img.endswith(".jpg") or img.endswith(".png"):
             image_path_list.append(os.path.join(os.path.abspath("res"), img))
     return image_path_list
+
 
 # print(get_images())
 # 图像预处理,包括加载,转灰度图,二值化,返回二值化图像
@@ -25,6 +27,7 @@ def image_preprocess(image_path):
         return None
     ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     return (ret, thresh)
+
 
 # 统计每行像素个数
 def statistic_pixel_in_row(thresh_img):
@@ -41,16 +44,19 @@ def statistic_pixel_in_row(thresh_img):
     # 返回行数和每行像素个数的列表
     return (thresh_img.shape[0], pixels_in_row)
 
+
 def image_process(image_path):
     ret, thresh = image_preprocess(image_path)
     data = statistic_pixel_in_row(thresh)
     return data
+
 
 def data_analysis(data):
     max_val = np.max(data[1])
     min_val = np.min(data[1])
     error_val = max_val - min_val
     return max_val, min_val, error_val
+
 
 def main():
     image_path_list = get_images()
