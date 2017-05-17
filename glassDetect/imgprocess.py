@@ -19,11 +19,16 @@ def loadImage(img):
 
 
 def convertBGR2RGB(BGRImg):
-    b, g, r = cv2.split(BGRImg)
-    rgb_img = cv2.merge((r, g, b))
-    # RGBImg = cv2.cvtColor(BGRImg, cv2.COLOR_BGR2RGB)
-    # return RGBImg
-    return rgb_img
+    # b, g, r = cv2.split(BGRImg)
+    # rgb_img = cv2.merge((r, g, b))
+    RGBImg = cv2.cvtColor(BGRImg, cv2.COLOR_BGR2RGB)
+    return RGBImg
+    # return rgb_img
+
+
+def resizeImage(img):
+    res = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_CUBIC)
+    return res
 
 
 # 图像预处理,包括加载,转灰度图,二值化,返回二值化图像和阈值

@@ -12,7 +12,6 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import random
-
 import utils
 import imgprocess
 from glassdetectdlg_ui import Ui_glassDetectDlg as glassDetectDlg
@@ -27,20 +26,20 @@ class ImageCanvas(FigureCanvas):
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        # self.axes = fig.add_subplot(111)
-
-        FigureCanvas.__init__(self, fig)
+        super(ImageCanvas, self).__init__(fig)
+        # FigureCanvas.__init__(self, fig)
         self.setParent(parent)
-        self.toolbar = NavigationToolbar(self, parent)
-        FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        # plt.figure(figsize=(20,10))
+        fig.patch.set_facecolor("green")
+        # FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
         self.plot()
 
     def plot(self):
-        # data = [random.random() for i in range(25)]
-        # ax = self.figure.add_subplot(111)
-        # ax.plot(data, 'r-')
-        # ax.set_title('PyQt Matplotlib Example')
+        data = [random.random() for i in range(25)]
+        ax = self.figure.add_subplot(111)
+        ax.plot(data, 'r-')
+        ax.set_title('PyQt Matplotlib Example')
         self.draw()
 
 
@@ -50,35 +49,24 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         global imageList
         self.setupUi(self)
         self.initUI()
-        imageList = utils.getImageList(os.path.abspath(self.imagePathEdit.text()))
-        print(imageList)
+        imageList = utils.getImageList(os.path.abspath(image_path))
         src = imgprocess.loadImage(imageList[0])
-        # self.showImage(src)
+        src_resize = imgprocess.resizeImage(src)
+        self.showImage(src_resize)
+        # image_rect = self.imageViewLabel.rect()
+        self.imageViewLabel.setGeometry(5, 5, src_resize.shape[1], src_resize.shape[0])
+        self.canvas = ImageCanvas(self, width=5, height=3)
+        self.canvas.move(5, 400)
 
     def initUI(self):
-        # self.figure = Figure()
-        # self.canvas = FigureCanvas(self.figure)
-        self.canvas = ImageCanvas(self, width=5, height=4)
-        self.canvas.move(5, 40)
-        self.toolbar = self.canvas.toolbar
-        # self.addToolBar(self.toolbar)
-        self.imageViewLabel.hide()
         imagePath = utils.read_config(_config_path, "param", "image_path")
-        self.imagePathEdit.setText(imagePath if imagePath else image_path)
+        # self.imagePathEdit.setText(imagePath if imagePath else image_path)
         self.loadImagePathBtn.clicked.connect(self.on_loadImagePath)
         self.prevImgBtn.clicked.connect(self.on_prevImage)
         self.nextImgBtn.clicked.connect(self.on_nextImage)
-        self.paramSettingBtn.clicked.connect(self.on_setParamEnable)
+        # self.paramSettingBtn.clicked.connect(self.on_setParamEnable)
         self.upLimitEdit.editingFinished.connect(self.on_upLimitEdited)
         self.downLimitEdit.editingFinished.connect(self.on_downLimitEdited)
-
-    def plot(self):
-        ''' plot some random stuff '''
-        data = [random.random() for i in range(25)]
-        ax = self.figure.add_subplot(111)
-        ax.hold(False)
-        ax.plot(data, '*-')
-        self.canvas.draw()
 
     def on_loadImagePath(self):
         fileName, ok = QFileDialog.getOpenFileName(
@@ -94,7 +82,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         print(imageList)
 
     def on_prevImage(self):
-        self.plot()
+        pass
 
     def on_nextImage(self):
         pass
