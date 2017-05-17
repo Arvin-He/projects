@@ -33,10 +33,10 @@ def write_config(config_path, field, key, value):
     return True
 
 
-# 获取图像路径
+# # 获取图像路径
 def getImageList(image_path):
     image_list = []
     for img in os.listdir(image_path):
         if img.endswith(".bmp") or img.endswith(".png"):
-            image_list.append(os.path.join(image_path, img))
+            image_list.append(os.path.normpath(os.path.join(image_path, img)))
     return image_list

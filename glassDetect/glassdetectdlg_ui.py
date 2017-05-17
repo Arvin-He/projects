@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\glassDetect\res\glassdetectdlg.ui'
+# Form implementation generated from reading ui file 'F:\projects\glassDetect\res\glassdetectdlg.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -11,19 +11,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_glassDetectDlg(object):
     def setupUi(self, glassDetectDlg):
         glassDetectDlg.setObjectName("glassDetectDlg")
-        glassDetectDlg.resize(853, 768)
+        glassDetectDlg.resize(853, 738)
         self.imageViewLabel = QtWidgets.QLabel(glassDetectDlg)
-        self.imageViewLabel.setGeometry(QtCore.QRect(10, 10, 500, 400))
-        self.imageViewLabel.setStyleSheet("background-color: rgb(0, 0, 0);")
+        self.imageViewLabel.setGeometry(QtCore.QRect(0, 0, 500, 400))
+        self.imageViewLabel.setStyleSheet("background-color: #333;")
         self.imageViewLabel.setText("")
         self.imageViewLabel.setObjectName("imageViewLabel")
         self.statusLabel = QtWidgets.QLabel(glassDetectDlg)
-        self.statusLabel.setGeometry(QtCore.QRect(0, 730, 1024, 38))
+        self.statusLabel.setGeometry(QtCore.QRect(0, 700, 1024, 38))
         self.statusLabel.setStyleSheet("background-color: rgb(0, 0, 255);")
         self.statusLabel.setText("")
         self.statusLabel.setObjectName("statusLabel")
         self.groupBox = QtWidgets.QGroupBox(glassDetectDlg)
-        self.groupBox.setGeometry(QtCore.QRect(530, 10, 311, 711))
+        self.groupBox.setGeometry(QtCore.QRect(530, 5, 311, 681))
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.label_11 = QtWidgets.QLabel(self.groupBox)
@@ -41,7 +41,7 @@ class Ui_glassDetectDlg(object):
         self.loadImagePathBtn.setGeometry(QtCore.QRect(10, 105, 130, 85))
         self.loadImagePathBtn.setObjectName("loadImagePathBtn")
         self.groupBox_2 = QtWidgets.QGroupBox(self.groupBox)
-        self.groupBox_2.setGeometry(QtCore.QRect(10, 210, 291, 491))
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 210, 291, 461))
         self.groupBox_2.setObjectName("groupBox_2")
         self.label_2 = QtWidgets.QLabel(self.groupBox_2)
         self.label_2.setGeometry(QtCore.QRect(10, 30, 110, 30))
