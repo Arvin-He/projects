@@ -8,6 +8,9 @@ from pprint import pprint
 
 from logger import logger
 
+imageWidth = 500
+imageHeight = 400
+
 
 def loadImage(img):
     try:
@@ -19,21 +22,18 @@ def loadImage(img):
 
 
 def convertBGR2RGB(BGRImg):
-    # b, g, r = cv2.split(BGRImg)
-    # rgb_img = cv2.merge((r, g, b))
     RGBImg = cv2.cvtColor(BGRImg, cv2.COLOR_BGR2RGB)
     return RGBImg
-    # return rgb_img
 
 
 def resizeImage(img):
-    res = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_CUBIC)
+    res = cv2.resize(img, (imageWidth, imageHeight), interpolation=cv2.INTER_CUBIC)
     return res
 
 
 # 图像预处理,包括加载,转灰度图,二值化,返回二值化图像和阈值
-def image_preprocess(srcImg):
-    gray = cv2.cvtColor(srcImg, cv2.COLOR_BGR2GRAY)
+def image_preprocess(img):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     return (ret, thresh)
 
@@ -41,7 +41,7 @@ def image_preprocess(srcImg):
 # 统计每行像素个数
 def statistic_pixel_in_row(thresh_img):
     if len(thresh_img.shape) > 2:
-        print("you should input a color image, not gray!")
+        print("please input a gray image, not color!")
         return
     pixels_in_row = []
     for row in range(thresh_img.shape[0]):
@@ -54,8 +54,8 @@ def statistic_pixel_in_row(thresh_img):
     return (thresh_img.shape[0], pixels_in_row)
 
 
-def image_process(image_path):
-    ret, thresh = image_preprocess(image_path)
+def image_process(img):
+    ret, thresh = image_preprocess(img)
     data = statistic_pixel_in_row(thresh)
     return data
 

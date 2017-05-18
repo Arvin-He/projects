@@ -33,14 +33,19 @@ class ImageCanvas(FigureCanvas):
         self.setParent(parent)
         fig.patch.set_facecolor("green")
         FigureCanvas.updateGeometry(self)
-        self.plot()
-
-    def plot(self):
-        # data = [random.random() for i in range(25)]
-        ax = self.figure.add_subplot(111)
-        # ax.plot(data, 'r-')
-        ax.set_title('玻璃边缘宽度值曲线')
+        # self.plot()
+        self.ax = self.figure.add_subplot(111)
+        self.ax.set_title('玻璃边缘宽度值曲线')
         self.draw()
+
+    def plot(self, data):
+        # data = [random.random() for i in range(25)]
+        # ax = self.figure.add_subplot(111)
+        # ax.plot(data, 'r-')
+        self.ax.plot(data, 'r-')
+        # ax.set_title('玻璃边缘宽度值曲线')
+        self.draw()
+
 
 
 class GlassDetectDlg(QDialog, glassDetectDlg):
@@ -50,7 +55,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         self.setupUi(self)
         self.initUI()
         self.canvas = ImageCanvas(self, width=5, height=3)
-        self.canvas.move(2, 399)
+        self.canvas.move(0, 399)
 
     def initUI(self):
         self.loadImagePathBtn.clicked.connect(self.on_loadImagePath)
@@ -77,6 +82,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
             src = imgprocess.loadImage(imageList[imageIndex])
             src_resize = imgprocess.resizeImage(src)
             self.showImage(src_resize)
+            self.showResult(src)
 
     def on_prevImage(self):
         global imageIndex
@@ -117,5 +123,10 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
     def processImg(self):
         pass
 
-    def showResult(self):
-        pass
+    def showResult(self, img):
+        data = imgprocess.image_process(img)
+        data_analysised = imgprocess.data_analysis(data)
+        print("max={}, min={}, error={}".format(data_analysised[0], data_analysised[1], data_analysised[2]))
+        self.canvas.plot([row for row in range(data[0])])
+        # 在同一张图片上显示所有曲线
+        # pl.show()
