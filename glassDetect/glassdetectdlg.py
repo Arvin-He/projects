@@ -1,3 +1,4 @@
+#! usr/bin/python3
 # -*- coding:utf-8 -*-
 
 import os
@@ -12,7 +13,6 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
-import random
 import utils
 import imgprocess
 from glassdetectdlg_ui import Ui_glassDetectDlg as glassDetectDlg
@@ -54,11 +54,23 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint | Qt.WindowCloseButtonHint)
 
     def initUI(self):
+        self.downLimitEdit.setText(utils.read_config(config_path, "param", "minLimit"))
+        self.upLimitEdit.setText(utils.read_config(config_path, "param", "maxLimit"))
+        self.downLimitEdit.editingFinished.connect(self.on_setMinLimit)
+        self.upLimitEdit.editingFinished.connect(self.on_setMaxLimit)
         self.loadImagePathBtn.clicked.connect(self.on_loadImagePath)
         self.prevImgBtn.clicked.connect(self.on_prevImage)
         self.nextImgBtn.clicked.connect(self.on_nextImage)
         self.upLimitEdit.editingFinished.connect(self.on_upLimitEdited)
         self.downLimitEdit.editingFinished.connect(self.on_downLimitEdited)
+
+    def on_setMinLimit(self):
+        minLimit = self.downLimitEdit.text()
+        utils.write_config(config_path, "param", "minLimit", minLimit)
+
+    def on_setMaxLimit(self):
+        maxLimit = self.upLimitEdit.text()
+        utils.write_config(config_path, "param", "maxLimit", maxLimit)
 
     def on_loadImagePath(self):
         fileName, ok = QFileDialog.getOpenFileName(
@@ -130,6 +142,17 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         self.diffEdit.setText("{:.3f}".format(data["diff"]))
         self.evaluateEdit.setText("{:.1f}".format(data["estimate"]))
 
-    def judgeResult(self):
-        pass
+    def judgeResult(self, diff):
+        minLimit = float(self.downLimitEdit.text())
+        maxLimit = float(self.upLimitEdit.text())
+        if diff in range(minLimit, maxLimit):
+            self.resultLabel.setText("Good")
+        else:
+            self.resultLabel.setText("Bad")
 
+
+# if __name__ == "__main__":
+#     glassDetectDlg = GlassDetectDlg()
+#     glassDetectDlgRect = glassDetectDlg.geometry()
+#     glassDetectDlg.setFixedSize(glassDetectDlgRect.size())
+#     glassDetectDlg.exec_()
