@@ -5,8 +5,9 @@ import sys
 import time
 from datetime import datetime
 from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QDialog, QFileDialog, QSizePolicy
+from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtCore import Qt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
@@ -33,19 +34,13 @@ class ImageCanvas(FigureCanvas):
         self.setParent(parent)
         fig.patch.set_facecolor("green")
         FigureCanvas.updateGeometry(self)
-        # self.plot()
         self.ax = self.figure.add_subplot(111)
-        self.ax.set_title('玻璃边缘宽度值曲线')
+        self.ax.set_title('Glass boarder width')
         self.draw()
 
-    def plot(self, data):
-        # data = [random.random() for i in range(25)]
-        # ax = self.figure.add_subplot(111)
-        # ax.plot(data, 'r-')
-        self.ax.plot(data, 'r-')
-        # ax.set_title('玻璃边缘宽度值曲线')
+    def plot(self, x, y):
+        self.ax.plot(x, y)
         self.draw()
-
 
 
 class GlassDetectDlg(QDialog, glassDetectDlg):
@@ -56,6 +51,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         self.initUI()
         self.canvas = ImageCanvas(self, width=5, height=3)
         self.canvas.move(0, 399)
+        self.setWindowFlags(Qt.WindowMinMaxButtonsHint | Qt.WindowCloseButtonHint)
 
     def initUI(self):
         self.loadImagePathBtn.clicked.connect(self.on_loadImagePath)
@@ -80,30 +76,29 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
                 imageIndex = index
         if imageList:
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImage(src)
+            src_resize = imgprocess.resizeImg(src)
             self.showImage(src_resize)
             self.showResult(src)
 
     def on_prevImage(self):
-        global imageIndex
+        global imageIndex, imageList
         if imageList:
             if imageIndex-1 < 0:
                 imageIndex = len(imageList)
             imageIndex -= 1
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImage(src)
+            src_resize = imgprocess.resizeImg(src)
             self.showImage(src_resize)
 
     def on_nextImage(self):
-        global imageIndex
+        global imageIndex, imageList
         if imageList:
-            if imageIndex >= len(imageList):
+            if imageIndex+1 >= len(imageList):
                 imageIndex = 0
             imageIndex += 1
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImage(src)
+            src_resize = imgprocess.resizeImg(src)
             self.showImage(src_resize)
-
 
     def on_upLimitEdited(self):
         global upLimit
@@ -114,19 +109,27 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         downLimit = float(self.downLimitEdit.text())
 
     def showImage(self, img):
-        rgb_img = imgprocess.convertBGR2RGB(img)
+        src2 = imgprocess.resizeImg(img)
+        rgb_img = imgprocess.convertBGR2RGB(src2)
         qimg = QImage(
             rgb_img.data, rgb_img.shape[1], rgb_img.shape[0], QImage.Format_RGB888)
         qpm = QPixmap.fromImage(qimg)
         self.imageViewLabel.setPixmap(qpm)
 
-    def processImg(self):
+    def showResult(self, img):
+        data = imgprocess.get_image_process_data(img)
+        res = imgprocess.data_analysis(data)
+        print(res)
+        self.canvas.plot([row for row in range(data[0])], data[1])
+        self.updateUI(res)
+
+    def updateUI(self, data):
+        self.minEdit.setText("{:.1f}".format(data["min"]))
+        self.maxEdit.setText("{:.1f}".format(data["max"]))
+        self.meanEdit.setText("{:.3f}".format(data["mean"]))
+        self.diffEdit.setText("{:.3f}".format(data["diff"]))
+        self.evaluateEdit.setText("{:.1f}".format(data["estimate"]))
+
+    def judgeResult(self):
         pass
 
-    def showResult(self, img):
-        data = imgprocess.image_process(img)
-        data_analysised = imgprocess.data_analysis(data)
-        print("max={}, min={}, error={}".format(data_analysised[0], data_analysised[1], data_analysised[2]))
-        self.canvas.plot([row for row in range(data[0])])
-        # 在同一张图片上显示所有曲线
-        # pl.show()

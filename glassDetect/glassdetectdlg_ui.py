@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'F:\projects\glassDetect\res\glassdetectdlg.ui'
+# Form implementation generated from reading ui file 'C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\glassDetect\res\glassdetectdlg.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -79,6 +79,14 @@ class Ui_glassDetectDlg(object):
         self.label_10 = QtWidgets.QLabel(self.groupBox_2)
         self.label_10.setGeometry(QtCore.QRect(10, 200, 110, 30))
         self.label_10.setObjectName("label_10")
+        self.label_13 = QtWidgets.QLabel(self.groupBox_2)
+        self.label_13.setGeometry(QtCore.QRect(10, 240, 110, 30))
+        self.label_13.setObjectName("label_13")
+        self.resultLabel = QtWidgets.QLabel(self.groupBox_2)
+        self.resultLabel.setGeometry(QtCore.QRect(150, 240, 121, 30))
+        self.resultLabel.setStyleSheet("background-color: rgb(0, 0, 0);\n"
+"font: 75 12pt \"green\" \"宋体\";")
+        self.resultLabel.setObjectName("resultLabel")
         self.label_12 = QtWidgets.QLabel(self.groupBox)
         self.label_12.setGeometry(QtCore.QRect(10, 60, 100, 30))
         self.label_12.setObjectName("label_12")
@@ -112,6 +120,8 @@ class Ui_glassDetectDlg(object):
         self.label_9.setText(_translate("glassDetectDlg", "边缘最大最小差值:"))
         self.evaluateEdit.setText(_translate("glassDetectDlg", "0"))
         self.label_10.setText(_translate("glassDetectDlg", "边缘宽度估计值:"))
+        self.label_13.setText(_translate("glassDetectDlg", "结果判定:"))
+        self.resultLabel.setText(_translate("glassDetectDlg", "11"))
         self.label_12.setText(_translate("glassDetectDlg", "边缘宽度下限:"))
         self.upLimitEdit.setText(_translate("glassDetectDlg", "0"))
         self.nextImgBtn.setText(_translate("glassDetectDlg", "下一张图片"))

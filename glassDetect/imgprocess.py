@@ -1,9 +1,10 @@
 # -*-coding:utf-8 -*-
 import os
-import numpy as np
 import cv2
-from matplotlib import pyplot as plt
+import numpy as np
 import pylab as pl
+from matplotlib import pyplot as plt
+from collections import Counter
 from pprint import pprint
 
 from logger import logger
@@ -26,58 +27,51 @@ def convertBGR2RGB(BGRImg):
     return RGBImg
 
 
-def resizeImage(img):
-    res = cv2.resize(img, (imageWidth, imageHeight), interpolation=cv2.INTER_CUBIC)
+def resizeImg(img):
+    res = cv2.resize(
+        img, (imageWidth, imageHeight), interpolation=cv2.INTER_CUBIC)
     return res
 
 
-# 图像预处理,包括加载,转灰度图,二值化,返回二值化图像和阈值
-def image_preprocess(img):
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+# 二值化, 返回二值化图像和阈值
+def threshImg(img):
+    if len(img.shape) > 2:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img
+    ret, thresh = cv2.threshold(
+        gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     return (ret, thresh)
 
 
-# 统计每行像素个数
-def statistic_pixel_in_row(thresh_img):
-    if len(thresh_img.shape) > 2:
-        print("please input a gray image, not color!")
+# 获取每行像素个数,返回由两个列表组成的元组
+def getRowPixels(img):
+    if len(img.shape) > 2:
+        logger.error("please input a binary image, not color!")
         return
-    pixels_in_row = []
-    for row in range(thresh_img.shape[0]):
+    pixels_list = []
+    for row in range(img.shape[0]):
         pixel_count = 0
-        for col in range(thresh_img.shape[1]):
-            if thresh_img[row, col] > 0:
+        for col in range(img.shape[1]):
+            if img[row, col] > 0:
                 pixel_count += 1
-        pixels_in_row.append(pixel_count)
-    # 返回行数和每行像素个数的列表
-    return (thresh_img.shape[0], pixels_in_row)
+        pixels_list.append(pixel_count)
+    return (img.shape[0], pixels_list)
 
 
-def image_process(img):
-    ret, thresh = image_preprocess(img)
-    data = statistic_pixel_in_row(thresh)
+def get_image_process_data(img):
+    ret, thresh = threshImg(img)
+    data = getRowPixels(thresh)
     return data
 
 
 def data_analysis(data):
-    max_val = np.max(data[1])
-    min_val = np.min(data[1])
-    error_val = max_val - min_val
-    return max_val, min_val, error_val
-
-
-def main():
-    image_path_list = get_images()
-    data_list = []
-    for image_path in image_path_list:
-        data = image_process(image_path)
-        data_list.append(data)
-        data_analysised = data_analysis(data)
-        print("max={}, min={}, error={}".format(data_analysised[0], data_analysised[1], data_analysised[2]))
-        pl.plot([row for row in range(data[0])], data[1])
-    # 在同一张图片上显示所有曲线
-    pl.show()
-
-
-# main()
+    if data:
+        res = {}
+        res["min"] = np.min(data[1])
+        res["max"] = np.max(data[1])
+        res["mean"] = np.mean(data[1])
+        res["diff"] = res["max"] - res["min"]
+        estimate_val = Counter(data[1])
+        res["estimate"] = estimate_val.most_common(1)[0][0]
+        return res
