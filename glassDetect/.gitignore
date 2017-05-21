@@ -4,4 +4,7 @@ __pycache__/
 __pycache__/*.pyc
 *.pyc
 log/
+*.exe
+dist/
+build/glassDtect/
 

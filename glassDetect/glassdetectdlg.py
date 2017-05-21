@@ -1,24 +1,25 @@
-#! usr/bin/python3
 # -*- coding:utf-8 -*-
 
 import os
 import sys
-import time
-from datetime import datetime
-from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QDialog, QFileDialog
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
+
 import utils
 import imgprocess
 from glassdetectdlg_ui import Ui_glassDetectDlg as glassDetectDlg
 
-app = QtWidgets.QApplication(sys.argv)
-_config_path = os.path.abspath("config.ini")
+
+
+# app = QtWidgets.QApplication(sys.argv)
+app = QApplication(sys.argv)
+config_path = os.path.abspath("config.ini")
 image_path = os.path.join(os.path.abspath("res"), "images")
 imageList = []
 imageIndex = 0
@@ -76,7 +77,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         fileName, ok = QFileDialog.getOpenFileName(
             self, "Select image", "", "Image Files (*.bmp);;All Files (*)")
         image_path = os.path.dirname(fileName)
-        utils.write_config(_config_path, "param", "image_path", image_path)
+        utils.write_config(config_path, "param", "image_path", image_path)
         global imageList
         if imageList:
             imageList.clear()
@@ -88,8 +89,7 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
                 imageIndex = index
         if imageList:
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImg(src)
-            self.showImage(src_resize)
+            self.showImage(src)
             self.showResult(src)
 
     def on_prevImage(self):
@@ -99,8 +99,8 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
                 imageIndex = len(imageList)
             imageIndex -= 1
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImg(src)
-            self.showImage(src_resize)
+            self.showImage(src)
+            self.showResult(src)
 
     def on_nextImage(self):
         global imageIndex, imageList
@@ -109,8 +109,8 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
                 imageIndex = 0
             imageIndex += 1
             src = imgprocess.loadImage(imageList[imageIndex])
-            src_resize = imgprocess.resizeImg(src)
-            self.showImage(src_resize)
+            self.showImage(src)
+            self.showResult(src)
 
     def on_upLimitEdited(self):
         global upLimit
@@ -131,7 +131,6 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
     def showResult(self, img):
         data = imgprocess.get_image_process_data(img)
         res = imgprocess.data_analysis(data)
-        print(res)
         self.canvas.plot([row for row in range(data[0])], data[1])
         self.updateUI(res)
 
@@ -141,18 +140,12 @@ class GlassDetectDlg(QDialog, glassDetectDlg):
         self.meanEdit.setText("{:.3f}".format(data["mean"]))
         self.diffEdit.setText("{:.3f}".format(data["diff"]))
         self.evaluateEdit.setText("{:.1f}".format(data["estimate"]))
+        self.judgeResult(data["diff"])
 
     def judgeResult(self, diff):
-        minLimit = float(self.downLimitEdit.text())
-        maxLimit = float(self.upLimitEdit.text())
-        if diff in range(minLimit, maxLimit):
+        minLimit = int(self.downLimitEdit.text())
+        maxLimit = int(self.upLimitEdit.text())
+        if diff in range(maxLimit - minLimit):
             self.resultLabel.setText("Good")
         else:
             self.resultLabel.setText("Bad")
-
-
-# if __name__ == "__main__":
-#     glassDetectDlg = GlassDetectDlg()
-#     glassDetectDlgRect = glassDetectDlg.geometry()
-#     glassDetectDlg.setFixedSize(glassDetectDlgRect.size())
-#     glassDetectDlg.exec_()

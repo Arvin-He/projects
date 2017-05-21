@@ -1,11 +1,7 @@
 # -*-coding:utf-8 -*-
-import os
 import cv2
 import numpy as np
-import pylab as pl
-from matplotlib import pyplot as plt
 from collections import Counter
-from pprint import pprint
 
 from logger import logger
 

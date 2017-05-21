@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\glassDetect\res\glassdetectdlg.ui'
+# Form implementation generated from reading ui file 'F:\projects\glassDetect\res\glassdetectdlg.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_glassDetectDlg(object):
     def setupUi(self, glassDetectDlg):
@@ -32,8 +31,7 @@ class Ui_glassDetectDlg(object):
         self.label_11.setObjectName("label_11")
         self.downLimitEdit = QtWidgets.QLineEdit(self.groupBox)
         self.downLimitEdit.setGeometry(QtCore.QRect(160, 60, 131, 30))
-        self.downLimitEdit.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.downLimitEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.downLimitEdit.setReadOnly(True)
         self.downLimitEdit.setObjectName("downLimitEdit")
         self.prevImgBtn = QtWidgets.QPushButton(self.groupBox)
@@ -87,15 +85,15 @@ class Ui_glassDetectDlg(object):
         self.resultLabel = QtWidgets.QLabel(self.groupBox_2)
         self.resultLabel.setGeometry(QtCore.QRect(150, 240, 121, 30))
         self.resultLabel.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-                                       "font: 75 12pt \"green\" \"宋体\";")
+"font: 75 14pt \"Consolas\";\n"
+"color : #00EC00;")
         self.resultLabel.setObjectName("resultLabel")
         self.label_12 = QtWidgets.QLabel(self.groupBox)
         self.label_12.setGeometry(QtCore.QRect(10, 60, 100, 30))
         self.label_12.setObjectName("label_12")
         self.upLimitEdit = QtWidgets.QLineEdit(self.groupBox)
         self.upLimitEdit.setGeometry(QtCore.QRect(160, 20, 131, 30))
-        self.upLimitEdit.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.upLimitEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.upLimitEdit.setReadOnly(True)
         self.upLimitEdit.setObjectName("upLimitEdit")
         self.nextImgBtn = QtWidgets.QPushButton(self.groupBox)
@@ -124,7 +122,8 @@ class Ui_glassDetectDlg(object):
         self.evaluateEdit.setText(_translate("glassDetectDlg", "0"))
         self.label_10.setText(_translate("glassDetectDlg", "边缘宽度估计值:"))
         self.label_13.setText(_translate("glassDetectDlg", "结果判定:"))
-        self.resultLabel.setText(_translate("glassDetectDlg", "11"))
+        self.resultLabel.setText(_translate("glassDetectDlg", "None"))
         self.label_12.setText(_translate("glassDetectDlg", "边缘宽度下限:"))
         self.upLimitEdit.setText(_translate("glassDetectDlg", "0"))
         self.nextImgBtn.setText(_translate("glassDetectDlg", "下一张图片"))
+
