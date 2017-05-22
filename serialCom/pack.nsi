@@ -31,9 +31,9 @@ OutFile "${OUT_DIR}\${OUT_FILE_NAME}"
 ; 安装路径
 InstallDir "C:\${PRODUCT_NAME}"
 ;安装显示图标及图片
-!define MUI_ICON "favor.ico"
+;!define MUI_ICON "favor.ico"
 ;卸载图标
-!define MUI_UNICON "uninst.ico"
+;!define MUI_UNICON "uninst.ico"
 
 ;Icon "favor.ico"
 ;UninstallIcon "uninst.ico"
@@ -58,7 +58,7 @@ Section "Installer Section"
 
 	File /r /x "*.nsi" /x "*.bat" /x "*.pyc" /x "make/*" ".\dist\*"
 	File /r "log"
-	File /r "platforms"
+	File /r "make\platforms"
 	File "config.ini"
 	File "favor.ico"
 	File "uninst.ico"

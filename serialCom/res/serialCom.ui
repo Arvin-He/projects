@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
-    <height>450</height>
+    <width>578</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
      <x>20</x>
      <y>140</y>
      <width>541</width>
-     <height>251</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
@@ -35,7 +35,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>40</y>
+      <y>30</y>
       <width>380</width>
       <height>30</height>
      </rect>
@@ -48,7 +48,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>30</y>
       <width>110</width>
       <height>30</height>
      </rect>
@@ -61,7 +61,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>90</y>
+      <y>80</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -74,7 +74,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>90</y>
+      <y>80</y>
       <width>110</width>
       <height>30</height>
      </rect>
@@ -87,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>140</y>
+      <y>180</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -100,7 +100,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>140</y>
+      <y>180</y>
       <width>110</width>
       <height>30</height>
      </rect>
@@ -113,7 +113,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>140</y>
+      <y>180</y>
       <width>60</width>
       <height>30</height>
      </rect>
@@ -126,7 +126,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>190</y>
+      <y>230</y>
       <width>110</width>
       <height>30</height>
      </rect>
@@ -139,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>190</y>
+      <y>230</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -152,13 +152,55 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>190</y>
+      <y>230</y>
       <width>111</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>拧紧角度(int):</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>110</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>标志位(int):</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="flagBitEdit">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>130</y>
+      <width>150</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="flagBitLabel">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>130</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -283,7 +325,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>410</y>
+     <y>430</y>
      <width>541</width>
      <height>30</height>
     </rect>
