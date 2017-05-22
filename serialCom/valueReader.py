@@ -21,7 +21,7 @@ class MainWindow(QDialog, serialDlg):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self.initUI()
-        self.lastFlag = 0
+        self.lastFlag = 1
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
 
@@ -68,32 +68,33 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        if serCom.writeData():
-            time.sleep(0.005)
-            recv_data = serCom.readData()
+        recv_data = serCom.readData()
+        if not recv_data:
+            if serCom.writeData():
+                time.sleep(0.005)
+                recv_data = serCom.readData()
+
+        if recv_data:
             self.recvHexEdit.setText(recv_data)
             # 转换收到的数据
             trans_data = serCom.transformData(recv_data)
             self.transValEdit.setText(trans_data)
-
             process_data = serCom.processData(trans_data)
-
             flagBit = serCom.getFlagBit(process_data)
             tightTorque = serCom.getTightTorque(process_data)
             tightAngle = serCom.getTightAngle(process_data)
-
             self.flagBitEdit.setText(flagBit)
-            if flagBit == "1":
+            if flagBit == "2":
                 self.flagBitLabel.setStyleSheet(
                     "QLabel{background-color: green;}")
-            elif flagBit == "2":
+            elif flagBit == "3":
                 self.flagBitLabel.setStyleSheet(
                     "QLabel{background-color: red;}")
             else:
                 self.flagBitLabel.setStyleSheet(
                     "QLabel{background-color: transparent;}")
 
-            if self.lastFlag == 0 and (flagBit == "1" or flagBit == "2"):
+            if self.lastFlag == 1 and (flagBit == "2" or flagBit == "3"):
                 self.tightTorqueEdit.setText(tightTorque)
                 self.tightAngleEdit.setText(tightAngle)
                 csv_data = [flagBit, tightTorque, tightAngle,
@@ -102,8 +103,44 @@ class MainWindow(QDialog, serialDlg):
             # 保存上一次的flag
             self.lastFlag = flagBit
         else:
-            logger.info("发送指令失败,定时器关闭...")
-            self.timer.stop()
+            logger.warn("recev no data")
+
+        # if serCom.writeData():
+        #     time.sleep(0.005)
+        #     recv_data = serCom.readData()
+        #     if recv_data:
+        #         self.recvHexEdit.setText(recv_data)
+        #         # 转换收到的数据
+        #         trans_data = serCom.transformData(recv_data)
+        #         self.transValEdit.setText(trans_data)
+        #         process_data = serCom.processData(trans_data)
+        #         flagBit = serCom.getFlagBit(process_data)
+        #         tightTorque = serCom.getTightTorque(process_data)
+        #         tightAngle = serCom.getTightAngle(process_data)
+        #         self.flagBitEdit.setText(flagBit)
+        #         if flagBit == "2":
+        #             self.flagBitLabel.setStyleSheet(
+        #                 "QLabel{background-color: green;}")
+        #         elif flagBit == "3":
+        #             self.flagBitLabel.setStyleSheet(
+        #                 "QLabel{background-color: red;}")
+        #         else:
+        #             self.flagBitLabel.setStyleSheet(
+        #                 "QLabel{background-color: transparent;}")
+
+        #         if self.lastFlag == 1 and (flagBit == "2" or flagBit == "3"):
+        #             self.tightTorqueEdit.setText(tightTorque)
+        #             self.tightAngleEdit.setText(tightAngle)
+        #             csv_data = [flagBit, tightTorque, tightAngle,
+        #                         datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+        #             csvData.saveCSV(csv_data)
+        #         # 保存上一次的flag
+        #         self.lastFlag = flagBit
+        #     else:
+        #         logger.warn("recev no data")
+        # else:
+        #     logger.info("发送指令失败,定时器关闭...")
+        #     self.timer.stop()
 
     def on_stopRead(self):
         self.infoLabel.setText("信息:停止串口读取数据!")

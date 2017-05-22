@@ -40,8 +40,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_30.setFont(font)
         self.label_30.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_30.setAlignment(QtCore.Qt.AlignCenter)
         self.label_30.setObjectName("label_30")
         self.label_31 = QtWidgets.QLabel(self.groupBox)
@@ -54,8 +54,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_31.setFont(font)
         self.label_31.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_31.setAlignment(QtCore.Qt.AlignCenter)
         self.label_31.setObjectName("label_31")
         self.label_32 = QtWidgets.QLabel(self.groupBox)
@@ -68,8 +68,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_32.setFont(font)
         self.label_32.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_32.setAlignment(QtCore.Qt.AlignCenter)
         self.label_32.setObjectName("label_32")
         self.label_33 = QtWidgets.QLabel(self.groupBox)
@@ -82,33 +82,38 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_33.setFont(font)
         self.label_33.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_33.setAlignment(QtCore.Qt.AlignCenter)
         self.label_33.setObjectName("label_33")
         self.sumEdit_27 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_27.setGeometry(QtCore.QRect(120, 140, 80, 30))
-        self.sumEdit_27.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_27.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_27.setReadOnly(True)
         self.sumEdit_27.setObjectName("sumEdit_27")
         self.sumEdit_28 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_28.setGeometry(QtCore.QRect(120, 20, 80, 30))
-        self.sumEdit_28.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_28.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_28.setReadOnly(True)
         self.sumEdit_28.setObjectName("sumEdit_28")
         self.sumEdit_29 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_29.setGeometry(QtCore.QRect(120, 100, 80, 30))
-        self.sumEdit_29.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_29.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_29.setReadOnly(True)
         self.sumEdit_29.setObjectName("sumEdit_29")
         self.sumEdit_30 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_30.setGeometry(QtCore.QRect(120, 60, 80, 30))
-        self.sumEdit_30.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_30.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_30.setReadOnly(True)
         self.sumEdit_30.setObjectName("sumEdit_30")
         self.sumEdit_31 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_31.setGeometry(QtCore.QRect(410, 140, 80, 30))
-        self.sumEdit_31.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_31.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_31.setReadOnly(True)
         self.sumEdit_31.setObjectName("sumEdit_31")
         self.label_34 = QtWidgets.QLabel(self.groupBox)
@@ -121,8 +126,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_34.setFont(font)
         self.label_34.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_34.setAlignment(QtCore.Qt.AlignCenter)
         self.label_34.setObjectName("label_34")
         self.label_35 = QtWidgets.QLabel(self.groupBox)
@@ -135,23 +140,26 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_35.setFont(font)
         self.label_35.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_35.setAlignment(QtCore.Qt.AlignCenter)
         self.label_35.setObjectName("label_35")
         self.sumEdit_32 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_32.setGeometry(QtCore.QRect(410, 100, 80, 30))
-        self.sumEdit_32.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_32.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_32.setReadOnly(True)
         self.sumEdit_32.setObjectName("sumEdit_32")
         self.sumEdit_33 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_33.setGeometry(QtCore.QRect(410, 20, 80, 30))
-        self.sumEdit_33.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_33.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_33.setReadOnly(True)
         self.sumEdit_33.setObjectName("sumEdit_33")
         self.sumEdit_34 = QtWidgets.QLineEdit(self.groupBox)
         self.sumEdit_34.setGeometry(QtCore.QRect(410, 60, 80, 30))
-        self.sumEdit_34.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_34.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_34.setReadOnly(True)
         self.sumEdit_34.setObjectName("sumEdit_34")
         self.label_36 = QtWidgets.QLabel(self.groupBox)
@@ -164,8 +172,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_36.setFont(font)
         self.label_36.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_36.setAlignment(QtCore.Qt.AlignCenter)
         self.label_36.setObjectName("label_36")
         self.label_37 = QtWidgets.QLabel(self.groupBox)
@@ -178,13 +186,14 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_37.setFont(font)
         self.label_37.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_37.setAlignment(QtCore.Qt.AlignCenter)
         self.label_37.setObjectName("label_37")
         self.sampleViewLabel = QtWidgets.QLabel(boltDetectDlg)
         self.sampleViewLabel.setGeometry(QtCore.QRect(520, 299, 391, 321))
-        self.sampleViewLabel.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.sampleViewLabel.setStyleSheet(
+            "background-color: rgb(255, 255, 255);")
         self.sampleViewLabel.setText("")
         self.sampleViewLabel.setObjectName("sampleViewLabel")
         self.groupBox_3 = QtWidgets.QGroupBox(boltDetectDlg)
@@ -200,10 +209,11 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_12.setFont(font)
         self.label_12.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_12.setText("")
-        self.label_12.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_12.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.label_12.setObjectName("label_12")
         self.label_13 = QtWidgets.QLabel(self.groupBox_3)
         self.label_13.setGeometry(QtCore.QRect(100, 60, 391, 30))
@@ -215,10 +225,11 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_13.setFont(font)
         self.label_13.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_13.setText("")
-        self.label_13.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_13.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.label_13.setObjectName("label_13")
         self.label_14 = QtWidgets.QLabel(self.groupBox_3)
         self.label_14.setGeometry(QtCore.QRect(10, 20, 90, 30))
@@ -230,8 +241,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_14.setFont(font)
         self.label_14.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName("label_14")
         self.label_16 = QtWidgets.QLabel(self.groupBox_3)
@@ -244,8 +255,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_16.setFont(font)
         self.label_16.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_16.setAlignment(QtCore.Qt.AlignCenter)
         self.label_16.setObjectName("label_16")
         self.groupBox_4 = QtWidgets.QGroupBox(boltDetectDlg)
@@ -261,8 +272,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                   "color : #00EC00;\n"
+                                   "font: 75 15pt \"宋体\";")
         self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(self.groupBox_4)
@@ -275,8 +286,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                   "color : #00EC00;\n"
+                                   "font: 75 15pt \"宋体\";")
         self.label_8.setAlignment(QtCore.Qt.AlignCenter)
         self.label_8.setObjectName("label_8")
         self.label_9 = QtWidgets.QLabel(self.groupBox_4)
@@ -289,8 +300,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_9.setFont(font)
         self.label_9.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                   "color : #00EC00;\n"
+                                   "font: 75 15pt \"宋体\";")
         self.label_9.setAlignment(QtCore.Qt.AlignCenter)
         self.label_9.setObjectName("label_9")
         self.label_10 = QtWidgets.QLabel(self.groupBox_4)
@@ -303,8 +314,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_10.setFont(font)
         self.label_10.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_10.setAlignment(QtCore.Qt.AlignCenter)
         self.label_10.setObjectName("label_10")
         self.label_11 = QtWidgets.QLabel(self.groupBox_4)
@@ -317,8 +328,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_11.setFont(font)
         self.label_11.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_11.setAlignment(QtCore.Qt.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.label_15 = QtWidgets.QLabel(self.groupBox_4)
@@ -331,8 +342,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_15.setFont(font)
         self.label_15.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_15.setAlignment(QtCore.Qt.AlignCenter)
         self.label_15.setObjectName("label_15")
         self.label_17 = QtWidgets.QLabel(self.groupBox_4)
@@ -345,33 +356,38 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_17.setFont(font)
         self.label_17.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_17.setAlignment(QtCore.Qt.AlignCenter)
         self.label_17.setObjectName("label_17")
         self.sumEdit_2 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_2.setGeometry(QtCore.QRect(110, 80, 80, 30))
-        self.sumEdit_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_2.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_2.setReadOnly(True)
         self.sumEdit_2.setObjectName("sumEdit_2")
         self.sumEdit_3 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_3.setGeometry(QtCore.QRect(110, 120, 80, 30))
-        self.sumEdit_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_3.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_3.setReadOnly(True)
         self.sumEdit_3.setObjectName("sumEdit_3")
         self.sumEdit_4 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_4.setGeometry(QtCore.QRect(110, 160, 80, 30))
-        self.sumEdit_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_4.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_4.setReadOnly(True)
         self.sumEdit_4.setObjectName("sumEdit_4")
         self.sumEdit_5 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_5.setGeometry(QtCore.QRect(110, 200, 80, 30))
-        self.sumEdit_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_5.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_5.setReadOnly(True)
         self.sumEdit_5.setObjectName("sumEdit_5")
         self.sumEdit_6 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_6.setGeometry(QtCore.QRect(110, 240, 80, 30))
-        self.sumEdit_6.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_6.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_6.setReadOnly(True)
         self.sumEdit_6.setObjectName("sumEdit_6")
         self.label_18 = QtWidgets.QLabel(self.groupBox_4)
@@ -384,8 +400,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_18.setFont(font)
         self.label_18.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_18.setAlignment(QtCore.Qt.AlignCenter)
         self.label_18.setObjectName("label_18")
         self.label_19 = QtWidgets.QLabel(self.groupBox_4)
@@ -398,8 +414,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_19.setFont(font)
         self.label_19.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_19.setAlignment(QtCore.Qt.AlignCenter)
         self.label_19.setObjectName("label_19")
         self.label_20 = QtWidgets.QLabel(self.groupBox_4)
@@ -412,58 +428,68 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_20.setFont(font)
         self.label_20.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_20.setAlignment(QtCore.Qt.AlignCenter)
         self.label_20.setObjectName("label_20")
         self.sumEdit_7 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_7.setGeometry(QtCore.QRect(200, 80, 60, 30))
-        self.sumEdit_7.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_7.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_7.setReadOnly(True)
         self.sumEdit_7.setObjectName("sumEdit_7")
         self.sumEdit_8 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_8.setGeometry(QtCore.QRect(270, 80, 60, 30))
-        self.sumEdit_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_8.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_8.setReadOnly(True)
         self.sumEdit_8.setObjectName("sumEdit_8")
         self.sumEdit_9 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_9.setGeometry(QtCore.QRect(200, 120, 60, 30))
-        self.sumEdit_9.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_9.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_9.setReadOnly(True)
         self.sumEdit_9.setObjectName("sumEdit_9")
         self.sumEdit_10 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_10.setGeometry(QtCore.QRect(270, 120, 60, 30))
-        self.sumEdit_10.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_10.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_10.setReadOnly(True)
         self.sumEdit_10.setObjectName("sumEdit_10")
         self.sumEdit_11 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_11.setGeometry(QtCore.QRect(200, 160, 60, 30))
-        self.sumEdit_11.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_11.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_11.setReadOnly(True)
         self.sumEdit_11.setObjectName("sumEdit_11")
         self.sumEdit_12 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_12.setGeometry(QtCore.QRect(270, 160, 60, 30))
-        self.sumEdit_12.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_12.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_12.setReadOnly(True)
         self.sumEdit_12.setObjectName("sumEdit_12")
         self.sumEdit_13 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_13.setGeometry(QtCore.QRect(200, 200, 60, 30))
-        self.sumEdit_13.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_13.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_13.setReadOnly(True)
         self.sumEdit_13.setObjectName("sumEdit_13")
         self.sumEdit_14 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_14.setGeometry(QtCore.QRect(270, 200, 60, 30))
-        self.sumEdit_14.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_14.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_14.setReadOnly(True)
         self.sumEdit_14.setObjectName("sumEdit_14")
         self.sumEdit_15 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_15.setGeometry(QtCore.QRect(200, 240, 60, 30))
-        self.sumEdit_15.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_15.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_15.setReadOnly(True)
         self.sumEdit_15.setObjectName("sumEdit_15")
         self.sumEdit_16 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_16.setGeometry(QtCore.QRect(270, 240, 60, 30))
-        self.sumEdit_16.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_16.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_16.setReadOnly(True)
         self.sumEdit_16.setObjectName("sumEdit_16")
         self.label_21 = QtWidgets.QLabel(self.groupBox_4)
@@ -476,43 +502,50 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_21.setFont(font)
         self.label_21.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_21.setAlignment(QtCore.Qt.AlignCenter)
         self.label_21.setObjectName("label_21")
         self.sumEdit_17 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_17.setGeometry(QtCore.QRect(410, 200, 60, 30))
-        self.sumEdit_17.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_17.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_17.setReadOnly(True)
         self.sumEdit_17.setObjectName("sumEdit_17")
         self.sumEdit_18 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_18.setGeometry(QtCore.QRect(340, 80, 60, 30))
-        self.sumEdit_18.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_18.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_18.setReadOnly(True)
         self.sumEdit_18.setObjectName("sumEdit_18")
         self.sumEdit_19 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_19.setGeometry(QtCore.QRect(340, 160, 60, 30))
-        self.sumEdit_19.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_19.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_19.setReadOnly(True)
         self.sumEdit_19.setObjectName("sumEdit_19")
         self.sumEdit_20 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_20.setGeometry(QtCore.QRect(410, 160, 60, 30))
-        self.sumEdit_20.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_20.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_20.setReadOnly(True)
         self.sumEdit_20.setObjectName("sumEdit_20")
         self.sumEdit_21 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_21.setGeometry(QtCore.QRect(410, 80, 60, 30))
-        self.sumEdit_21.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_21.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_21.setReadOnly(True)
         self.sumEdit_21.setObjectName("sumEdit_21")
         self.sumEdit_22 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_22.setGeometry(QtCore.QRect(410, 120, 60, 30))
-        self.sumEdit_22.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_22.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_22.setReadOnly(True)
         self.sumEdit_22.setObjectName("sumEdit_22")
         self.sumEdit_23 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_23.setGeometry(QtCore.QRect(340, 120, 60, 30))
-        self.sumEdit_23.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_23.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_23.setReadOnly(True)
         self.sumEdit_23.setObjectName("sumEdit_23")
         self.label_22 = QtWidgets.QLabel(self.groupBox_4)
@@ -525,23 +558,26 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_22.setFont(font)
         self.label_22.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_22.setAlignment(QtCore.Qt.AlignCenter)
         self.label_22.setObjectName("label_22")
         self.sumEdit_24 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_24.setGeometry(QtCore.QRect(340, 240, 60, 30))
-        self.sumEdit_24.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_24.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_24.setReadOnly(True)
         self.sumEdit_24.setObjectName("sumEdit_24")
         self.sumEdit_25 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_25.setGeometry(QtCore.QRect(410, 240, 60, 30))
-        self.sumEdit_25.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_25.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_25.setReadOnly(True)
         self.sumEdit_25.setObjectName("sumEdit_25")
         self.sumEdit_26 = QtWidgets.QLineEdit(self.groupBox_4)
         self.sumEdit_26.setGeometry(QtCore.QRect(340, 200, 60, 30))
-        self.sumEdit_26.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.sumEdit_26.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.sumEdit_26.setReadOnly(True)
         self.sumEdit_26.setObjectName("sumEdit_26")
         self.label_23 = QtWidgets.QLabel(self.groupBox_4)
@@ -554,8 +590,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_23.setFont(font)
         self.label_23.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_23.setAlignment(QtCore.Qt.AlignCenter)
         self.label_23.setObjectName("label_23")
         self.label_24 = QtWidgets.QLabel(self.groupBox_4)
@@ -568,8 +604,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_24.setFont(font)
         self.label_24.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_24.setAlignment(QtCore.Qt.AlignCenter)
         self.label_24.setObjectName("label_24")
         self.label_25 = QtWidgets.QLabel(self.groupBox_4)
@@ -582,8 +618,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_25.setFont(font)
         self.label_25.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_25.setAlignment(QtCore.Qt.AlignCenter)
         self.label_25.setObjectName("label_25")
         self.label_26 = QtWidgets.QLabel(self.groupBox_4)
@@ -596,8 +632,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_26.setFont(font)
         self.label_26.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_26.setAlignment(QtCore.Qt.AlignCenter)
         self.label_26.setObjectName("label_26")
         self.label_27 = QtWidgets.QLabel(self.groupBox_4)
@@ -610,8 +646,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_27.setFont(font)
         self.label_27.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_27.setAlignment(QtCore.Qt.AlignCenter)
         self.label_27.setObjectName("label_27")
         self.label_28 = QtWidgets.QLabel(self.groupBox_4)
@@ -624,8 +660,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_28.setFont(font)
         self.label_28.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_28.setAlignment(QtCore.Qt.AlignCenter)
         self.label_28.setObjectName("label_28")
         self.label_29 = QtWidgets.QLabel(self.groupBox_4)
@@ -638,8 +674,8 @@ class Ui_boltDetectDlg(object):
         font.setWeight(9)
         self.label_29.setFont(font)
         self.label_29.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color : #00EC00;\n"
-"font: 75 15pt \"宋体\";")
+                                    "color : #00EC00;\n"
+                                    "font: 75 15pt \"宋体\";")
         self.label_29.setAlignment(QtCore.Qt.AlignCenter)
         self.label_29.setObjectName("label_29")
         self.stopBtn_2 = QtWidgets.QPushButton(boltDetectDlg)
@@ -721,4 +757,3 @@ class Ui_boltDetectDlg(object):
         self.label_28.setText(_translate("boltDetectDlg", "OK"))
         self.label_29.setText(_translate("boltDetectDlg", "OK"))
         self.stopBtn_2.setText(_translate("boltDetectDlg", "清零"))
-

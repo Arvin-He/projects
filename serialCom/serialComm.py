@@ -55,6 +55,8 @@ def readData():
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
             return data2.decode('utf-8')
+        # else:
+            # logger.info("recev data less than 13 bytes!")
     else:
         logger.info("串口没有打开!")
         return None
