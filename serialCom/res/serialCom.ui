@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
-    <height>473</height>
+    <width>580</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
      <rect>
       <x>130</x>
       <y>30</y>
-      <width>380</width>
+      <width>391</width>
       <height>30</height>
      </rect>
     </property>
@@ -87,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>180</y>
+      <y>130</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -100,46 +100,20 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>180</y>
+      <y>130</y>
       <width>110</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>拧紧力矩(float):</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>180</y>
-      <width>60</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>N.m</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>230</y>
-      <width>110</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>degree</string>
+     <string>拧紧力矩(N.m):</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="tightAngleEdit">
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>230</y>
+      <y>180</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -152,34 +126,34 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>230</y>
+      <y>180</y>
       <width>111</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>拧紧角度(int):</string>
+     <string>拧紧角度(degree):</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>130</y>
+      <y>230</y>
       <width>110</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>标志位(int):</string>
+     <string>拧紧状态:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="flagBitEdit">
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>130</y>
-      <width>150</width>
+      <y>230</y>
+      <width>101</width>
       <height>30</height>
      </rect>
     </property>
@@ -190,8 +164,8 @@
    <widget class="QLabel" name="flagBitLabel">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>130</y>
+      <x>250</x>
+      <y>230</y>
       <width>30</width>
       <height>30</height>
      </rect>
@@ -202,6 +176,84 @@
     <property name="text">
      <string/>
     </property>
+   </widget>
+   <widget class="QTableWidget" name="dataTable">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>80</y>
+      <width>231</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>80</number>
+    </attribute>
+    <row>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>7</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>9</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>标志位</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>拧紧力矩</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>拧紧角度</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">

@@ -33,8 +33,10 @@ def closeCom():
 
 
 def writeData():
+
     global ser
     if ser and ser.is_open:
+        ser.reset_input_buffer()
         # 16进制转bytes
         data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
         ser.write(data)
@@ -48,15 +50,16 @@ def writeData():
 def readData():
     global ser
     if ser and ser.is_open:
-        if ser.in_waiting == 13:
+        try:
             data = ser.read(13)
             # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
             # 将bytes的内容转16进制表示的bytes
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
             return data2.decode('utf-8')
-        # else:
-            # logger.info("recev data less than 13 bytes!")
+        except Exception as e:
+            logger.error("read data failed, {}".format(e))
+            return
     else:
         logger.info("串口没有打开!")
         return None
