@@ -5,6 +5,7 @@ import sys
 import time
 from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QTableWidgetItem, QAbstractItemView
 
@@ -21,6 +22,7 @@ class MainWindow(QDialog, serialDlg):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
+        self.setWindowFlags(Qt.WindowMinMaxButtonsHint | Qt.WindowCloseButtonHint)
         self.initUI()
         self.lastdata = ["", ""]
         self.showdata = []

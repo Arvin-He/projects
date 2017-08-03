@@ -25,7 +25,7 @@
      <x>20</x>
      <y>140</y>
      <width>541</width>
-     <height>281</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
@@ -177,84 +177,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QTableWidget" name="dataTable">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>80</y>
-      <width>231</width>
-      <height>181</height>
-     </rect>
-    </property>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>80</number>
-    </attribute>
-    <row>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>3</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>4</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>5</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>6</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>7</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>8</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>9</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>10</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>标志位</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>拧紧力矩</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>拧紧角度</string>
-     </property>
-    </column>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
@@ -271,7 +193,7 @@
    <widget class="QPushButton" name="openBtn">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>300</x>
       <y>20</y>
       <width>100</width>
       <height>30</height>
@@ -284,9 +206,9 @@
    <widget class="QLineEdit" name="portEdit">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>80</x>
       <y>20</y>
-      <width>150</width>
+      <width>191</width>
       <height>30</height>
      </rect>
     </property>
@@ -297,9 +219,9 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>20</y>
-      <width>110</width>
+      <width>65</width>
       <height>30</height>
      </rect>
     </property>
@@ -310,7 +232,7 @@
    <widget class="QPushButton" name="closeBtn">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>300</x>
       <y>60</y>
       <width>100</width>
       <height>30</height>
@@ -323,9 +245,9 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>60</y>
-      <width>110</width>
+      <width>65</width>
       <height>30</height>
      </rect>
     </property>
@@ -336,9 +258,9 @@
    <widget class="QLineEdit" name="baudrateEdit">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>80</x>
       <y>60</y>
-      <width>150</width>
+      <width>191</width>
       <height>30</height>
      </rect>
     </property>
@@ -384,6 +306,97 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="dataTable">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>50</y>
+     <width>271</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>80</number>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>3</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>4</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>5</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>6</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>7</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>8</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>9</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>10</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>标志位</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>拧紧力矩</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>拧紧角度</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>10</y>
+     <width>65</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>数据显示:</string>
    </property>
   </widget>
  </widget>
