@@ -128,10 +128,11 @@ class MainWindow(QDialog, serialDlg):
             self.timer.stop()
 
     def showDataOnTable(self):
-        for i in range(len(self.showdata)):
-            new_item0 = QTableWidgetItem(self.showdata[i][0])
-            new_item1 = QTableWidgetItem(self.showdata[i][1])
-            new_item2 = QTableWidgetItem(self.showdata[i][2])
+        data_num = len(self.showdata)
+        for i in range(data_num):
+            new_item0 = QTableWidgetItem(self.showdata[data_num-1-i][0])
+            new_item1 = QTableWidgetItem(self.showdata[data_num-1-i][1])
+            new_item2 = QTableWidgetItem(self.showdata[data_num-1-i][2])
             self.dataTable.setItem(i, 0, new_item0)
             self.dataTable.setItem(i, 1, new_item1)
             self.dataTable.setItem(i, 2, new_item2)
