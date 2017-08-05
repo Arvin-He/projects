@@ -9,7 +9,9 @@ print("input file ={}".format(inputFile))
 outputFile = os.path.abspath("../serialCom_ui.py")
 print("output file ={}".format(outputFile))
 # py3.4.3
-subprocess.call(["pyuic5.bat", inputFile, "-o", outputFile])
+try:
+    subprocess.call(["pyuic5.bat", inputFile, "-o", outputFile])
+except:
 # py3.6
-# subprocess.call(["pyuic5", inputFile, "-o", outputFile])
+    subprocess.call(["pyuic5", inputFile, "-o", outputFile])
 print("build ui done.")

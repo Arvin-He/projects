@@ -8,10 +8,8 @@ from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtWidgets import QTableWidgetItem, QAbstractItemView
 
 import utils
-import csvData
 from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
@@ -27,12 +25,12 @@ class MainWindow(QDialog, serialDlg):
                             Qt.WindowCloseButtonHint)
         self.data = {}
         self.old_data = {}
+        self.tightTorqueList = []
+        self.tightAngleList = []
         self.initUI()
-        self.lastdata = ["", ""]
-        self.showdata = []
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
-        self.showDatasOnPanel()
+        self.showDataOnPanel()
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -101,18 +99,19 @@ class MainWindow(QDialog, serialDlg):
             # 在获取新数据前保存上一次的值
             self.old_data = copy.deepcopy(self.data)
             self.getData()
+            # 去重
+            self.dedupData()
             self.showData()
-            self.showState()
         else:
             logger.info("发送指令失败,定时器关闭...")
             self.timer.stop()
 
     # 读取串口数据,并提取数据
     def getData(self):
-        self.data["recv"] = serCom.readData()
-        if recv_data:
+        self.data["recev"] = serCom.readData()
+        if self.data["recev"]:
             # 转换收到的数据
-            self.data["trans"] = serCom.transformData(self.data["recv"])
+            self.data["trans"] = serCom.transformData(self.data["recev"])
             self.data["process"] = serCom.processData(self.data["trans"])
             self.data["flagBit"] = serCom.getFlagBit(self.data["process"])
             self.data["tightTorque"] = serCom.getTightTorque(
@@ -122,32 +121,37 @@ class MainWindow(QDialog, serialDlg):
         else:
             logger.warn("recev no data")
 
+    # 去除重复数据
+    def dedupData(self):
+        if self.old_data["tightTorque"] != self.data["tightTorque"] or self.old_data["tightAngle"] != self.data[
+            "tightAngle"]:
+            if len(self.tightTorqueList) >= self.group_count * 2:
+                del self.tightTorqueList[0]
+                del self.tightAngleList[0]
+            self.tightTorqueList.append(self.data["tightTorque"])
+            self.tightAngleList.append(self.data["tightAngle"])
+
+    def saveData(self):
+        pass
+        #     csv_data = [flagBit, tightTorque, tightAngle,
+        #                 datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+        #     csvData.saveCSV(csv_data)
+
     # 显示数据
     def showData(self):
-        self.recvHexEdit.setText(self.data["recv"])
+        self.recvHexEdit.setText(self.data["recev"])
         self.transValEdit.setText(self.data["trans"])
         self.flagBitEdit.setText(self.data["flagBit"])
+        # 显示状态位
+        self.showState()
         if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
             self.tightTorqueEdit.setText(self.data["tightTorque"])
             self.tightAngleEdit.setText(self.data["tightAngle"])
-            # # 去重
-            # if self.lastdata and (self.lastdata[0] != tightTorque or self.lastdata[1] != tightAngle):
-            #     if len(self.showdata) < 10:
-            #         self.showdata.append(
-            #             (flagBit, tightTorque, tightAngle))
-            #     else:
-            #         self.showdata.remove(self.showdata[0])
-            #         self.showdata.append(
-            #             (flagBit, tightTorque, tightAngle))
-            #     self.showDataOnTable()
-            #     csv_data = [flagBit, tightTorque, tightAngle,
-            #                 datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
-            #     csvData.saveCSV(csv_data)
         else:
             self.tightTorqueEdit.setText("")
             self.tightAngleEdit.setText("")
 
-    # 显示状态
+    # 显示状态位
     def showState(self):
         if self.data["flagBit"] == "2":
             self.flagBitLabel.setStyleSheet(
@@ -159,29 +163,18 @@ class MainWindow(QDialog, serialDlg):
             self.flagBitLabel.setStyleSheet(
                 "QLabel{background-color: transparent;}")
 
-    def showDatasOnPanel(self):
+    def showDataOnPanel(self):
         format_text = self.formatText()
-        text = "\n".join(format_text)
+        text = "\n\n".join(format_text)
         self.dataPanel.setText(text)
 
     def formatText(self):
         text_list = []
-        header = "拧紧力矩".rjust(20)+"拧紧角度".rjust(20)
+        header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
         text_list.append(header)
-        for i in range(int(self.group_count)):
-            text_list.append("{}号螺丝: ".format(i+1))
+        for i in range(int(self.group_count)*2):
+            text_list.append("  {}.  ".format(i + 1))
         return text_list
-
-    def showDataOnTable(self):
-        data_num = len(self.showdata)
-        for i in range(data_num):
-            pass
-            # new_item0 = QTableWidgetItem(self.showdata[data_num-1-i][0])
-            # new_item1 = QTableWidgetItem(self.showdata[data_num-1-i][1])
-            # new_item2 = QTableWidgetItem(self.showdata[data_num-1-i][2])
-            # self.dataTable.setItem(i, 0, new_item0)
-            # self.dataTable.setItem(i, 1, new_item1)
-            # self.dataTable.setItem(i, 2, new_item2)
 
     def on_stopRead(self):
         self.infoLabel.setText("信息:停止串口读取数据!")
