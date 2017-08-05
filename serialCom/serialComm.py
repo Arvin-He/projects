@@ -33,7 +33,6 @@ def closeCom():
 
 
 def writeData():
-
     global ser
     if ser and ser.is_open:
         ser.reset_input_buffer()
