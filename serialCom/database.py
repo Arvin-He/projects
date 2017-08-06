@@ -117,6 +117,17 @@ class DataBase(object):
         with self.getSession() as session:
             session.flush(objects)
 
+    def createTable(self, cls):
+        table = cls.__table__
+        if table.exists(self.engine):
+            return
+        table.create(self.engine)
+
+    def dropTable(self, cls):
+        table = cls.__table__
+        if table.exists(self.engine):
+            table.drop(self.engine)
+
     def clearTable(self, cls):
         table = cls.__table__
         with self.engine.begin() as connection:
@@ -202,28 +213,25 @@ class DataBase(object):
         return self.BaseModel.metadata
 
 
-class JSONEncodedDict(TypeDecorator):
-    impl = VARCHAR
+# class JSONEncodedDict(TypeDecorator):
+#     impl = VARCHAR
 
-    def coerce_compared_value(self, op, value):
-        if op in (operators.like_op, operators.notlike_op):
-            return String()
-        else:
-            return self
+#     def coerce_compared_value(self, op, value):
+#         if op in (operators.like_op, operators.notlike_op):
+#             return String()
+#         else:
+#             return self
 
-    def process_bind_param(self, value, dialect):
-        if value is not None:
-            value = json.dumps(value)
+#     def process_bind_param(self, value, dialect):
+#         if value is not None:
+#             value = json.dumps(value)
+#         return value
 
-        return value
+#     def process_result_value(self, value, dialect):
+#         if value is not None:
+#             value = json.loads(value)
+#         return value
 
-    def process_result_value(self, value, dialect):
-        if value is not None:
-            value = json.loads(value)
-        return value
-
-
-sqlalchemy.JsonType = MutableDict.as_mutable(JSONEncodedDict)
-
+# sqlalchemy.JsonType = MutableDict.as_mutable(JSONEncodedDict)
 
 db = DataBase("data.db")

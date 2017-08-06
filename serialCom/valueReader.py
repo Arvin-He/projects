@@ -13,6 +13,8 @@ import utils
 from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
+import serialdb
+
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -28,9 +30,11 @@ class MainWindow(QDialog, serialDlg):
         self.tightTorqueList = []
         self.tightAngleList = []
         self.initUI()
+        self.barcodeEdit.setFocus()
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
         self.showDataOnPanel()
+        self.saveData()
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -131,12 +135,6 @@ class MainWindow(QDialog, serialDlg):
             self.tightTorqueList.append(self.data["tightTorque"])
             self.tightAngleList.append(self.data["tightAngle"])
 
-    def saveData(self):
-        pass
-        #     csv_data = [flagBit, tightTorque, tightAngle,
-        #                 datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
-        #     csvData.saveCSV(csv_data)
-
     # 显示数据
     def showData(self):
         self.recvHexEdit.setText(self.data["recev"])
@@ -165,16 +163,34 @@ class MainWindow(QDialog, serialDlg):
 
     def showDataOnPanel(self):
         format_text = self.formatText()
-        text = "\n\n".join(format_text)
+        text = "\n".join(format_text)
         self.dataPanel.setText(text)
 
     def formatText(self):
         text_list = []
-        header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
+        header = "拧紧力矩".rjust(12) + "拧紧角度".rjust(12)
         text_list.append(header)
         for i in range(int(self.group_count)*2):
             text_list.append("  {}.  ".format(i + 1))
         return text_list
+
+    def get_barcode(self):
+        return self.barcodeEdit.text()
+
+    def get_tight_torque(self):
+        tight_torque_dict = {}
+        tight_torque_dict["tight_torque"] = self.tightTorqueList
+        return tight_torque_dict
+
+    def get_tight_angle(self):
+        tight_angle_dict = {}
+        tight_angle_dict["tight_angle"] = self.tightAngleList
+        return tight_angle_dict
+
+    def saveData(self):
+        serialdb.insert_productItem(barcode=self.get_barcode(),
+                                    tight_torque=self.get_tight_torque(),
+                                    tight_angle=self.get_tight_angle())
 
     def on_stopRead(self):
         self.infoLabel.setText("信息:停止串口读取数据!")
