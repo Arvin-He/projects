@@ -268,6 +268,9 @@
     <property name="text">
      <string>打开串口</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLineEdit" name="portEdit">
     <property name="geometry">
@@ -320,6 +323,9 @@
     <property name="text">
      <string>关闭串口</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
@@ -369,6 +375,9 @@
     <property name="text">
      <string>停止读取</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="startReadBtn">
     <property name="geometry">
@@ -384,6 +393,9 @@
     </property>
     <property name="text">
      <string>开始读取</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -448,9 +460,9 @@
    <widget class="QLineEdit" name="groupCountEdit">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>90</x>
       <y>40</y>
-      <width>121</width>
+      <width>120</width>
       <height>35</height>
      </rect>
     </property>
@@ -465,7 +477,7 @@
    <widget class="QPushButton" name="preBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>460</x>
       <y>30</y>
       <width>160</width>
       <height>50</height>
@@ -477,11 +489,14 @@
     <property name="text">
      <string>查看上一组</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="nextBtn">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>820</x>
       <y>30</y>
       <width>160</width>
       <height>50</height>
@@ -493,11 +508,14 @@
     <property name="text">
      <string>查看下一组</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>20</x>
       <y>40</y>
       <width>65</width>
       <height>30</height>
@@ -510,9 +528,9 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>220</x>
       <y>40</y>
-      <width>111</width>
+      <width>100</width>
       <height>35</height>
      </rect>
     </property>
@@ -520,7 +538,7 @@
      <string>( 个 / 组 )</string>
     </property>
    </widget>
-   <widget class="QLabel" name="dataPanel">
+   <widget class="QListWidget" name="dataListPanel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -531,31 +549,17 @@
     </property>
     <property name="font">
      <font>
+      <family>微软雅黑</family>
       <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="text">
-     <string>数据面板</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-    <property name="margin">
-     <number>20</number>
-    </property>
-    <property name="indent">
-     <number>5</number>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="graphPanel">
+   <widget class="QListWidget" name="productInfoPanel">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -567,30 +571,10 @@
     <property name="font">
      <font>
       <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
      </font>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="text">
-     <string>曲线面板</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-    <property name="margin">
-     <number>20</number>
-    </property>
-    <property name="indent">
-     <number>5</number>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
    </widget>
   </widget>

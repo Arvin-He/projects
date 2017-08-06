@@ -5,6 +5,7 @@ import sys
 import time
 import copy
 from datetime import datetime
+from PyQt5 import QtGui
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
@@ -13,10 +14,13 @@ import utils
 from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
+from database import db
 import serialdb
 
 
 app = QtWidgets.QApplication(sys.argv)
+colors = ['#7fc97f', '#beaed4', '#fdc086', '#ffff99',
+          '#386cb0', '#f0027f', '#bf5b17', '#666666']
 
 
 class MainWindow(QDialog, serialDlg):
@@ -32,9 +36,13 @@ class MainWindow(QDialog, serialDlg):
         self.initUI()
         self.barcodeEdit.setFocus()
         self.timer = QtCore.QTimer()
+        self.timer2 = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
-        self.showDataOnPanel()
-        self.saveData()
+        self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
+        self.showProductInfo()
+        self.timer2.start(3000)
+        # self.showDataOnPanel()
+        # self.saveData()
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -96,6 +104,10 @@ class MainWindow(QDialog, serialDlg):
         # 启动定时器
         self.timer.start(50)
 
+    def on_setFocusInBarcodeEdit(self):
+        if not self.barcodeEdit.hasFocus():
+            self.barcodeEdit.setFocus()
+
     # 定时写数据读数据
     def on_readData(self):
         if serCom.writeData():
@@ -106,6 +118,7 @@ class MainWindow(QDialog, serialDlg):
             # 去重
             self.dedupData()
             self.showData()
+            self.saveData()
         else:
             logger.info("发送指令失败,定时器关闭...")
             self.timer.stop()
@@ -128,7 +141,7 @@ class MainWindow(QDialog, serialDlg):
     # 去除重复数据
     def dedupData(self):
         if self.old_data["tightTorque"] != self.data["tightTorque"] or self.old_data["tightAngle"] != self.data[
-            "tightAngle"]:
+                "tightAngle"]:
             if len(self.tightTorqueList) >= self.group_count * 2:
                 del self.tightTorqueList[0]
                 del self.tightAngleList[0]
@@ -148,6 +161,7 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.tightTorqueEdit.setText("")
             self.tightAngleEdit.setText("")
+        self.showDataOnPanel()
 
     # 显示状态位
     def showState(self):
@@ -162,17 +176,33 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
-        format_text = self.formatText()
-        text = "\n".join(format_text)
-        self.dataPanel.setText(text)
+        header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
+        self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
+        count = len(self.tightTorqueList)
+        for i in range(count):
+            tightTorque = self.tightTorqueList[count - i - 1]
+            tightAngle = self.tightAngleList[count - i - 1]
+            item_text = "{:>16}".format(tightTorque) + "{:>25}".format(tightAngle)
+            item = QtWidgets.QListWidgetItem(item_text)
+            if i == 0:
+                item.setBackground(QtGui.QColor("#7fc97f"))
+            self.dataListPanel.addItem(item)
 
-    def formatText(self):
-        text_list = []
-        header = "拧紧力矩".rjust(12) + "拧紧角度".rjust(12)
-        text_list.append(header)
-        for i in range(int(self.group_count)*2):
-            text_list.append("  {}.  ".format(i + 1))
-        return text_list
+    def showProductInfo(self):
+        with db.getSession() as session:
+            res = serialdb.query_productItem(session)
+            header = "产品信息明细:"
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
+            product_id = "ID: {}".format(res.id)
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
+            barcode = "条形码: {}".format(res.barcode)
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
+            tightTorque = "拧紧力矩: {}".format(res.tight_torque)
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
+            tightAngle = "拧紧角度: {}".format(res.tight_angle)
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
+            date_time = "日期-时间: {}".format(res.record_date.strftime("%Y-%m-%d %H:%M:%S"))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
 
     def get_barcode(self):
         return self.barcodeEdit.text()
@@ -188,9 +218,10 @@ class MainWindow(QDialog, serialDlg):
         return tight_angle_dict
 
     def saveData(self):
-        serialdb.insert_productItem(barcode=self.get_barcode(),
-                                    tight_torque=self.get_tight_torque(),
-                                    tight_angle=self.get_tight_angle())
+        if len(self.tightTorqueList) == self.group_count * 2:
+            serialdb.insert_productItem(barcode=self.get_barcode(),
+                                        tight_torque=self.get_tight_torque(),
+                                        tight_angle=self.get_tight_angle())
 
     def on_stopRead(self):
         self.infoLabel.setText("信息:停止串口读取数据!")

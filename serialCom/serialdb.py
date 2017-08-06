@@ -6,8 +6,6 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String, Float, Text
 
 
-
-
 class SerialComTable(db.BaseModel):
     __tablename__ = "serialdata"
     id = Column(Integer, primary_key=True)
@@ -25,10 +23,11 @@ def insert_productItem(barcode=None, tight_torque=None, tight_angle=None):
     db.add(product_data)
 
 
-def query_productItem():
-    with db.getQuery(SerialComTable) as query:
-        res = query.order_by(SerialComTable.id.desc()).first()
-        return res
+def query_productItem(session):
+    res = session.query(SerialComTable).order_by(SerialComTable.id.desc()).first()
+    # with db.getQuery(SerialComTable) as query:
+        # res = query.order_by(SerialComTable.id.desc()).first()
+    return res
 
 
 def query_id():
