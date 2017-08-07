@@ -14,7 +14,6 @@ import utils
 from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
-from database import db
 import serialdb
 
 
@@ -189,20 +188,19 @@ class MainWindow(QDialog, serialDlg):
             self.dataListPanel.addItem(item)
 
     def showProductInfo(self):
-        with db.getSession() as session:
-            res = serialdb.query_productItem(session)
-            header = "产品信息明细:"
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
-            product_id = "ID: {}".format(res.id)
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
-            barcode = "条形码: {}".format(res.barcode)
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
-            tightTorque = "拧紧力矩: {}".format(res.tight_torque)
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
-            tightAngle = "拧紧角度: {}".format(res.tight_angle)
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
-            date_time = "日期-时间: {}".format(res.record_date.strftime("%Y-%m-%d %H:%M:%S"))
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
+        productInfo = serialdb.query_productInfo()
+        header = "产品信息明细:"
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
+        product_id = "产品ID:{}".format(productInfo["id"])  
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
+        barcode = "条形码:   {}".format(productInfo["barcode"])
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
+        tightTorque = "拧紧力矩:  {}".format(productInfo["tight_torque"])
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
+        tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
+        date_time = "日期-时间: {}".format(productInfo["record_date"])
+        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
 
     def get_barcode(self):
         return self.barcodeEdit.text()
