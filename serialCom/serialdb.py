@@ -43,6 +43,22 @@ def query_productInfo():
             "%Y-%m-%d %H:%M:%S") if res else None
         return product_info
 
+def query_productInfoByID(id):
+    product_info = {}
+    with db.getQuery(SerialComTable) as query:
+        res = query.get(id)
+        product_info["id"] = res.id if res else None
+        product_info["barcode"] = res.barcode if res else None
+        tight_torque_dict = json.loads(res.tight_torque) if res else None
+        product_info["tight_torque"] = tight_torque_dict["tight_torque"] if tight_torque_dict else None
+        tight_angle_dict = json.loads(res.tight_angle) if res else None
+        product_info["tight_angle"] = tight_angle_dict["tight_angle"] if res else None
+        product_info["record_date"] = res.record_date.strftime(
+            "%Y-%m-%d %H:%M:%S") if res else None
+        return product_info
+
+
+
 
 def query_id():
     with db.getQuery(SerialComTable) as query:

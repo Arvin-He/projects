@@ -477,9 +477,9 @@
    <widget class="QPushButton" name="preBtn">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>690</x>
       <y>30</y>
-      <width>160</width>
+      <width>120</width>
       <height>50</height>
      </rect>
     </property>
@@ -496,9 +496,9 @@
    <widget class="QPushButton" name="nextBtn">
     <property name="geometry">
      <rect>
-      <x>820</x>
+      <x>860</x>
       <y>30</y>
-      <width>160</width>
+      <width>120</width>
       <height>50</height>
      </rect>
     </property>
@@ -575,6 +575,19 @@
     </property>
     <property name="focusPolicy">
      <enum>Qt::NoFocus</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="currBtn">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>30</y>
+      <width>120</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>查看最新数据</string>
     </property>
    </widget>
   </widget>

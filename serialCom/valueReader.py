@@ -32,13 +32,14 @@ class MainWindow(QDialog, serialDlg):
         self.old_data = {}
         self.tightTorqueList = []
         self.tightAngleList = []
+        self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
         self.timer = QtCore.QTimer()
         self.timer2 = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
         self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
-        self.showProductInfo()
+        # self.showProductInfo()
         self.timer2.start(3000)
         # self.showDataOnPanel()
         # self.saveData()
@@ -63,6 +64,7 @@ class MainWindow(QDialog, serialDlg):
         self.portEdit.editingFinished.connect(self.on_editPortName)
         self.baudrateEdit.editingFinished.connect(self.on_editBaudrate)
         self.groupCountEdit.editingFinished.connect(self.on_editGroupCount)
+        self.currBtn.clicked.connect(self.on_showProductInfo)
         self.preBtn.clicked.connect(self.on_showPre)
         self.nextBtn.clicked.connect(self.on_showNext)
 
@@ -81,11 +83,7 @@ class MainWindow(QDialog, serialDlg):
         utils.write_config(os.path.abspath("config.ini"),
                            "group", "count", self.group_count)
 
-    def on_showPre(self):
-        pass
-
-    def on_showNext(self):
-        pass
+    
 
     def on_openCom(self):
         if serCom.openCom(self.port, self.baud_rate):
@@ -187,11 +185,30 @@ class MainWindow(QDialog, serialDlg):
                 item.setBackground(QtGui.QColor("#7fc97f"))
             self.dataListPanel.addItem(item)
 
-    def showProductInfo(self):
+    def on_showPre(self):
+        if self.productID is not None:
+            ID = self.productID -1
+            if ID > 0 :
+                productInfo = serialdb.query_productInfoByID(ID)
+                self.showInfo(productInfo)
+
+    def on_showNext(self):
+        if self.productID is not None:
+            ID = self.productID + 1
+            if ID > 0 :
+                productInfo = serialdb.query_productInfoByID(ID)
+                self.showInfo(productInfo)
+
+    def on_showProductInfo(self):
         productInfo = serialdb.query_productInfo()
+        self.showInfo(productInfo)
+
+    def showInfo(self, info):
+        productInfo = info
         header = "产品信息明细:"
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
-        product_id = "产品ID:{}".format(productInfo["id"])  
+        product_id = "产品ID:{}".format(productInfo["id"])
+        self.productID = int(productInfo["id"]) if productInfo["id"] else None
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
         barcode = "条形码:   {}".format(productInfo["barcode"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
