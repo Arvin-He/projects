@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import TypeDecorator, VARCHAR
 from sqlalchemy.sql import select, operators, text
 from sqlalchemy.ext.mutable import MutableDict
-
+from logger import logger
 
 class DataBase(object):
 
@@ -48,18 +48,18 @@ class DataBase(object):
         self._createAll()
         """Provide a transactional scope around a series of operations."""
         session = self.Session()
-        # _logger.debug("session open")
+        logger.info("session open")
         try:
             yield session
             session.commit()
-            # _logger.debug("session commit")
+            logger.info("session commit")
         except:
             session.rollback()
-            # _logger.debug("session rollback")
+            logger.info("session rollback")
             raise
         finally:
             session.close()
-            # _logger.debug("session close")
+            logger.info("session close")
 
     @contextlib.contextmanager
     def getQuery(self, *entities, **kwargs):

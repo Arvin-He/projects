@@ -4,7 +4,7 @@ import database
 from database import db
 from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String, Float, Text
-
+from logger import logger
 
 class SerialComTable(db.BaseModel):
     __tablename__ = "serialdata"
@@ -31,17 +31,22 @@ def query_productItem(session):
 
 def query_productInfo():
     product_info = {}
+    logger.info("~~~~~~~~~~~~~~~~~")
     with db.getQuery(SerialComTable) as query:
+        logger.info("11111111111111111111111")
         res = query.order_by(SerialComTable.id.desc()).first()
-        product_info["id"] = res.id if res else None
-        product_info["barcode"] = res.barcode if res else None
-        tight_torque_dict = json.loads(res.tight_torque) if res else None
+        logger.info("22222222222222222222222222")
+        # logger.info("res = ".format(res))
+        product_info["id"] = res.id if res.id else None
+        logger.info("id = ".format(product_info["id"]))
+        product_info["barcode"] = res.barcode if res.barcode else None
+        tight_torque_dict = json.loads(res.tight_torque) if res.tight_torque else None
         product_info["tight_torque"] = tight_torque_dict["tight_torque"] if tight_torque_dict else None
-        tight_angle_dict = json.loads(res.tight_angle) if res else None
-        product_info["tight_angle"] = tight_angle_dict["tight_angle"] if res else None
+        tight_angle_dict = json.loads(res.tight_angle) if res.tight_angle else None
+        product_info["tight_angle"] = tight_angle_dict["tight_angle"] if tight_angle_dict else None
         product_info["record_date"] = res.record_date.strftime(
-            "%Y-%m-%d %H:%M:%S") if res else None
-        return product_info
+            "%Y-%m-%d %H:%M:%S") if res.record_date else None
+    return product_info
 
 def query_productInfoByID(id):
     product_info = {}
@@ -55,7 +60,7 @@ def query_productInfoByID(id):
         product_info["tight_angle"] = tight_angle_dict["tight_angle"] if res else None
         product_info["record_date"] = res.record_date.strftime(
             "%Y-%m-%d %H:%M:%S") if res else None
-        return product_info
+    return product_info
 
 
 

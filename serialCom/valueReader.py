@@ -39,10 +39,7 @@ class MainWindow(QDialog, serialDlg):
         self.timer2 = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
         self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
-        # self.showProductInfo()
         self.timer2.start(3000)
-        # self.showDataOnPanel()
-        # self.saveData()
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -190,18 +187,23 @@ class MainWindow(QDialog, serialDlg):
             ID = self.productID -1
             if ID > 0 :
                 productInfo = serialdb.query_productInfoByID(ID)
-                self.showInfo(productInfo)
+                if productInfo is not None:
+                    self.showInfo(productInfo)
 
     def on_showNext(self):
         if self.productID is not None:
             ID = self.productID + 1
             if ID > 0 :
                 productInfo = serialdb.query_productInfoByID(ID)
-                self.showInfo(productInfo)
+                if productInfo is not None:
+                    self.showInfo(productInfo)
 
     def on_showProductInfo(self):
+        logger.info("xxxxxxxxxxxxxx")
         productInfo = serialdb.query_productInfo()
-        self.showInfo(productInfo)
+        logger.info(productInfo)
+        if productInfo is not None:
+            self.showInfo(productInfo)
 
     def showInfo(self, info):
         productInfo = info
