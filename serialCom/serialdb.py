@@ -1,6 +1,7 @@
 # -*- encoding:utf-8 -*-
 import json
 import database
+import sqlalchemy
 from database import db
 from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String, Float, Text

@@ -10,12 +10,15 @@ from sqlalchemy.sql import select, operators, text
 from sqlalchemy.ext.mutable import MutableDict
 from logger import logger
 
+data_dir = os.path.abspath('userdata')
+if not os.path.exists(data_dir):
+    os.mkdir(data_dir)
+
 class DataBase(object):
 
     def __init__(self, name, echo=False):
         self.name = name
-        self.path = os.path.join(os.path.abspath(
-            os.path.dirname(__file__)), self.name)
+        self.path = os.path.abspath(os.path.join(data_dir, self.name))
         url = "sqlite:///" + self.path
         # _logger.debug("engine: {}".format(url))
         self.engine = create_engine(url, echo=echo)
@@ -234,4 +237,4 @@ class DataBase(object):
 
 # sqlalchemy.JsonType = MutableDict.as_mutable(JSONEncodedDict)
 
-db = DataBase("data.db")
+db = DataBase("user_data.db")
