@@ -80,8 +80,6 @@ class MainWindow(QDialog, serialDlg):
         utils.write_config(os.path.abspath("config.ini"),
                            "group", "count", self.group_count)
 
-    
-
     def on_openCom(self):
         if serCom.openCom(self.port, self.baud_rate):
             self.infoLabel.setText("信息:串口{}打开成功!".format(self.port))
@@ -176,49 +174,51 @@ class MainWindow(QDialog, serialDlg):
         for i in range(count):
             tightTorque = self.tightTorqueList[count - i - 1]
             tightAngle = self.tightAngleList[count - i - 1]
-            item_text = "{:>16}".format(tightTorque) + "{:>25}".format(tightAngle)
+            item_text = "{:>16}".format(
+                tightTorque) + "{:>25}".format(tightAngle)
             item = QtWidgets.QListWidgetItem(item_text)
             if i == 0:
                 item.setBackground(QtGui.QColor("#7fc97f"))
             self.dataListPanel.addItem(item)
 
     def on_showPre(self):
-        if self.productID is not None:
-            ID = self.productID -1
-            if ID > 0 :
-                productInfo = serialdb.query_productInfoByID(ID)
-                if productInfo is not None:
-                    self.showInfo(productInfo)
+        self.productID -= 1
+        logger.info("pre_id = {}".format(self.productID))
+        productInfo = serialdb.query_productInfoByID(self.productID)
+        self.showInfo(productInfo)
 
     def on_showNext(self):
-        if self.productID is not None:
-            ID = self.productID + 1
-            if ID > 0 :
-                productInfo = serialdb.query_productInfoByID(ID)
-                if productInfo is not None:
-                    self.showInfo(productInfo)
+        self.productID += 1
+        logger.info("next_id = {}".format(self.productID))
+        productInfo = serialdb.query_productInfoByID(self.productID)
+        self.showInfo(productInfo)
 
     def on_showProductInfo(self):
-        logger.info("xxxxxxxxxxxxxx")
         productInfo = serialdb.query_productInfo()
         logger.info(productInfo)
-        if productInfo is not None:
-            self.showInfo(productInfo)
+        self.showInfo(productInfo)
 
-    def showInfo(self, info):
-        productInfo = info
+    def showInfo(self, productInfo):
+        self.productInfoPanel.clear()
         header = "产品信息明细:"
+        product_id = "产品ID:"
+        barcode = "条形码:"
+        tightTorque = "拧紧力矩:"
+        tightAngle = "拧紧角度:"
+        date_time = "日期-时间:"
+        if productInfo is not None:
+            product_id = "产品ID:{}".format(productInfo["id"])
+            self.productID = int(productInfo["id"])
+            barcode = "条形码:   {}".format(productInfo["barcode"])
+            tightTorque = "拧紧力矩:  {}".format(productInfo["tight_torque"])
+            tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
+            date_time = "日期-时间: {}".format(productInfo["record_date"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
-        product_id = "产品ID:{}".format(productInfo["id"])
-        self.productID = int(productInfo["id"]) if productInfo["id"] else None
+        logger.info("productID = {}".format(self.productID))
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
-        barcode = "条形码:   {}".format(productInfo["barcode"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
-        tightTorque = "拧紧力矩:  {}".format(productInfo["tight_torque"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
-        tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
-        date_time = "日期-时间: {}".format(productInfo["record_date"])
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
 
     def get_barcode(self):

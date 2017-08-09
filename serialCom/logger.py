@@ -8,9 +8,12 @@ import logging.handlers
 logger = logging.getLogger(__file__)
 logger.setLevel(logging.DEBUG)
 
+
 _logPath = os.path.abspath("log")
 if not os.path.exists("log"):
     os.mkdir("log")
+
+
 _prepend = "log-"
 _suffix = ".log"
 _logFileName = os.path.join(
@@ -24,12 +27,18 @@ fh = logging.handlers.TimedRotatingFileHandler(filename=_logFileName,
                                                backupCount=60,
                                                encoding="utf-8")
 fh.setLevel(logging.DEBUG)
+# 再创建一个handler，用于输出到控制台
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
 
 # 定义handler的输出格式
 formatter = logging.Formatter(
     '%(asctime)s %(levelname).1s %(name)s %(filename)s(%(lineno)d): %(message)s')
 fh.setFormatter(formatter)
+ch.setFormatter(formatter)
 
 
 # 给 logger 添加handler
 logger.addHandler(fh)
+logger.addHandler(ch)

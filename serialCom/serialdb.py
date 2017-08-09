@@ -6,6 +6,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String, Float, Text
 from logger import logger
 
+
 class SerialComTable(db.BaseModel):
     __tablename__ = "serialdata"
     id = Column(Integer, primary_key=True)
@@ -31,38 +32,50 @@ def query_productItem(session):
 
 def query_productInfo():
     product_info = {}
-    logger.info("~~~~~~~~~~~~~~~~~")
-    with db.getQuery(SerialComTable) as query:
-        logger.info("11111111111111111111111")
-        res = query.order_by(SerialComTable.id.desc()).first()
-        logger.info("22222222222222222222222222")
-        # logger.info("res = ".format(res))
-        product_info["id"] = res.id if res.id else None
-        logger.info("id = ".format(product_info["id"]))
-        product_info["barcode"] = res.barcode if res.barcode else None
-        tight_torque_dict = json.loads(res.tight_torque) if res.tight_torque else None
-        product_info["tight_torque"] = tight_torque_dict["tight_torque"] if tight_torque_dict else None
-        tight_angle_dict = json.loads(res.tight_angle) if res.tight_angle else None
-        product_info["tight_angle"] = tight_angle_dict["tight_angle"] if tight_angle_dict else None
-        product_info["record_date"] = res.record_date.strftime(
-            "%Y-%m-%d %H:%M:%S") if res.record_date else None
-    return product_info
+    try:
+        with db.getQuery(SerialComTable) as query:
+            res = query.order_by(SerialComTable.id.desc()).first()
+            if res is not None:
+                product_info["id"] = res.id
+                logger.info("id = ".format(product_info["id"]))
+                product_info["barcode"] = res.barcode
+                logger.info("barcode = ".format(res.barcode))
+
+                tight_torque_dict = json.loads(res.tight_torque)
+                logger.info("tight_torque = ".format(json.loads(res.tight_torque)))
+                product_info["tight_torque"] = tight_torque_dict["tight_torque"]
+                tight_angle_dict = json.loads(res.tight_angle)
+                product_info["tight_angle"] = tight_angle_dict["tight_angle"]
+                product_info["record_date"] = res.record_date.strftime(
+                    "%Y-%m-%d %H:%M:%S")
+                return product_info
+            else:
+                return None
+    except Exception as e:
+        logger.warning(e)
+        return
+
 
 def query_productInfoByID(id):
     product_info = {}
-    with db.getQuery(SerialComTable) as query:
-        res = query.get(id)
-        product_info["id"] = res.id if res else None
-        product_info["barcode"] = res.barcode if res else None
-        tight_torque_dict = json.loads(res.tight_torque) if res else None
-        product_info["tight_torque"] = tight_torque_dict["tight_torque"] if tight_torque_dict else None
-        tight_angle_dict = json.loads(res.tight_angle) if res else None
-        product_info["tight_angle"] = tight_angle_dict["tight_angle"] if res else None
-        product_info["record_date"] = res.record_date.strftime(
-            "%Y-%m-%d %H:%M:%S") if res else None
-    return product_info
-
-
+    try:
+        with db.getQuery(SerialComTable) as query:
+            res = query.get(id)
+            if res:
+                product_info["id"] = res.id
+                product_info["barcode"] = res.barcode
+                tight_torque_dict = json.loads(res.tight_torque)
+                product_info["tight_torque"] = tight_torque_dict["tight_torque"]
+                tight_angle_dict = json.loads(res.tight_angle)
+                product_info["tight_angle"] = tight_angle_dict["tight_angle"]
+                product_info["record_date"] = res.record_date.strftime(
+                    "%Y-%m-%d %H:%M:%S") if res else None
+                return product_info
+            else:
+                return None
+    except Exception as e:
+        logger.warning(e)
+        return
 
 
 def query_id():

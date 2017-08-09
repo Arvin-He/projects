@@ -48,18 +48,18 @@ class DataBase(object):
         self._createAll()
         """Provide a transactional scope around a series of operations."""
         session = self.Session()
-        logger.info("session open")
+        # logger.info("session open")
         try:
             yield session
             session.commit()
-            logger.info("session commit")
+            # logger.info("session commit")
         except:
             session.rollback()
-            logger.info("session rollback")
+            # logger.info("session rollback")
             raise
         finally:
             session.close()
-            logger.info("session close")
+            # logger.info("session close")
 
     @contextlib.contextmanager
     def getQuery(self, *entities, **kwargs):
