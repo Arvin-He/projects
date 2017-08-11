@@ -14,6 +14,7 @@ data_dir = os.path.abspath('userdata')
 if not os.path.exists(data_dir):
     os.mkdir(data_dir)
 
+
 class DataBase(object):
 
     def __init__(self, name, echo=False):

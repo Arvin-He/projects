@@ -1,10 +1,11 @@
 # -*- encoding:utf-8 -*-
 import json
-import database
 import sqlalchemy
-from database import db
 from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String, Float, Text
+
+import database
+from database import db
 from logger import logger
 
 
@@ -43,7 +44,8 @@ def query_productInfo():
                 logger.info("barcode = ".format(res.barcode))
 
                 tight_torque_dict = json.loads(res.tight_torque)
-                logger.info("tight_torque = ".format(json.loads(res.tight_torque)))
+                logger.info("tight_torque = ".format(
+                    json.loads(res.tight_torque)))
                 product_info["tight_torque"] = tight_torque_dict["tight_torque"]
                 tight_angle_dict = json.loads(res.tight_angle)
                 product_info["tight_angle"] = tight_angle_dict["tight_angle"]

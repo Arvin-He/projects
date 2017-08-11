@@ -3,6 +3,7 @@
 import sys
 from cx_Freeze import setup, Executable
 
+
 # 依赖会自动检测,但会需要微调
 build_exe_options = {
     "packages": ["sqlalchemy"],

@@ -1,4 +1,4 @@
-# usr/bin/python3
+# !usr/bin/python3
 # -*- coding:utf-8 -*-
 import os
 import sys
@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 
-import utils
+from utils import read_config, write_config
 from logger import logger, fh
 import serialComm as serCom
 from serialCom_ui import Ui_serialDlg as serialDlg
@@ -43,11 +43,11 @@ class MainWindow(QDialog, serialDlg):
 
     def initUI(self):
         self.infoLabel.setText("信息:")
-        self.port = utils.read_config(
+        self.port = read_config(
             os.path.abspath("config/config.ini"), "serial", "port")
-        self.baud_rate = utils.read_config(
+        self.baud_rate = read_config(
             os.path.abspath("config/config.ini"), "serial", "baudrate")
-        self.group_count = utils.read_config(
+        self.group_count = read_config(
             os.path.abspath("config/config.ini"), "group", "count")
 
         self.portEdit.setText(self.port)
@@ -67,17 +67,17 @@ class MainWindow(QDialog, serialDlg):
 
     def on_editPortName(self):
         self.port = self.portEdit.text()
-        utils.write_config(os.path.abspath("config/config.ini"),
+        write_config(os.path.abspath("config/config.ini"),
                            "serial", "port", self.port)
 
     def on_editBaudrate(self):
         self.baud_rate = self.baudrateEdit.text()
-        utils.write_config(os.path.abspath("config/config.ini"),
+        write_config(os.path.abspath("config/config.ini"),
                            "serial", "baudrate", self.baud_rate)
 
     def on_editGroupCount(self):
         self.group_count = self.groupCountEdit.text()
-        utils.write_config(os.path.abspath("config/config.ini"),
+        write_config(os.path.abspath("config/config.ini"),
                            "group", "count", self.group_count)
 
     def on_openCom(self):
