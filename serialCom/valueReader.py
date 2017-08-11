@@ -44,11 +44,11 @@ class MainWindow(QDialog, serialDlg):
     def initUI(self):
         self.infoLabel.setText("信息:")
         self.port = utils.read_config(
-            os.path.abspath("config.ini"), "serial", "port")
+            os.path.abspath("config/config.ini"), "serial", "port")
         self.baud_rate = utils.read_config(
-            os.path.abspath("config.ini"), "serial", "baudrate")
+            os.path.abspath("config/config.ini"), "serial", "baudrate")
         self.group_count = utils.read_config(
-            os.path.abspath("config.ini"), "group", "count")
+            os.path.abspath("config/config.ini"), "group", "count")
 
         self.portEdit.setText(self.port)
         self.baudrateEdit.setText(self.baud_rate)
@@ -67,17 +67,17 @@ class MainWindow(QDialog, serialDlg):
 
     def on_editPortName(self):
         self.port = self.portEdit.text()
-        utils.write_config(os.path.abspath("config.ini"),
+        utils.write_config(os.path.abspath("config/config.ini"),
                            "serial", "port", self.port)
 
     def on_editBaudrate(self):
         self.baud_rate = self.baudrateEdit.text()
-        utils.write_config(os.path.abspath("config.ini"),
+        utils.write_config(os.path.abspath("config/config.ini"),
                            "serial", "baudrate", self.baud_rate)
 
     def on_editGroupCount(self):
         self.group_count = self.groupCountEdit.text()
-        utils.write_config(os.path.abspath("config.ini"),
+        utils.write_config(os.path.abspath("config/config.ini"),
                            "group", "count", self.group_count)
 
     def on_openCom(self):

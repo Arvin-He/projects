@@ -3,6 +3,7 @@
 __pycache__/
 dist/
 log/
+build/
 *.exe
 *.csv
 *.db
