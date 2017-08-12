@@ -57,11 +57,11 @@ Section "Installer Section"
 	SetOutPath $INSTDIR
     ; 主要是拷贝需要的文件,包括依赖,图标,配置文件等等,一般程序会事先打包到一个目录下,如build\exe.win-amd64-3.6\下
 	File /r "..\build\exe.win-amd64-3.6\*"
-	File /r "..\userdata\"
-	File "..\config\"
-	File /r "..\log\"
-	File "..\res\favor.ico"
-	File "..\res\uninst.ico"
+	File /r "..\serialcom\userdata\"
+	File /r "..\serialcom\config\"
+	File /r "..\serialcom\log\"
+	File "favor.ico"
+	File "uninst.ico"
 
 	WriteUninstaller "uninstall.exe"
 

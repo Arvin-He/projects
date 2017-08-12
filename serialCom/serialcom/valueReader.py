@@ -17,7 +17,6 @@ from serialCom_ui import Ui_serialDlg as serialDlg
 import serialdb
 
 
-app = QtWidgets.QApplication(sys.argv)
 colors = ['#7fc97f', '#beaed4', '#fdc086', '#ffff99',
           '#386cb0', '#f0027f', '#bf5b17', '#666666']
 
@@ -26,6 +25,7 @@ class MainWindow(QDialog, serialDlg):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
+        # self.ui = loadUi(self, ":../serialCom.ui")
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
         self.data = {}
@@ -68,17 +68,17 @@ class MainWindow(QDialog, serialDlg):
     def on_editPortName(self):
         self.port = self.portEdit.text()
         write_config(os.path.abspath("config/config.ini"),
-                           "serial", "port", self.port)
+                     "serial", "port", self.port)
 
     def on_editBaudrate(self):
         self.baud_rate = self.baudrateEdit.text()
         write_config(os.path.abspath("config/config.ini"),
-                           "serial", "baudrate", self.baud_rate)
+                     "serial", "baudrate", self.baud_rate)
 
     def on_editGroupCount(self):
         self.group_count = self.groupCountEdit.text()
         write_config(os.path.abspath("config/config.ini"),
-                           "group", "count", self.group_count)
+                     "group", "count", self.group_count)
 
     def on_openCom(self):
         if serCom.openCom(self.port, self.baud_rate):
@@ -132,8 +132,8 @@ class MainWindow(QDialog, serialDlg):
 
     # 去除重复数据
     def dedupData(self):
-        if self.old_data["tightTorque"] != self.data["tightTorque"] or self.old_data["tightAngle"] != self.data[
-                "tightAngle"]:
+        if self.old_data["tightTorque"] != self.data["tightTorque"] or \
+                self.old_data["tightAngle"] != self.data["tightAngle"]:
             if len(self.tightTorqueList) >= self.group_count * 2:
                 del self.tightTorqueList[0]
                 del self.tightAngleList[0]
@@ -251,11 +251,3 @@ class MainWindow(QDialog, serialDlg):
         fh.flush()
         fh.close()
         self.close()
-        app.closeAllWindows()
-
-
-if __name__ == "__main__":
-    mainWin = MainWindow()
-    mainWinRect = mainWin.geometry()
-    mainWin.setFixedSize(mainWinRect.size())
-    mainWin.exec_()

@@ -1,10 +1,9 @@
 .vscode/
 .idea/
-app/__pycache__/
-__pycache__/
-dist/
-log/
-build/
+serialcom/__pycache__/
+serialcom/log/
+serialcom/build/
 *.exe
 *.csv
 *.db
+*.pyc

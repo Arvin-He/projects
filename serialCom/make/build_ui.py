@@ -4,9 +4,9 @@ import sys
 import subprocess
 
 
-inputFile = os.path.abspath(os.path.join("../res", "serialCom.ui"))
+inputFile = os.path.abspath(os.path.join("../serialcom/res", "serialCom.ui"))
 print("input file ={}".format(inputFile))
-outputFile = os.path.abspath("../serialCom_ui.py")
+outputFile = os.path.abspath("../serialcom/serialCom_ui.py")
 print("output file ={}".format(outputFile))
 try:
     # py3.4.3
