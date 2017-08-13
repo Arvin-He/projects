@@ -2,7 +2,7 @@
 import serial
 import binascii
 
-from logger import logger
+from log import logger
 
 ser = None
 

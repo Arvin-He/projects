@@ -4,7 +4,7 @@
 import sys
 from PyQt5 import QtGui
 from PyQt5 import QtCore, QtWidgets
-from valueReader import MainWindow
+from valuereader import MainWindow
 
 app = QtWidgets.QApplication(sys.argv)
 

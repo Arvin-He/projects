@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, DateTime, String, Float, Text
 
 import database
 from database import db
-from logger import logger
+from log import logger
 
 
 class SerialComTable(db.BaseModel):

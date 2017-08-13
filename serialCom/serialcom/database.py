@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import TypeDecorator, VARCHAR
 from sqlalchemy.sql import select, operators, text
 from sqlalchemy.ext.mutable import MutableDict
-from logger import logger
+from log import logger
 
 data_dir = os.path.abspath('userdata')
 if not os.path.exists(data_dir):
@@ -216,26 +216,5 @@ class DataBase(object):
     def metadata(self):
         return self.BaseModel.metadata
 
-
-# class JSONEncodedDict(TypeDecorator):
-#     impl = VARCHAR
-
-#     def coerce_compared_value(self, op, value):
-#         if op in (operators.like_op, operators.notlike_op):
-#             return String()
-#         else:
-#             return self
-
-#     def process_bind_param(self, value, dialect):
-#         if value is not None:
-#             value = json.dumps(value)
-#         return value
-
-#     def process_result_value(self, value, dialect):
-#         if value is not None:
-#             value = json.loads(value)
-#         return value
-
-# sqlalchemy.JsonType = MutableDict.as_mutable(JSONEncodedDict)
 
 db = DataBase("user_data.db")

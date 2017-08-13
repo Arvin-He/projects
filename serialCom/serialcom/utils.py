@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import configparser
-from logger import logger
+from log import logger
 
 
 # 读配置文件

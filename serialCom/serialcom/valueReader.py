@@ -11,9 +11,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 
 from utils import read_config, write_config
-from logger import logger, fh
-import serialComm as serCom
-from serialCom_ui import Ui_serialDlg as serialDlg
+from log import logger, fh
+import serialcom as serCom
+from serialcom_ui import Ui_serialDlg as serialDlg
 import serialdb
 
 
