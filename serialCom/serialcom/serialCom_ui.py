@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'F:\projects\serialCom\res\serialCom.ui'
+# Form implementation generated from reading ui file 'C:\Users\jun.he\Documents\github\projects\serialCom\serialcom\res\serialcom.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.1
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -70,7 +70,7 @@ class Ui_serialDlg(object):
         self.tightAngleEdit.setReadOnly(True)
         self.tightAngleEdit.setObjectName("tightAngleEdit")
         self.label_4 = QtWidgets.QLabel(self.groupBox)
-        self.label_4.setGeometry(QtCore.QRect(20, 180, 111, 35))
+        self.label_4.setGeometry(QtCore.QRect(20, 180, 105, 35))
         self.label_4.setObjectName("label_4")
         self.label_10 = QtWidgets.QLabel(self.groupBox)
         self.label_10.setGeometry(QtCore.QRect(20, 230, 110, 35))
@@ -214,7 +214,7 @@ class Ui_serialDlg(object):
         self.label.setText(_translate("serialDlg", "接收信息(Hex):"))
         self.label_2.setText(_translate("serialDlg", "整合数值(int):"))
         self.label_3.setText(_translate("serialDlg", "拧紧力矩(N.m):"))
-        self.label_4.setText(_translate("serialDlg", "拧紧角度(degree):"))
+        self.label_4.setText(_translate("serialDlg", "拧紧角度(度):"))
         self.label_10.setText(_translate("serialDlg", "拧紧状态:"))
         self.groupBox_2.setTitle(_translate("serialDlg", "串口设置:"))
         self.openBtn.setText(_translate("serialDlg", "打开串口"))

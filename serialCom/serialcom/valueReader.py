@@ -27,6 +27,7 @@ class MainWindow(QDialog, serialDlg):
         # self.ui = loadUi(self, ":../serialCom.ui")
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
+        self.com_state = False
         self.data = {}
         self.old_data = {}
         self.tightTorqueList = []
@@ -80,7 +81,8 @@ class MainWindow(QDialog, serialDlg):
                      "group", "count", self.group_count)
 
     def on_openCom(self):
-        if serCom.openCom(self.port, self.baud_rate):
+        self.com_state = serCom.openCom(self.port, self.baud_rate)
+        if self.com_state is True:
             self.infoLabel.setText("信息:串口{}打开成功!".format(self.port))
         else:
             self.infoLabel.setText("信息:串口{}打开失败!".format(self.port))
@@ -92,8 +94,20 @@ class MainWindow(QDialog, serialDlg):
             self.infoLabel.setText("信息:串口没有打开,不需要关闭!")
 
     def on_startRead(self):
-        # 启动定时器
-        self.timer.start(50)
+        if self.com_state is True:
+            self.infoLabel.setText("信息:开始读取串口数据...")
+            # 启动定时器
+            self.timer.start(50)
+        else:
+            self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
+
+    def on_stopRead(self):
+        if self.com_state is True:
+            self.infoLabel.setText("信息:停止串口读取数据...")
+            # 关掉定时器
+            self.timer.stop()
+        else:
+            self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
     def on_setFocusInBarcodeEdit(self):
         if not self.barcodeEdit.hasFocus():
@@ -239,10 +253,7 @@ class MainWindow(QDialog, serialDlg):
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
 
-    def on_stopRead(self):
-        self.infoLabel.setText("信息:停止串口读取数据!")
-        # 关掉定时器
-        self.timer.stop()
+    
 
     def done(self, result):
         super(MainWindow, self).done(result)
