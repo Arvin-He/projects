@@ -216,15 +216,26 @@
      <rect>
       <x>290</x>
       <y>230</y>
-      <width>30</width>
-      <height>30</height>
+      <width>40</width>
+      <height>35</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string/>
+     <string>OK</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -588,6 +599,9 @@
     </property>
     <property name="text">
      <string>查看最新数据</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

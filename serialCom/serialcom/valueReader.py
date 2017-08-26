@@ -35,11 +35,12 @@ class MainWindow(QDialog, serialDlg):
         self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
+
         self.timer = QtCore.QTimer()
         self.timer2 = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
         self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
-        self.timer2.start(3000)
+        self.timer2.start(5000)
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -94,12 +95,16 @@ class MainWindow(QDialog, serialDlg):
             self.infoLabel.setText("信息:串口没有打开,不需要关闭!")
 
     def on_startRead(self):
-        if self.com_state is True:
-            self.infoLabel.setText("信息:开始读取串口数据...")
-            # 启动定时器
-            self.timer.start(50)
-        else:
-            self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
+        try:
+            if self.com_state is True:
+                self.infoLabel.setText("信息:开始读取串口数据...")
+                # 启动定时器
+                self.timer.start(50)
+            else:
+                self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
+        except BaseException as e:
+            print(e)
+            return
 
     def on_stopRead(self):
         if self.com_state is True:
@@ -115,18 +120,24 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        if serCom.writeData():
-            time.sleep(0.005)
-            # 在获取新数据前保存上一次的值
-            self.old_data = copy.deepcopy(self.data)
-            self.getData()
-            # 去重
-            self.dedupData()
-            self.showData()
-            self.saveData()
-        else:
-            logger.info("发送指令失败,定时器关闭...")
-            self.timer.stop()
+        try:
+            if serCom.writeData():
+                time.sleep(0.005)
+                # 在获取新数据前保存上一次的值
+                self.old_data = copy.deepcopy(self.data)
+                # print(self.old_data)
+                self.getData()
+                # print(self.data)
+                # 去重
+                # self.dedupData()
+                # self.showData()
+                # self.saveData()
+            else:
+                logger.info("发送指令失败,定时器关闭...")
+                self.timer.stop()
+        except BaseException as e:
+            print(e)
+            return
 
     # 读取串口数据,并提取数据
     def getData(self):
@@ -171,12 +182,15 @@ class MainWindow(QDialog, serialDlg):
     # 显示状态位
     def showState(self):
         if self.data["flagBit"] == "2":
+            self.flagBitLabel.setText("OK")
             self.flagBitLabel.setStyleSheet(
-                "QLabel{background-color: green;}")
+                "QLabel{color: green; background-color: black;}")
         elif self.data["flagBit"] == "3":
+            self.flagBitLabel.setText("NG")
             self.flagBitLabel.setStyleSheet(
-                "QLabel{background-color: red;}")
+                "QLabel{color: red; background-color: black;}")
         else:
+            self.flagBitLabel.setText("")
             self.flagBitLabel.setStyleSheet(
                 "QLabel{background-color: transparent;}")
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\jun.he\Documents\github\projects\serialCom\serialcom\res\serialcom.ui'
+# Form implementation generated from reading ui file 'F:\projects\serialCom\serialcom\res\serialcom.ui'
 #
 # Created by: PyQt5 UI code generator 5.9
 #
@@ -86,9 +86,15 @@ class Ui_serialDlg(object):
         self.flagBitEdit.setReadOnly(True)
         self.flagBitEdit.setObjectName("flagBitEdit")
         self.flagBitLabel = QtWidgets.QLabel(self.groupBox)
-        self.flagBitLabel.setGeometry(QtCore.QRect(290, 230, 30, 30))
-        self.flagBitLabel.setStyleSheet("")
-        self.flagBitLabel.setText("")
+        self.flagBitLabel.setGeometry(QtCore.QRect(290, 230, 40, 35))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.flagBitLabel.setFont(font)
+        self.flagBitLabel.setStyleSheet("color: rgb(0, 255, 0);\n"
+"background-color: rgb(0, 0, 0);")
+        self.flagBitLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.flagBitLabel.setObjectName("flagBitLabel")
         self.groupBox_2 = QtWidgets.QGroupBox(serialDlg)
         self.groupBox_2.setGeometry(QtCore.QRect(570, 10, 440, 175))
@@ -202,6 +208,7 @@ class Ui_serialDlg(object):
         self.productInfoPanel.setObjectName("productInfoPanel")
         self.currBtn = QtWidgets.QPushButton(self.groupBox_4)
         self.currBtn.setGeometry(QtCore.QRect(470, 20, 120, 50))
+        self.currBtn.setAutoDefault(False)
         self.currBtn.setObjectName("currBtn")
 
         self.retranslateUi(serialDlg)
@@ -216,6 +223,7 @@ class Ui_serialDlg(object):
         self.label_3.setText(_translate("serialDlg", "拧紧力矩(N.m):"))
         self.label_4.setText(_translate("serialDlg", "拧紧角度(度):"))
         self.label_10.setText(_translate("serialDlg", "拧紧状态:"))
+        self.flagBitLabel.setText(_translate("serialDlg", "OK"))
         self.groupBox_2.setTitle(_translate("serialDlg", "串口设置:"))
         self.openBtn.setText(_translate("serialDlg", "打开串口"))
         self.label_7.setText(_translate("serialDlg", "COM端口:"))

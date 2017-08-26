@@ -11,7 +11,7 @@ def openCom(port, baud_rate):
     global ser
     if ser is None:
         try:
-            ser = serial.Serial(port, baud_rate)
+            ser = serial.Serial(port, baud_rate, timeout=1)
         except serial.serialutil.SerialException as e:
             logger.error("串口{}打开失败! 错误:{}".format(port, e))
             return False
@@ -33,24 +33,31 @@ def closeCom():
 
 
 def writeData():
+    
     global ser
-    if ser and ser.is_open:
-        ser.reset_input_buffer()
-        # 16进制转bytes
-        data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
-        ser.write(data)
-        return True
-    else:
-        logger.info("串口没有打开!")
-        return False
+    try:
+        if ser and ser.is_open:
+            ser.reset_input_buffer()
+            # 16进制转bytes
+            data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
+            ser.write(data)
+            return True
+        else:
+            logger.info("串口没有打开!")
+            return False
+    except BaseException as e:
+        print(e)
+        raise e
 
 
 # 读取字节并转换成16进制字符串
 def readData():
+    print("xxxxxxxxxxxxx ")
     global ser
     if ser and ser.is_open:
         try:
             data = ser.read(13)
+            print("data = ", data)
             # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
             # 将bytes的内容转16进制表示的bytes
             data2 = binascii.hexlify(data)

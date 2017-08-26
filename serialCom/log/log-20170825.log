@@ -1,0 +1,4 @@
+2017-08-25 19:03:30,908 I F:\projects\serialCom\serialcom\log.py utils.py(15): read_config F:\projects\serialCom\config\config.ini serial port [Errno 2] No such file or directory: 'F:\\projects\\serialCom\\config\\config.ini'
+2017-08-25 19:03:30,909 I F:\projects\serialCom\serialcom\log.py utils.py(15): read_config F:\projects\serialCom\config\config.ini serial baudrate [Errno 2] No such file or directory: 'F:\\projects\\serialCom\\config\\config.ini'
+2017-08-25 19:03:30,910 I F:\projects\serialCom\serialcom\log.py utils.py(15): read_config F:\projects\serialCom\config\config.ini group count [Errno 2] No such file or directory: 'F:\\projects\\serialCom\\config\\config.ini'
+2017-08-25 19:03:34,100 I F:\projects\serialCom\serialcom\log.py valuereader.py(260): close application
