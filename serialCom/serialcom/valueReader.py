@@ -129,9 +129,9 @@ class MainWindow(QDialog, serialDlg):
                 self.getData()
                 # print(self.data)
                 # 去重
-                # self.dedupData()
-                # self.showData()
-                # self.saveData()
+                self.dedupData()
+                self.showData()
+                self.saveData()
             else:
                 logger.info("发送指令失败,定时器关闭...")
                 self.timer.stop()
@@ -156,14 +156,15 @@ class MainWindow(QDialog, serialDlg):
 
     # 去除重复数据
     def dedupData(self):
+        self.tightTorqueList.append(self.data["tightTorque"])
+        self.tightAngleList.append(self.data["tightAngle"])
+
         if self.old_data["tightTorque"] != self.data["tightTorque"] or \
                 self.old_data["tightAngle"] != self.data["tightAngle"]:
             if len(self.tightTorqueList) >= self.group_count * 2:
                 del self.tightTorqueList[0]
                 del self.tightAngleList[0]
-            self.tightTorqueList.append(self.data["tightTorque"])
-            self.tightAngleList.append(self.data["tightAngle"])
-
+            
     # 显示数据
     def showData(self):
         self.recvHexEdit.setText(self.data["recev"])
@@ -196,8 +197,10 @@ class MainWindow(QDialog, serialDlg):
 
     def showDataOnPanel(self):
         header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
-        self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
+        if self.dataListPanel.item(0) is None:
+            self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
         count = len(self.tightTorqueList)
+        print("COUNT = ", count)
         for i in range(count):
             tightTorque = self.tightTorqueList[count - i - 1]
             tightAngle = self.tightAngleList[count - i - 1]
