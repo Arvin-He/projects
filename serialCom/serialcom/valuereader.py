@@ -158,13 +158,16 @@ class MainWindow(QDialog, serialDlg):
     def dedupData(self):
         self.tightTorqueList.append(self.data["tightTorque"])
         self.tightAngleList.append(self.data["tightAngle"])
+        count = len(self.tightTorqueList)
+        if self.old_data["tightTorque"] == self.data["tightTorque"] and \
+                self.old_data["tightAngle"] == self.data["tightAngle"]:
+            del self.tightTorqueList[count - 1]
+            del self.tightAngleList[count - 1]
 
-        if self.old_data["tightTorque"] != self.data["tightTorque"] or \
-                self.old_data["tightAngle"] != self.data["tightAngle"]:
-            if len(self.tightTorqueList) >= self.group_count * 2:
-                del self.tightTorqueList[0]
-                del self.tightAngleList[0]
-            
+        if len(self.tightTorqueList) > int(self.group_count) * 2:
+            del self.tightTorqueList[0]
+            del self.tightAngleList[0]
+
     # 显示数据
     def showData(self):
         self.recvHexEdit.setText(self.data["recev"])
@@ -196,6 +199,7 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
+        self.dataListPanel.clear()
         header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
         if self.dataListPanel.item(0) is None:
             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
@@ -269,8 +273,6 @@ class MainWindow(QDialog, serialDlg):
             serialdb.insert_productItem(barcode=self.get_barcode(),
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
-
-    
 
     def done(self, result):
         super(MainWindow, self).done(result)
