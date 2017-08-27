@@ -269,7 +269,7 @@ class MainWindow(QDialog, serialDlg):
         return tight_angle_dict
 
     def saveData(self):
-        if len(self.tightTorqueList) == self.group_count * 2:
+        if len(self.tightTorqueList) == int(self.group_count) * 2:
             serialdb.insert_productItem(barcode=self.get_barcode(),
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
