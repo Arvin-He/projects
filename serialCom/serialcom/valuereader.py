@@ -32,6 +32,7 @@ class MainWindow(QDialog, serialDlg):
         self.old_data = {}
         self.tightTorqueList = []
         self.tightAngleList = []
+        self.isNewItem = True
         self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
@@ -156,17 +157,25 @@ class MainWindow(QDialog, serialDlg):
 
     # 去除重复数据
     def dedupData(self):
+        count = len(self.tightTorqueList)
+        # 4个螺丝一组,显示8个值,满8个数值就清空
+        if count == int(self.group_count) * 2:
+            self.isNewItem = True
+            self.tightTorqueList.clear()
+            self.tightAngleList.clear()
+        else:
+            self.isNewItem = False
+        # 去重,每50ms读取一次值,取用新值,删除旧值
         self.tightTorqueList.append(self.data["tightTorque"])
         self.tightAngleList.append(self.data["tightAngle"])
-        count = len(self.tightTorqueList)
         if self.old_data["tightTorque"] == self.data["tightTorque"] and \
                 self.old_data["tightAngle"] == self.data["tightAngle"]:
             del self.tightTorqueList[count - 1]
             del self.tightAngleList[count - 1]
 
-        if len(self.tightTorqueList) > int(self.group_count) * 2:
-            del self.tightTorqueList[0]
-            del self.tightAngleList[0]
+        # if len(self.tightTorqueList) > int(self.group_count) * 2:
+        #     del self.tightTorqueList[0]
+        #     del self.tightAngleList[0]
 
     # 显示数据
     def showData(self):
@@ -200,8 +209,8 @@ class MainWindow(QDialog, serialDlg):
 
     def showDataOnPanel(self):
         self.dataListPanel.clear()
-        header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
         if self.dataListPanel.item(0) is None:
+            header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
         count = len(self.tightTorqueList)
         print("COUNT = ", count)
@@ -269,8 +278,12 @@ class MainWindow(QDialog, serialDlg):
         return tight_angle_dict
 
     def saveData(self):
-        if len(self.tightTorqueList) == int(self.group_count) * 2:
+        if self.isNewItem:
             serialdb.insert_productItem(barcode=self.get_barcode(),
+                                        tight_torque=self.get_tight_torque(),
+                                        tight_angle=self.get_tight_angle())
+        else:
+            serialdb.update_productItem(barcode=self.get_barcode(),
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
 

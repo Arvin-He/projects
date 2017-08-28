@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'F:\projects\serialCom\serialcom\res\serialcom.ui'
+# Form implementation generated from reading ui file 'C:\Users\aron\AppData\Roaming\aronWorkSpace\arvinGithub\projects\serialCom\serialcom\res\serialcom.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 

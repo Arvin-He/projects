@@ -26,6 +26,17 @@ def insert_productItem(barcode=None, tight_torque=None, tight_angle=None):
     db.add(product_data)
 
 
+def update_productItem(barcode=None, tight_torque=None, tight_angle=None):
+    with db.getQuery(SerialComTable) as query:
+        res = query.order_by(SerialComTable.id.desc()).first()
+        # assert res is not None
+        if res:
+            res.barcode = barcode
+            res.tight_torque = json.dumps(tight_torque)
+            res.tight_angle = json.dumps(tight_angle)
+            res.record_date = datetime.now()
+
+
 def query_productItem(session):
     res = session.query(SerialComTable).order_by(
         SerialComTable.id.desc()).first()
