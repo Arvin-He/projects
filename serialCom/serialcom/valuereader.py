@@ -40,8 +40,11 @@ class MainWindow(QDialog, serialDlg):
         self.timer = QtCore.QTimer()
         self.timer2 = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
-        self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
-        self.timer2.start(5000)
+
+        self.timer2.timeout.connect(self.on_readBarcode)
+        self.timer2.start(100)
+        # self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
+        # self.timer2.start(5000)
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -114,6 +117,13 @@ class MainWindow(QDialog, serialDlg):
             self.timer.stop()
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
+
+    def on_readBarcode(self):
+        barcode = sys.stdin.readline().strip()
+        if len(barcode) == 16:
+            if self.barcodeEdit.text() is not None:
+                self.barcodeEdit.setText("")
+            self.barcodeEdit.setText(barcode)
 
     def on_setFocusInBarcodeEdit(self):
         if not self.barcodeEdit.hasFocus():
