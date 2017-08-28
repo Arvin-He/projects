@@ -3,6 +3,8 @@ import os
 import sys
 import time
 import copy
+import threading
+from io import StringIO
 from datetime import datetime
 from PyQt5 import QtGui
 from PyQt5 import QtCore, QtWidgets
@@ -27,6 +29,8 @@ class MainWindow(QDialog, serialDlg):
         # self.ui = loadUi(self, ":../serialCom.ui")
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
+        # self.buff =StringIO()
+        # sys.stdout = self.buff
         self.com_state = False
         self.data = {}
         self.old_data = {}
@@ -36,13 +40,16 @@ class MainWindow(QDialog, serialDlg):
         self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
+        self.init_text = ""
 
-        self.timer = QtCore.QTimer()
-        self.timer2 = QtCore.QTimer()
+        self.timer = QtCore.QTimer()      
         self.timer.timeout.connect(self.on_readData)
 
+        self.timer2 = QtCore.QTimer()
         self.timer2.timeout.connect(self.on_readBarcode)
-        self.timer2.start(100)
+        self.timer2.start(1000)
+        # self.t1 = threading.Thread(target=self.start_read_barcode)
+        # self.t1.start()
         # self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
         # self.timer2.start(5000)
 
@@ -110,6 +117,17 @@ class MainWindow(QDialog, serialDlg):
             print(e)
             return
 
+    def start_read_barcode(self):
+        self.on_readBarcode()
+        # self.timer2.start(100)
+
+        # while 1:
+        #     line = sys.stdin.readline().rstrip()
+        #     if line:
+        #         if self.barcodeEdit.text() is not None:
+        #         self.barcodeEdit.setText("")
+        #         self.barcodeEdit.setText(barcode)
+
     def on_stopRead(self):
         if self.com_state is True:
             self.infoLabel.setText("信息:停止串口读取数据...")
@@ -119,11 +137,45 @@ class MainWindow(QDialog, serialDlg):
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
     def on_readBarcode(self):
-        barcode = sys.stdin.readline().strip()
-        if len(barcode) == 16:
-            if self.barcodeEdit.text() is not None:
-                self.barcodeEdit.setText("")
-            self.barcodeEdit.setText(barcode)
+        if not self.barcodeEdit.hasFocus():
+            self.barcodeEdit.setFocus()
+        if len(self.barcodeEdit.text()) 
+        # if self.barcodeEdit.text():
+        #     fulltext = self.barcodeEdit.text()
+        #     print(fulltext)
+        #     subtext = fulltext[(len(self.barcodeEdit.text())/2-1):-1]
+        #     print(subtext)
+        #     self.barcodeEdit.setText(subtext)
+
+        # if self.init_text != self.barcodeEdit.text():
+            # self.init_text = self.barcodeEdit.text().replace(self.init_text, "")
+        # self.barcodeEdit.setText(self.init_text)
+        # text_len = len(self.barcodeEdit.text())
+        # if self.barcodeEdit.text() is not None:
+            # text_len2 = len(self.barcodeEdit.text())
+
+        # while 1:
+        # print("xxxxxx")
+        # if sys.stdin.buffer.readable()
+        # print(a)
+        # print(a)
+        # while 1:
+            # print(self.buff)
+            # barcode = sys.stdin.readline()
+            # ss = sys.stdout.readline()
+            # barcode2 = sys.stdout.write(barcode)
+            # print(barcode2)
+            # if barcode2:
+                # if self.barcodeEdit.text() is not None:
+                #     self.barcodeEdit.setText("")
+                # self.barcodeEdit.setText(barcode2)
+        # barcode = sys.stdin.readline().rstrip()
+        # barcode = sys.stdin.readline().rstrip()
+        
+        # if len(barcode) == 16:
+        #     if self.barcodeEdit.text() is not None:
+        #         self.barcodeEdit.setText("")
+        #     self.barcodeEdit.setText(barcode)
 
     def on_setFocusInBarcodeEdit(self):
         if not self.barcodeEdit.hasFocus():
