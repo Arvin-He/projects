@@ -25,6 +25,7 @@ def closeCom():
     global ser
     if ser and ser.is_open:
         ser.close()
+        ser = None
         logger.info("串口关闭!")
         return True
     else:
