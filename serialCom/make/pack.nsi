@@ -56,7 +56,9 @@ Section "Installer Section"
 	
 	SetOutPath $INSTDIR
     ; 主要是拷贝需要的文件,包括依赖,图标,配置文件等等,一般程序会事先打包到一个目录下,如build\exe.win-amd64-3.6\下
-	File /r "..\serialcom\build\exe.win32-3.6\*"
+	;File /r "..\serialcom\build\exe.win32-3.6\*"
+	File /r "..\serialcom\build\exe.win32-3.4\*"
+	
 	File /r "..\serialcom\config"
 	;File /r "..\serialcom\userdata"
 	;File /r "..\serialcom\log"
@@ -64,8 +66,8 @@ Section "Installer Section"
 	File "uninst.ico"
 
 	WriteUninstaller "uninstall.exe"
-
-  ;CreateShortCut "$SMSTARTUP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" 
+    ; 设置开机启动
+    CreateShortCut "$SMSTARTUP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" 
 
 	CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
 	CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\卸载 ${PRODUCT_NAME}.lnk" "$INSTDIR\Uninstall.exe"

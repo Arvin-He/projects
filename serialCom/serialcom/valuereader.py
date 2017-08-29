@@ -47,7 +47,7 @@ class MainWindow(QDialog, serialDlg):
 
         self.timer2 = QtCore.QTimer()
         self.timer2.timeout.connect(self.on_readBarcode)
-        self.timer2.start(1000)
+        self.timer2.start(3000)
         # self.t1 = threading.Thread(target=self.start_read_barcode)
         # self.t1.start()
         # self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
@@ -139,7 +139,12 @@ class MainWindow(QDialog, serialDlg):
     def on_readBarcode(self):
         if not self.barcodeEdit.hasFocus():
             self.barcodeEdit.setFocus()
-        if len(self.barcodeEdit.text()) 
+        if len(self.barcodeEdit.text()) != 21:
+            if len(self.barcodeEdit.text()) > 21:
+                # 截取最后21位字符串
+                self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
+            else:
+                self.barcodeEdit.setText("")
         # if self.barcodeEdit.text():
         #     fulltext = self.barcodeEdit.text()
         #     print(fulltext)
