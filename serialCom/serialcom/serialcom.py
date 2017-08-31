@@ -7,16 +7,22 @@ from log import logger
 ser = None
 
 
-def openCom(port, baud_rate):
+def openCom(port, baud_rate, time_out):
     global ser
     if ser is None:
         try:
-            ser = serial.Serial(port, baud_rate, timeout=1)
+            ser = serial.Serial(port, baud_rate, timeout=time_out)
         except serial.serialutil.SerialException as e:
             logger.error("串口{}打开失败! 错误:{}".format(port, e))
             return False
     else:
-        logger.info("{}串口已经被打开!".format(port))
+        if ser and ser.is_open:
+            logger.info("{}串口已经被打开!".format(port))
+            return True
+        else:
+            logger.error("{}串口错误,请关闭软件并检查串口!".format(port))
+            ser = None
+            return False
     logger.info("{}串口打开成功!".format(port))
     return True
 
@@ -29,46 +35,35 @@ def closeCom():
         logger.info("串口关闭!")
         return True
     else:
-        logger.info("串口没有打开,不需要关闭!")
+        logger.warning("串口没有打开,不需要关闭!")
         return False
 
 
 def writeData():
-    
     global ser
-    try:
-        if ser and ser.is_open:
-            ser.reset_input_buffer()
-            # 16进制转bytes
-            data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
-            ser.write(data)
-            return True
-        else:
-            logger.info("串口没有打开!")
-            return False
-    except BaseException as e:
-        print(e)
-        raise e
+    if ser and ser.is_open:
+        ser.reset_input_buffer()
+        # 16进制转bytes
+        data = bytes.fromhex('53 07 01 01 04 30 02 64 45')
+        ser.write(data)
+        return True
+    else:
+        logger.error("串口没有打开!")
+        return False
 
 
 # 读取字节并转换成16进制字符串
 def readData():
-    print("xxxxxxxxxxxxx ")
     global ser
     if ser and ser.is_open:
-        try:
-            data = ser.read(13)
-            print("data = ", data)
-            # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
-            # 将bytes的内容转16进制表示的bytes
-            data2 = binascii.hexlify(data)
-            # 将bytes转字符串,并返回
-            return data2.decode('utf-8')
-        except Exception as e:
-            logger.error("read data failed, {}".format(e))
-            return
+        data = ser.read(13)
+        # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
+        # 将bytes的内容转16进制表示的bytes
+        data2 = binascii.hexlify(data)
+        # 将bytes转字符串,并返回
+        return data2.decode('utf-8')
     else:
-        logger.info("串口没有打开!")
+        logger.error("串口没有打开!")
         return None
 
 
@@ -111,4 +106,3 @@ def getTightAngle(data):
         return data2
     else:
         logger.error("getTightAngle wrong data, data = {}".format(data))
-

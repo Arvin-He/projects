@@ -3,8 +3,6 @@ import os
 import sys
 import time
 import copy
-import threading
-from io import StringIO
 from datetime import datetime
 from PyQt5 import QtGui
 from PyQt5 import QtCore, QtWidgets
@@ -26,12 +24,9 @@ class MainWindow(QDialog, serialDlg):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        # self.ui = loadUi(self, ":../serialCom.ui")
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
-        # self.buff =StringIO()
-        # sys.stdout = self.buff
-        self.com_state = False
+        self.com_open = False
         self.data = {}
         self.old_data = {}
         self.tightTorqueList = []
@@ -40,9 +35,9 @@ class MainWindow(QDialog, serialDlg):
         self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
-        self.init_text = ""
+        # self.init_text = ""
 
-        self.timer = QtCore.QTimer()      
+        self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
 
         self.timer2 = QtCore.QTimer()
@@ -59,6 +54,8 @@ class MainWindow(QDialog, serialDlg):
             os.path.abspath("config/config.ini"), "serial", "port")
         self.baud_rate = read_config(
             os.path.abspath("config/config.ini"), "serial", "baudrate")
+        self.time_out = read_config(
+            os.path.abspath("config/config.ini"), "serial", "timeout")
         self.group_count = read_config(
             os.path.abspath("config/config.ini"), "group", "count")
 
@@ -93,46 +90,32 @@ class MainWindow(QDialog, serialDlg):
                      "group", "count", self.group_count)
 
     def on_openCom(self):
-        self.com_state = serCom.openCom(self.port, self.baud_rate)
-        if self.com_state is True:
+        self.com_open = serCom.openCom(
+            self.port, self.baud_rate, int(self.time_out))
+        if self.com_open is True:
             self.infoLabel.setText("信息:串口{}打开成功!".format(self.port))
         else:
             self.infoLabel.setText("信息:串口{}打开失败!".format(self.port))
 
     def on_closeCom(self):
         if serCom.closeCom():
-            self.infoLabel.setText("信息:串口关闭!")
+            self.infoLabel.setText("信息:串口{}关闭!".format(self.port))
         else:
-            self.infoLabel.setText("信息:串口没有打开,不需要关闭!")
+            self.infoLabel.setText("信息:串口{}没有打开,不需要关闭!".format(self.port))
 
     def on_startRead(self):
-        try:
-            if self.com_state is True:
-                self.infoLabel.setText("信息:开始读取串口数据...")
-                # 启动定时器
-                self.timer.start(50)
-            else:
-                self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
-        except BaseException as e:
-            print(e)
-            return
-
-    def start_read_barcode(self):
-        self.on_readBarcode()
-        # self.timer2.start(100)
-
-        # while 1:
-        #     line = sys.stdin.readline().rstrip()
-        #     if line:
-        #         if self.barcodeEdit.text() is not None:
-        #         self.barcodeEdit.setText("")
-        #         self.barcodeEdit.setText(barcode)
+        if self.com_open is True:
+            self.infoLabel.setText("信息:开始读取串口数据...")
+            # 启动定时器
+            self.timer.start(50)
+        else:
+            self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
     def on_stopRead(self):
-        if self.com_state is True:
-            self.infoLabel.setText("信息:停止串口读取数据...")
+        if self.com_open is True:
             # 关掉定时器
             self.timer.stop()
+            self.infoLabel.setText("信息:停止串口{}读取数据...".format(self.port))
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
@@ -145,42 +128,6 @@ class MainWindow(QDialog, serialDlg):
                 self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
             else:
                 self.barcodeEdit.setText("")
-        # if self.barcodeEdit.text():
-        #     fulltext = self.barcodeEdit.text()
-        #     print(fulltext)
-        #     subtext = fulltext[(len(self.barcodeEdit.text())/2-1):-1]
-        #     print(subtext)
-        #     self.barcodeEdit.setText(subtext)
-
-        # if self.init_text != self.barcodeEdit.text():
-            # self.init_text = self.barcodeEdit.text().replace(self.init_text, "")
-        # self.barcodeEdit.setText(self.init_text)
-        # text_len = len(self.barcodeEdit.text())
-        # if self.barcodeEdit.text() is not None:
-            # text_len2 = len(self.barcodeEdit.text())
-
-        # while 1:
-        # print("xxxxxx")
-        # if sys.stdin.buffer.readable()
-        # print(a)
-        # print(a)
-        # while 1:
-            # print(self.buff)
-            # barcode = sys.stdin.readline()
-            # ss = sys.stdout.readline()
-            # barcode2 = sys.stdout.write(barcode)
-            # print(barcode2)
-            # if barcode2:
-                # if self.barcodeEdit.text() is not None:
-                #     self.barcodeEdit.setText("")
-                # self.barcodeEdit.setText(barcode2)
-        # barcode = sys.stdin.readline().rstrip()
-        # barcode = sys.stdin.readline().rstrip()
-        
-        # if len(barcode) == 16:
-        #     if self.barcodeEdit.text() is not None:
-        #         self.barcodeEdit.setText("")
-        #     self.barcodeEdit.setText(barcode)
 
     def on_setFocusInBarcodeEdit(self):
         if not self.barcodeEdit.hasFocus():
@@ -188,24 +135,20 @@ class MainWindow(QDialog, serialDlg):
 
     # 定时写数据读数据
     def on_readData(self):
-        try:
-            if serCom.writeData():
-                time.sleep(0.005)
-                # 在获取新数据前保存上一次的值
-                self.old_data = copy.deepcopy(self.data)
-                # print(self.old_data)
-                self.getData()
-                # print(self.data)
-                # 去重
-                self.dedupData()
-                self.showData()
-                self.saveData()
-            else:
-                logger.info("发送指令失败,定时器关闭...")
-                self.timer.stop()
-        except BaseException as e:
-            print(e)
-            return
+        if serCom.writeData():
+            time.sleep(0.005)
+            # 在获取新数据前保存上一次的值
+            self.old_data = copy.deepcopy(self.data)
+            # print(self.old_data)
+            self.getData()
+            # print(self.data)
+            # 去重
+            self.dedupData()
+            self.showData()
+            self.saveData()
+        else:
+            logger.info("发送指令失败,定时器关闭...")
+            self.timer.stop()
 
     # 读取串口数据,并提取数据
     def getData(self):
@@ -233,16 +176,13 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.isNewItem = False
         # 去重,每50ms读取一次值,取用新值,删除旧值
-        self.tightTorqueList.append(self.data["tightTorque"])
-        self.tightAngleList.append(self.data["tightAngle"])
+        if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
+            self.tightTorqueList.append(self.data["tightTorque"])
+            self.tightAngleList.append(self.data["tightAngle"])
         if self.old_data["tightTorque"] == self.data["tightTorque"] and \
                 self.old_data["tightAngle"] == self.data["tightAngle"]:
             del self.tightTorqueList[count - 1]
             del self.tightAngleList[count - 1]
-
-        # if len(self.tightTorqueList) > int(self.group_count) * 2:
-        #     del self.tightTorqueList[0]
-        #     del self.tightAngleList[0]
 
     # 显示数据
     def showData(self):
@@ -332,7 +272,11 @@ class MainWindow(QDialog, serialDlg):
         self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
 
     def get_barcode(self):
-        return self.barcodeEdit.text()
+        barcode = self.barcodeEdit.text()
+        if len(barcode) == 21:
+            return barcode
+        else:
+            return ""
 
     def get_tight_torque(self):
         tight_torque_dict = {}

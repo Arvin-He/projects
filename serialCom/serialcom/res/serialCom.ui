@@ -28,15 +28,22 @@
      <height>281</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>数据信息:</string>
    </property>
    <widget class="QLineEdit" name="recvHexEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>180</x>
       <y>30</y>
-      <width>391</width>
+      <width>350</width>
       <height>35</height>
      </rect>
     </property>
@@ -59,9 +66,16 @@
      <rect>
       <x>20</x>
       <y>30</y>
-      <width>110</width>
+      <width>155</width>
       <height>35</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>接收信息(Hex):</string>
@@ -70,7 +84,7 @@
    <widget class="QLineEdit" name="transValEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>180</x>
       <y>80</y>
       <width>150</width>
       <height>35</height>
@@ -95,9 +109,16 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>110</width>
+      <width>155</width>
       <height>35</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>整合数值(int):</string>
@@ -106,7 +127,7 @@
    <widget class="QLineEdit" name="tightTorqueEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>180</x>
       <y>130</y>
       <width>150</width>
       <height>35</height>
@@ -131,9 +152,16 @@
      <rect>
       <x>20</x>
       <y>130</y>
-      <width>110</width>
+      <width>155</width>
       <height>35</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>拧紧力矩(N.m):</string>
@@ -142,7 +170,7 @@
    <widget class="QLineEdit" name="tightAngleEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>180</x>
       <y>180</y>
       <width>150</width>
       <height>35</height>
@@ -167,9 +195,16 @@
      <rect>
       <x>20</x>
       <y>180</y>
-      <width>105</width>
+      <width>155</width>
       <height>35</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>拧紧角度(度):</string>
@@ -180,9 +215,16 @@
      <rect>
       <x>20</x>
       <y>230</y>
-      <width>110</width>
+      <width>155</width>
       <height>35</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>拧紧状态:</string>
@@ -191,7 +233,7 @@
    <widget class="QLineEdit" name="flagBitEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>180</x>
       <y>230</y>
       <width>151</width>
       <height>35</height>
@@ -214,15 +256,15 @@
    <widget class="QLabel" name="flagBitLabel">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>230</y>
-      <width>40</width>
-      <height>35</height>
+      <x>340</x>
+      <y>180</y>
+      <width>85</width>
+      <height>85</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>50</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -248,13 +290,20 @@ background-color: rgb(0, 0, 0);</string>
      <height>175</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>串口设置:</string>
    </property>
    <widget class="QPushButton" name="openBtn">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>220</x>
       <y>30</y>
       <width>100</width>
       <height>40</height>
@@ -273,9 +322,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="portEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>100</x>
       <y>32</y>
-      <width>120</width>
+      <width>110</width>
       <height>35</height>
      </rect>
     </property>
@@ -298,7 +347,7 @@ background-color: rgb(0, 0, 0);</string>
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>65</width>
+      <width>85</width>
       <height>35</height>
      </rect>
     </property>
@@ -309,7 +358,7 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="closeBtn">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>220</x>
       <y>80</y>
       <width>100</width>
       <height>40</height>
@@ -330,7 +379,7 @@ background-color: rgb(0, 0, 0);</string>
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>65</width>
+      <width>85</width>
       <height>35</height>
      </rect>
     </property>
@@ -341,9 +390,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="baudrateEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>100</x>
       <y>82</y>
-      <width>120</width>
+      <width>110</width>
       <height>35</height>
      </rect>
     </property>
@@ -419,15 +468,22 @@ background-color: rgb(0, 0, 0);</string>
      <height>91</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>条形码扫描:</string>
    </property>
    <widget class="QLineEdit" name="barcodeEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>89</x>
       <y>30</y>
-      <width>350</width>
+      <width>341</width>
       <height>40</height>
      </rect>
     </property>
@@ -447,7 +503,7 @@ background-color: rgb(0, 0, 0);</string>
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>65</width>
+      <width>71</width>
       <height>40</height>
      </rect>
     </property>
@@ -465,13 +521,20 @@ background-color: rgb(0, 0, 0);</string>
      <height>451</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>数据显示:</string>
    </property>
    <widget class="QLineEdit" name="groupCountEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>120</x>
       <y>30</y>
       <width>120</width>
       <height>35</height>
@@ -488,9 +551,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="preBtn">
     <property name="geometry">
      <rect>
-      <x>690</x>
+      <x>679</x>
       <y>20</y>
-      <width>120</width>
+      <width>131</width>
       <height>50</height>
      </rect>
     </property>
@@ -507,9 +570,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="nextBtn">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>849</x>
       <y>20</y>
-      <width>120</width>
+      <width>131</width>
       <height>50</height>
      </rect>
     </property>
@@ -539,9 +602,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>250</x>
       <y>30</y>
-      <width>100</width>
+      <width>151</width>
       <height>35</height>
      </rect>
     </property>
@@ -591,9 +654,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="currBtn">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>459</x>
       <y>20</y>
-      <width>120</width>
+      <width>141</width>
       <height>50</height>
      </rect>
     </property>
