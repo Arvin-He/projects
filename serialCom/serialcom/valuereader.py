@@ -27,15 +27,17 @@ class MainWindow(QDialog, serialDlg):
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
         self.com_open = False
-        self.data = {}
-        self.old_data = {}
+        self.data = {"recev": None, "trans": None, "process": None,
+                     "flagBit": None, "tightTorque": None, "tightAngle": None}
+        self.old_data = {"recev": None, "trans": None, "process": None,
+                     "flagBit": None, "tightTorque": None, "tightAngle": None}
         self.tightTorqueList = []
         self.tightAngleList = []
+        self.flagBitList = []
         self.isNewItem = True
         self.productID = 0
         self.initUI()
         self.barcodeEdit.setFocus()
-        # self.init_text = ""
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
@@ -139,9 +141,7 @@ class MainWindow(QDialog, serialDlg):
             time.sleep(0.005)
             # 在获取新数据前保存上一次的值
             self.old_data = copy.deepcopy(self.data)
-            # print(self.old_data)
             self.getData()
-            # print(self.data)
             # 去重
             self.dedupData()
             self.showData()
@@ -173,21 +173,24 @@ class MainWindow(QDialog, serialDlg):
             self.isNewItem = True
             self.tightTorqueList.clear()
             self.tightAngleList.clear()
+            self.flagBitList.clear()
         else:
             self.isNewItem = False
         # 去重,每50ms读取一次值,取用新值,删除旧值
         if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
             self.tightTorqueList.append(self.data["tightTorque"])
             self.tightAngleList.append(self.data["tightAngle"])
-        if self.old_data["tightTorque"] == self.data["tightTorque"] and \
-                self.old_data["tightAngle"] == self.data["tightAngle"]:
-            del self.tightTorqueList[count - 1]
-            del self.tightAngleList[count - 1]
+            self.flagBitList.append(self.data["flagBit"])
+            if self.old_data and self.old_data["tightTorque"] == self.data["tightTorque"] and \
+                    self.old_data["tightAngle"] == self.data["tightAngle"]:
+                del self.tightTorqueList[count - 1]
+                del self.tightAngleList[count - 1]
+                del self.flagBitList[count - 1]
 
     # 显示数据
     def showData(self):
         self.recvHexEdit.setText(self.data["recev"])
-        self.transValEdit.setText(self.data["trans"])
+        self.transValEdit.setText(self.data["process"])
         self.flagBitEdit.setText(self.data["flagBit"])
         # 显示状态位
         self.showState()
@@ -217,15 +220,15 @@ class MainWindow(QDialog, serialDlg):
     def showDataOnPanel(self):
         self.dataListPanel.clear()
         if self.dataListPanel.item(0) is None:
-            header = "拧紧力矩".rjust(16) + "拧紧角度".rjust(16)
+            header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
         count = len(self.tightTorqueList)
-        print("COUNT = ", count)
         for i in range(count):
             tightTorque = self.tightTorqueList[count - i - 1]
             tightAngle = self.tightAngleList[count - i - 1]
-            item_text = "{:>16}".format(
-                tightTorque) + "{:>25}".format(tightAngle)
+            flagBit = self.flagBitList[count - i - 1]
+            item_text = "{:>12}".format(
+                tightTorque) + "{:>20}".format(tightAngle) + "{:>28}".format(flagBit)
             item = QtWidgets.QListWidgetItem(item_text)
             if i == 0:
                 item.setBackground(QtGui.QColor("#7fc97f"))

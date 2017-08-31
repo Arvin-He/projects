@@ -75,13 +75,16 @@ def transformData(data):
         data2 = data[14:22]
         data3 = reversed([data2[i:i + 2] for i in range(0, len(data2), 2)])
         return "".join(data3)
-
+    else:
+        return None
 
 # 将16进制的字符串转换成10进制字符串
 def processData(data):
     if data:
         data2 = str(int(data, 16)).zfill(8)
         return data2
+    else:
+        return None
 
 
 def getFlagBit(data):
@@ -89,6 +92,7 @@ def getFlagBit(data):
         return data[0]
     else:
         logger.error("getFlagBit wrong data, data = {}".format(data))
+        return None
 
 
 def getTightTorque(data):
@@ -98,6 +102,7 @@ def getTightTorque(data):
         return "{:.3f}".format(data3)
     else:
         logger.error("getTightTorque wrong data, data = {}".format(data))
+        return None       
 
 
 def getTightAngle(data):
@@ -106,3 +111,4 @@ def getTightAngle(data):
         return data2
     else:
         logger.error("getTightAngle wrong data, data = {}".format(data))
+        return None
