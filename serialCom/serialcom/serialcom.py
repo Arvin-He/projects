@@ -98,7 +98,10 @@ def getFlagBit(data):
 def getTightTorque(data):
     if data and len(data) > 5:
         data2 = data[1:5]
-        data3 = int(data2) * 0.001
+        if int(data2) in range(0, 2000):
+            data3 = int(data2) * 0.01
+        else:
+            data3 = int(data2) * 0.001
         return "{:.3f}".format(data3)
     else:
         logger.error("getTightTorque wrong data, data = {}".format(data))

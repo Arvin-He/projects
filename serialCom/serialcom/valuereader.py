@@ -30,7 +30,7 @@ class MainWindow(QDialog, serialDlg):
         self.data = {"recev": None, "trans": None, "process": None,
                      "flagBit": None, "tightTorque": None, "tightAngle": None}
         self.old_data = {"recev": None, "trans": None, "process": None,
-                     "flagBit": None, "tightTorque": None, "tightAngle": None}
+                         "flagBit": None, "tightTorque": None, "tightAngle": None}
         self.tightTorqueList = []
         self.tightAngleList = []
         self.flagBitList = []
@@ -181,14 +181,25 @@ class MainWindow(QDialog, serialDlg):
             self.isNewItem = False
         # 去重,每50ms读取一次值,取用新值,删除旧值
         if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
-            self.tightTorqueList.append(self.data["tightTorque"])
-            self.tightAngleList.append(self.data["tightAngle"])
-            self.flagBitList.append(self.data["flagBit"])
-            if self.old_data and self.old_data["tightTorque"] == self.data["tightTorque"] and \
-                    self.old_data["tightAngle"] == self.data["tightAngle"]:
-                del self.tightTorqueList[count - 1]
-                del self.tightAngleList[count - 1]
-                del self.flagBitList[count - 1]
+            if self.old_data["tightTorque"] is None and self.old_data["tightAngle"] is None:
+                self.tightTorqueList.append(self.data["tightTorque"])
+                self.tightAngleList.append(self.data["tightAngle"])
+                self.flagBitList.append(self.data["flagBit"])
+            else:
+                if not (self.old_data["tightTorque"] == self.data["tightTorque"] and
+                        self.old_data["tightAngle"] == self.data["tightAngle"]):
+                    self.tightTorqueList.append(self.data["tightTorque"])
+                    self.tightAngleList.append(self.data["tightAngle"])
+                    self.flagBitList.append(self.data["flagBit"])
+
+            # self.tightTorqueList.append(self.data["tightTorque"])
+            # self.tightAngleList.append(self.data["tightAngle"])
+            # self.flagBitList.append(self.data["flagBit"])
+            # if self.old_data and self.old_data["tightTorque"] == self.data["tightTorque"] and \
+            #         self.old_data["tightAngle"] == self.data["tightAngle"]:
+            #     del self.tightTorqueList[count - 1]
+            #     del self.tightAngleList[count - 1]
+            #     del self.flagBitList[count - 1]
 
     # 显示数据
     def showData(self):
@@ -230,8 +241,8 @@ class MainWindow(QDialog, serialDlg):
             tightTorque = self.tightTorqueList[count - i - 1]
             tightAngle = self.tightAngleList[count - i - 1]
             flagBit = self.flagBitList[count - i - 1]
-            item_text = "{:>12}".format(
-                tightTorque) + "{:>20}".format(tightAngle) + "{:>28}".format(flagBit)
+            item_text = "{:>11}".format(
+                tightTorque) + "{:>20}".format(tightAngle) + "{:>22}".format(flagBit)
             item = QtWidgets.QListWidgetItem(item_text)
             if i == 0:
                 item.setBackground(QtGui.QColor("#7fc97f"))
@@ -269,13 +280,16 @@ class MainWindow(QDialog, serialDlg):
             tightTorque = "拧紧力矩:  {}".format(productInfo["tight_torque"])
             tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
             date_time = "日期-时间: {}".format(productInfo["record_date"])
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
-        logger.info("productID = {}".format(self.productID))
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
-        self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
+            # logger.info("productID = {}".format(self.productID))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
+        else:
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
+
 
     def get_barcode(self):
         barcode = self.barcodeEdit.text()
