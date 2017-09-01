@@ -36,6 +36,7 @@ class MainWindow(QDialog, serialDlg):
         self.flagBitList = []
         self.isNewItem = True
         self.productID = 0
+        self.isBoth = True
         self.initUI()
         self.barcodeEdit.setFocus()
 
@@ -45,10 +46,6 @@ class MainWindow(QDialog, serialDlg):
         self.timer2 = QtCore.QTimer()
         self.timer2.timeout.connect(self.on_readBarcode)
         self.timer2.start(3000)
-        # self.t1 = threading.Thread(target=self.start_read_barcode)
-        # self.t1.start()
-        # self.timer2.timeout.connect(self.on_setFocusInBarcodeEdit)
-        # self.timer2.start(5000)
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -75,8 +72,7 @@ class MainWindow(QDialog, serialDlg):
         self.currBtn.clicked.connect(self.on_showProductInfo)
         self.preBtn.clicked.connect(self.on_showPre)
         self.nextBtn.clicked.connect(self.on_showNext)
-        self.leftRadioBtn.clicked.connect(self.on_setLeft)
-        self.rightRadioBtn.clicked.connect(self.on_setRight)
+        self.singleRadioBtn.clicked.connect(self.on_setSingle)
         self.bothRadioBtn.clicked.connect(self.on_setBoth)
 
     def on_editPortName(self):
@@ -125,18 +121,21 @@ class MainWindow(QDialog, serialDlg):
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
     def on_readBarcode(self):
-        if not self.barcodeEdit.hasFocus():
-            self.barcodeEdit.setFocus()
-        if len(self.barcodeEdit.text()) != 21:
-            if len(self.barcodeEdit.text()) > 21:
-                # 截取最后21位字符串
-                self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
-            else:
-                self.barcodeEdit.setText("")
+        if self.isBoth:
+            pass
+        else:
+            if not self.barcodeEdit.hasFocus():
+                self.barcodeEdit.setFocus()
+            if len(self.barcodeEdit.text()) != 21:
+                if len(self.barcodeEdit.text()) > 21:
+                    # 截取最后21位字符串
+                    self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
+                else:
+                    self.barcodeEdit.setText("")
 
-    def on_setFocusInBarcodeEdit(self):
-        if not self.barcodeEdit.hasFocus():
-            self.barcodeEdit.setFocus()
+    # def on_setFocusInBarcodeEdit(self):
+    #     if not self.barcodeEdit.hasFocus():
+    #         self.barcodeEdit.setFocus()
 
     # 定时写数据读数据
     def on_readData(self):
@@ -192,15 +191,6 @@ class MainWindow(QDialog, serialDlg):
                     self.tightAngleList.append(self.data["tightAngle"])
                     self.flagBitList.append(self.data["flagBit"])
 
-            # self.tightTorqueList.append(self.data["tightTorque"])
-            # self.tightAngleList.append(self.data["tightAngle"])
-            # self.flagBitList.append(self.data["flagBit"])
-            # if self.old_data and self.old_data["tightTorque"] == self.data["tightTorque"] and \
-            #         self.old_data["tightAngle"] == self.data["tightAngle"]:
-            #     del self.tightTorqueList[count - 1]
-            #     del self.tightAngleList[count - 1]
-            #     del self.flagBitList[count - 1]
-
     # 显示数据
     def showData(self):
         self.recvHexEdit.setText(self.data["recev"])
@@ -244,25 +234,31 @@ class MainWindow(QDialog, serialDlg):
             item_text = "{:>11}".format(
                 tightTorque) + "{:>20}".format(tightAngle) + "{:>22}".format(flagBit)
             item = QtWidgets.QListWidgetItem(item_text)
-            if i == 0:
+            if i in range(0, 2):
                 item.setBackground(QtGui.QColor("#7fc97f"))
+            elif i in range(2, 4):
+                item.setBackground(QtGui.QColor("#beaed4"))
+            elif i in range(4, 6):
+                item.setBackground(QtGui.QColor("#fdc086"))
+            elif i in range(6, 8):
+                item.setBackground(QtGui.QColor("#ffff99"))
             self.dataListPanel.addItem(item)
 
     def on_showPre(self):
         self.productID -= 1
-        logger.info("pre_id = {}".format(self.productID))
+        # logger.info("pre_id = {}".format(self.productID))
         productInfo = serialdb.query_productInfoByID(self.productID)
         self.showInfo(productInfo)
 
     def on_showNext(self):
         self.productID += 1
-        logger.info("next_id = {}".format(self.productID))
+        # logger.info("next_id = {}".format(self.productID))
         productInfo = serialdb.query_productInfoByID(self.productID)
         self.showInfo(productInfo)
 
     def on_showProductInfo(self):
         productInfo = serialdb.query_productInfo()
-        logger.info(productInfo)
+        # logger.info(productInfo)
         self.showInfo(productInfo)
 
     def showInfo(self, productInfo):
@@ -293,7 +289,7 @@ class MainWindow(QDialog, serialDlg):
 
     def get_barcode(self):
         barcode = self.barcodeEdit.text()
-        if len(barcode) == 21:
+        if len(barcode) == 21 or len(barcode) == 18:
             return barcode
         else:
             return ""
@@ -318,19 +314,15 @@ class MainWindow(QDialog, serialDlg):
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
 
-    def on_setLeft(self):
-        self.leftRadioBtn.setChecked(True)
+    def on_setSingle(self):
+        self.isBoth = False
+        self.singleRadioBtn.setChecked(True)
         self.barcodeEdit.setEnabled(True)
         self.barcodeEdit_2.setEnabled(False)
         self.barcodeEdit.setFocus()
 
-    def on_setRight(self):
-        self.rightRadioBtn.setChecked(True)
-        self.barcodeEdit.setEnabled(False)
-        self.barcodeEdit_2.setEnabled(True)
-        self.barcodeEdit_2.setFocus()
-
     def on_setBoth(self):
+        self.isBoth = True
         self.bothRadioBtn.setChecked(True)
         self.barcodeEdit.setEnabled(True)
         self.barcodeEdit_2.setEnabled(True)
