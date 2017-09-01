@@ -22,9 +22,9 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>10</y>
-     <width>541</width>
+     <width>501</width>
      <height>281</height>
     </rect>
    </property>
@@ -41,9 +41,9 @@
    <widget class="QLineEdit" name="recvHexEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>30</y>
-      <width>350</width>
+      <width>310</width>
       <height>35</height>
      </rect>
     </property>
@@ -64,7 +64,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>30</y>
       <width>155</width>
       <height>35</height>
@@ -84,9 +84,9 @@
    <widget class="QLineEdit" name="transValEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>80</y>
-      <width>150</width>
+      <width>310</width>
       <height>35</height>
      </rect>
     </property>
@@ -107,7 +107,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>80</y>
       <width>155</width>
       <height>35</height>
@@ -127,9 +127,9 @@
    <widget class="QLineEdit" name="tightTorqueEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>130</y>
-      <width>150</width>
+      <width>310</width>
       <height>35</height>
      </rect>
     </property>
@@ -150,7 +150,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>130</y>
       <width>155</width>
       <height>35</height>
@@ -170,9 +170,9 @@
    <widget class="QLineEdit" name="tightAngleEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>180</y>
-      <width>150</width>
+      <width>210</width>
       <height>35</height>
      </rect>
     </property>
@@ -193,7 +193,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>180</y>
       <width>155</width>
       <height>35</height>
@@ -213,7 +213,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>230</y>
       <width>155</width>
       <height>35</height>
@@ -233,9 +233,9 @@
    <widget class="QLineEdit" name="flagBitEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>230</y>
-      <width>151</width>
+      <width>210</width>
       <height>35</height>
      </rect>
     </property>
@@ -256,7 +256,7 @@
    <widget class="QLabel" name="flagBitLabel">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>395</x>
       <y>180</y>
       <width>85</width>
       <height>85</height>
@@ -284,10 +284,10 @@ background-color: rgb(0, 0, 0);</string>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>519</x>
      <y>10</y>
-     <width>440</width>
-     <height>175</height>
+     <width>491</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="font">
@@ -303,9 +303,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="openBtn">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>240</x>
       <y>30</y>
-      <width>100</width>
+      <width>110</width>
       <height>40</height>
      </rect>
     </property>
@@ -322,9 +322,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="portEdit">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>110</x>
       <y>32</y>
-      <width>110</width>
+      <width>120</width>
       <height>35</height>
      </rect>
     </property>
@@ -358,9 +358,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="closeBtn">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>240</x>
       <y>80</y>
-      <width>100</width>
+      <width>110</width>
       <height>40</height>
      </rect>
     </property>
@@ -390,9 +390,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="baudrateEdit">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>110</x>
       <y>82</y>
-      <width>110</width>
+      <width>120</width>
       <height>35</height>
      </rect>
     </property>
@@ -410,9 +410,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="stopReadBtn">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>370</x>
       <y>80</y>
-      <width>100</width>
+      <width>110</width>
       <height>40</height>
      </rect>
     </property>
@@ -429,9 +429,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="startReadBtn">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>370</x>
       <y>30</y>
-      <width>100</width>
+      <width>110</width>
       <height>40</height>
      </rect>
     </property>
@@ -445,27 +445,14 @@ background-color: rgb(0, 0, 0);</string>
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="infoLabel">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>130</y>
-      <width>420</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>信息:</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>200</y>
-     <width>441</width>
-     <height>91</height>
+     <x>520</x>
+     <y>230</y>
+     <width>491</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="font">
@@ -481,9 +468,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="barcodeEdit">
     <property name="geometry">
      <rect>
-      <x>89</x>
+      <x>100</x>
       <y>30</y>
-      <width>341</width>
+      <width>380</width>
       <height>40</height>
      </rect>
     </property>
@@ -503,22 +490,55 @@ background-color: rgb(0, 0, 0);</string>
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>71</width>
+      <width>85</width>
       <height>40</height>
      </rect>
     </property>
     <property name="text">
-     <string>条形码:</string>
+     <string>条形码1:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="barcodeEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>380</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>85</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>条形码2:</string>
     </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>300</y>
-     <width>991</width>
-     <height>451</height>
+     <width>501</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="font">
@@ -534,9 +554,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QLineEdit" name="groupCountEdit">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>170</x>
       <y>30</y>
-      <width>120</width>
+      <width>181</width>
       <height>35</height>
      </rect>
     </property>
@@ -548,12 +568,176 @@ background-color: rgb(0, 0, 0);</string>
      </font>
     </property>
    </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>35</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>螺丝拧紧数目:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>30</y>
+      <width>121</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>( 个 / 组 )</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="dataListPanel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>461</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>14</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="infoLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>720</y>
+     <width>991</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>信息:</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_5">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>150</y>
+     <width>491</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="title">
+    <string>工位选择:</string>
+   </property>
+   <widget class="QRadioButton" name="leftRadioBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>左工位</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rightRadioBtn">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>30</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>右工位</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="bothRadioBtn">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>30</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>双工位</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_6">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>370</y>
+     <width>491</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="title">
+    <string>数据查看:</string>
+   </property>
+   <widget class="QListWidget" name="productInfoPanel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>351</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+   </widget>
    <widget class="QPushButton" name="preBtn">
     <property name="geometry">
      <rect>
-      <x>679</x>
-      <y>20</y>
-      <width>131</width>
+      <x>370</x>
+      <y>150</y>
+      <width>110</width>
       <height>50</height>
      </rect>
     </property>
@@ -570,9 +754,9 @@ background-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="nextBtn">
     <property name="geometry">
      <rect>
-      <x>849</x>
-      <y>20</y>
-      <width>131</width>
+      <x>370</x>
+      <y>270</y>
+      <width>110</width>
       <height>50</height>
      </rect>
     </property>
@@ -586,82 +770,17 @@ background-color: rgb(0, 0, 0);</string>
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>85</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>设置螺丝分组:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>30</y>
-      <width>151</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>( 个 / 组 )</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="dataListPanel">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>80</y>
-      <width>421</width>
-      <height>361</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>微软雅黑</family>
-      <pointsize>14</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="productInfoPanel">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>80</y>
-      <width>521</width>
-      <height>361</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-   </widget>
    <widget class="QPushButton" name="currBtn">
     <property name="geometry">
      <rect>
-      <x>459</x>
-      <y>20</y>
-      <width>141</width>
+      <x>370</x>
+      <y>40</y>
+      <width>110</width>
       <height>50</height>
      </rect>
     </property>
     <property name="text">
-     <string>查看最新数据</string>
+     <string>查看数据</string>
     </property>
     <property name="autoDefault">
      <bool>false</bool>
