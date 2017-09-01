@@ -267,6 +267,7 @@ class Ui_serialDlg(object):
         self.rightRadioBtn.setObjectName("rightRadioBtn")
         self.bothRadioBtn = QtWidgets.QRadioButton(self.groupBox_5)
         self.bothRadioBtn.setGeometry(QtCore.QRect(360, 30, 120, 30))
+        self.bothRadioBtn.setChecked(True)
         self.bothRadioBtn.setObjectName("bothRadioBtn")
         self.groupBox_6 = QtWidgets.QGroupBox(serialDlg)
         self.groupBox_6.setGeometry(QtCore.QRect(520, 370, 491, 341))

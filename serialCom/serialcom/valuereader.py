@@ -75,6 +75,9 @@ class MainWindow(QDialog, serialDlg):
         self.currBtn.clicked.connect(self.on_showProductInfo)
         self.preBtn.clicked.connect(self.on_showPre)
         self.nextBtn.clicked.connect(self.on_showNext)
+        self.leftRadioBtn.clicked.connect(self.on_setLeft)
+        self.rightRadioBtn.clicked.connect(self.on_setRight)
+        self.bothRadioBtn.clicked.connect(self.on_setBoth)
 
     def on_editPortName(self):
         self.port = self.portEdit.text()
@@ -300,6 +303,24 @@ class MainWindow(QDialog, serialDlg):
             serialdb.update_productItem(barcode=self.get_barcode(),
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
+
+    def on_setLeft(self):
+        self.leftRadioBtn.setChecked(True)
+        self.barcodeEdit.setEnabled(True)
+        self.barcodeEdit_2.setEnabled(False)
+        self.barcodeEdit.setFocus()
+
+    def on_setRight(self):
+        self.rightRadioBtn.setChecked(True)
+        self.barcodeEdit.setEnabled(False)
+        self.barcodeEdit_2.setEnabled(True)
+        self.barcodeEdit_2.setFocus()
+
+    def on_setBoth(self):
+        self.bothRadioBtn.setChecked(True)
+        self.barcodeEdit.setEnabled(True)
+        self.barcodeEdit_2.setEnabled(True)
+        self.barcodeEdit.setFocus()
 
     def done(self, result):
         super(MainWindow, self).done(result)
