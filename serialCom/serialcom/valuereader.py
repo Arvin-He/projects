@@ -27,18 +27,13 @@ class MainWindow(QDialog, serialDlg):
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
         self.com_open = False
-        self.data = {"recev": None, "trans": None, "process": None,
-                     "flagBit": None, "tightTorque": None, "tightAngle": None}
-        self.old_data = {"recev": None, "trans": None, "process": None,
-                         "flagBit": None, "tightTorque": None, "tightAngle": None}
-        self.tightTorqueList = []
-        self.tightAngleList = []
-        self.flagBitList = []
+        self.data = None
+        self.dataList = []
         self.isNewItem = True
         self.productID = 0
-        self.isBoth = True
+        # self.isBoth = True
         self.initUI()
-        self.barcodeEdit.setFocus()
+        # self.barcodeEdit.setFocus()
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
@@ -72,8 +67,8 @@ class MainWindow(QDialog, serialDlg):
         self.currBtn.clicked.connect(self.on_showProductInfo)
         self.preBtn.clicked.connect(self.on_showPre)
         self.nextBtn.clicked.connect(self.on_showNext)
-        self.singleRadioBtn.clicked.connect(self.on_setSingle)
-        self.bothRadioBtn.clicked.connect(self.on_setBoth)
+        # self.singleRadioBtn.clicked.connect(self.on_setSingle)
+        # self.bothRadioBtn.clicked.connect(self.on_setBoth)
 
     def on_editPortName(self):
         self.port = self.portEdit.text()
@@ -121,98 +116,61 @@ class MainWindow(QDialog, serialDlg):
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
     def on_readBarcode(self):
-        if self.isBoth:
-            pass
-        else:
-            if not self.barcodeEdit.hasFocus():
-                self.barcodeEdit.setFocus()
-            if len(self.barcodeEdit.text()) != 21:
-                if len(self.barcodeEdit.text()) > 21:
-                    # 截取最后21位字符串
-                    self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
-                else:
-                    self.barcodeEdit.setText("")
-
-    # def on_setFocusInBarcodeEdit(self):
-    #     if not self.barcodeEdit.hasFocus():
-    #         self.barcodeEdit.setFocus()
+        pass
+        # if self.isBoth:
+        #     pass
+        # else:
+        #     if not self.barcodeEdit.hasFocus():
+        #         self.barcodeEdit.setFocus()
+        #     if len(self.barcodeEdit.text()) != 21:
+        #         if len(self.barcodeEdit.text()) > 21:
+        #             # 截取最后21位字符串
+        #             self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
+        #         else:
+        #             self.barcodeEdit.setText("")
 
     # 定时写数据读数据
     def on_readData(self):
         if serCom.writeData():
             time.sleep(0.005)
-            # 在获取新数据前保存上一次的值
-            self.old_data = copy.deepcopy(self.data)
-            self.getData()
-            # 去重
-            self.dedupData()
-            self.showData()
-            self.saveData()
+            self.data = serCom.readData()
+            if self.data:
+                self.showData()
+                self.saveData()
         else:
             logger.info("发送指令失败,定时器关闭...")
             self.timer.stop()
 
-    # 读取串口数据,并提取数据
-    def getData(self):
-        self.data["recev"] = serCom.readData()
-        if self.data["recev"]:
-            # 转换收到的数据
-            self.data["trans"] = serCom.transformData(self.data["recev"])
-            self.data["process"] = serCom.processData(self.data["trans"])
-            self.data["flagBit"] = serCom.getFlagBit(self.data["process"])
-            self.data["tightTorque"] = serCom.getTightTorque(
-                self.data["process"])
-            self.data["tightAngle"] = serCom.getTightAngle(
-                self.data["process"])
-        else:
-            logger.warn("recev no data")
-
-    # 去除重复数据
-    def dedupData(self):
-        count = len(self.tightTorqueList)
-        # 4个螺丝一组,显示8个值,满8个数值就清空
-        if count == int(self.group_count) * 2:
-            self.isNewItem = True
-            self.tightTorqueList.clear()
-            self.tightAngleList.clear()
-            self.flagBitList.clear()
-        else:
-            self.isNewItem = False
-        # 去重,每50ms读取一次值,取用新值,删除旧值
-        if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
-            if self.old_data["tightTorque"] is None and self.old_data["tightAngle"] is None:
-                self.tightTorqueList.append(self.data["tightTorque"])
-                self.tightAngleList.append(self.data["tightAngle"])
-                self.flagBitList.append(self.data["flagBit"])
-            else:
-                if not (self.old_data["tightTorque"] == self.data["tightTorque"] and
-                        self.old_data["tightAngle"] == self.data["tightAngle"]):
-                    self.tightTorqueList.append(self.data["tightTorque"])
-                    self.tightAngleList.append(self.data["tightAngle"])
-                    self.flagBitList.append(self.data["flagBit"])
-
     # 显示数据
     def showData(self):
-        self.recvHexEdit.setText(self.data["recev"])
-        self.transValEdit.setText(self.data["process"])
-        self.flagBitEdit.setText(self.data["flagBit"])
-        # 显示状态位
-        self.showState()
-        if self.data["flagBit"] == "2" or self.data["flagBit"] == "3":
-            self.tightTorqueEdit.setText(self.data["tightTorque"])
-            self.tightAngleEdit.setText(self.data["tightAngle"])
+        self.recvHexEdit.setText(self.data[0])
+        if self.data[2] == 2 or self.data[2] == 3:
+            self.transValEdit.setText(self.data[1])
+            self.flagBitEdit.setText(self.data[2])
+            self.tightTorqueEdit.setText(self.data[3])
+            self.tightAngleEdit.setText(self.data[4])
+            my_data = (self.data[2], self.data[3], self.data[4])
+            
+            if len(self.dataList) == int(self.group_count)*2:
+                self.dataList.clear()
+            self.dataList.append(my_data)
+
         else:
+            self.transValEdit.setText("")
+            self.flagBitEdit.setText("")
             self.tightTorqueEdit.setText("")
             self.tightAngleEdit.setText("")
+        # 显示状态位
+        self.showState()
         self.showDataOnPanel()
 
     # 显示状态位
     def showState(self):
-        if self.data["flagBit"] == "2":
+        if self.data[2] == 2:
             self.flagBitLabel.setText("OK")
             self.flagBitLabel.setStyleSheet(
                 "QLabel{color: green; background-color: black;}")
-        elif self.data["flagBit"] == "3":
+        elif self.data[2] == 3:
             self.flagBitLabel.setText("NG")
             self.flagBitLabel.setStyleSheet(
                 "QLabel{color: red; background-color: black;}")
@@ -222,17 +180,16 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
-        self.dataListPanel.clear()
         if self.dataListPanel.item(0) is None:
             header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
-        count = len(self.tightTorqueList)
+        count = len(self.dataList)
         for i in range(count):
-            tightTorque = self.tightTorqueList[count - i - 1]
-            tightAngle = self.tightAngleList[count - i - 1]
-            flagBit = self.flagBitList[count - i - 1]
-            item_text = "{:>11}".format(
-                tightTorque) + "{:>20}".format(tightAngle) + "{:>22}".format(flagBit)
+            flagBit = self.dataList[count - i - 1][2]            
+            tightTorque = self.dataList[count - i - 1][3]
+            tightAngle = self.dataList[count - i - 1][4]
+            item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
+                tightAngle) + "{:>22}".format(flagBit)
             item = QtWidgets.QListWidgetItem(item_text)
             if i in range(0, 2):
                 item.setBackground(QtGui.QColor("#7fc97f"))
@@ -243,7 +200,7 @@ class MainWindow(QDialog, serialDlg):
             elif i in range(6, 8):
                 item.setBackground(QtGui.QColor("#ffff99"))
             self.dataListPanel.addItem(item)
-
+        
     def on_showPre(self):
         self.productID -= 1
         # logger.info("pre_id = {}".format(self.productID))
@@ -263,12 +220,6 @@ class MainWindow(QDialog, serialDlg):
 
     def showInfo(self, productInfo):
         self.productInfoPanel.clear()
-        header = "产品信息明细:"
-        product_id = "产品ID:"
-        barcode = "条形码:"
-        tightTorque = "拧紧力矩:"
-        tightAngle = "拧紧角度:"
-        date_time = "日期-时间:"
         if productInfo is not None:
             product_id = "产品ID:{}".format(productInfo["id"])
             self.productID = int(productInfo["id"])
@@ -276,7 +227,7 @@ class MainWindow(QDialog, serialDlg):
             tightTorque = "拧紧力矩:  {}".format(productInfo["tight_torque"])
             tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
             date_time = "日期-时间: {}".format(productInfo["record_date"])
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(header))
+            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品信息明细:"))
             # logger.info("productID = {}".format(self.productID))
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
@@ -286,23 +237,37 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
 
-
     def get_barcode(self):
-        barcode = self.barcodeEdit.text()
-        if len(barcode) == 21 or len(barcode) == 18:
-            return barcode
-        else:
-            return ""
+        pass
+        # barcode = self.barcodeEdit.text()
+        # if len(barcode) == 21 or len(barcode) == 18:
+        #     return barcode
+        # else:
+        #     return ""
+
+    # def get_barcode2(self):
+    #     barcode = self.barcodeEdit_2.text()
+    #     if len(barcode) == 21 or len(barcode) == 18:
+    #         return barcode
+    #     else:
+    #         return ""
+
+    def get_flagbit(self):
+        flags = []
+        for item in self.dataList:
+            flags.append(item[2])
+        return flags
 
     def get_tight_torque(self):
-        tight_torque_dict = {}
-        tight_torque_dict["tight_torque"] = self.tightTorqueList
-        return tight_torque_dict
+        torques = []
+        for item in self.dataList:
+            torques.append(item[3])
+        return torques
 
     def get_tight_angle(self):
-        tight_angle_dict = {}
-        tight_angle_dict["tight_angle"] = self.tightAngleList
-        return tight_angle_dict
+        angles = []
+        for item in self.dataList:
+            angles.append(item[4])
 
     def saveData(self):
         if self.isNewItem:
@@ -314,19 +279,19 @@ class MainWindow(QDialog, serialDlg):
                                         tight_torque=self.get_tight_torque(),
                                         tight_angle=self.get_tight_angle())
 
-    def on_setSingle(self):
-        self.isBoth = False
-        self.singleRadioBtn.setChecked(True)
-        self.barcodeEdit.setEnabled(True)
-        self.barcodeEdit_2.setEnabled(False)
-        self.barcodeEdit.setFocus()
+    # def on_setSingle(self):
+    #     self.isBoth = False
+    #     self.singleRadioBtn.setChecked(True)
+    #     self.barcodeEdit.setEnabled(True)
+    #     self.barcodeEdit_2.setEnabled(False)
+    #     self.barcodeEdit.setFocus()
 
-    def on_setBoth(self):
-        self.isBoth = True
-        self.bothRadioBtn.setChecked(True)
-        self.barcodeEdit.setEnabled(True)
-        self.barcodeEdit_2.setEnabled(True)
-        self.barcodeEdit.setFocus()
+    # def on_setBoth(self):
+    #     self.isBoth = True
+    #     self.bothRadioBtn.setChecked(True)
+    #     self.barcodeEdit.setEnabled(True)
+    #     self.barcodeEdit_2.setEnabled(True)
+    #     self.barcodeEdit.setFocus()
 
     def done(self, result):
         super(MainWindow, self).done(result)
