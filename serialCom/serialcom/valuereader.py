@@ -9,7 +9,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 
-from utils import read_config, write_config
+from utils import read_config, write_config, read_txt
 from log import logger, fh
 import serialcom as serCom
 from serialcom_ui import Ui_serialDlg as serialDlg
@@ -31,16 +31,10 @@ class MainWindow(QDialog, serialDlg):
         self.dataList = []
         self.isNewItem = True
         self.productID = 0
-        # self.isBoth = True
         self.initUI()
-        # self.barcodeEdit.setFocus()
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.on_readData)
-
-        self.timer2 = QtCore.QTimer()
-        self.timer2.timeout.connect(self.on_readBarcode)
-        self.timer2.start(3000)
 
     def initUI(self):
         self.infoLabel.setText("信息:")
@@ -52,6 +46,8 @@ class MainWindow(QDialog, serialDlg):
             os.path.abspath("config/config.ini"), "serial", "timeout")
         self.group_count = read_config(
             os.path.abspath("config/config.ini"), "group", "count")
+        self.barcode_path = read_config(
+            os.path.abspath("config/config.ini"), "barcode", "barcode_path")
 
         self.portEdit.setText(self.port)
         self.baudrateEdit.setText(self.baud_rate)
@@ -67,8 +63,6 @@ class MainWindow(QDialog, serialDlg):
         self.currBtn.clicked.connect(self.on_showProductInfo)
         self.preBtn.clicked.connect(self.on_showPre)
         self.nextBtn.clicked.connect(self.on_showNext)
-        # self.singleRadioBtn.clicked.connect(self.on_setSingle)
-        # self.bothRadioBtn.clicked.connect(self.on_setBoth)
 
     def on_editPortName(self):
         self.port = self.portEdit.text()
@@ -115,8 +109,8 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
-    def on_readBarcode(self):
-        pass
+    # def on_readBarcode(self):
+    #     pass
         # if self.isBoth:
         #     pass
         # else:
@@ -134,7 +128,7 @@ class MainWindow(QDialog, serialDlg):
         if serCom.writeData():
             time.sleep(0.005)
             self.data = serCom.readData()
-            if self.data:
+            if self.data is not None:
                 self.showData()
                 self.saveData()
         else:
@@ -143,25 +137,14 @@ class MainWindow(QDialog, serialDlg):
 
     # 显示数据
     def showData(self):
-        self.recvHexEdit.setText(self.data[0])
-        if self.data[2] == 2 or self.data[2] == 3:
-            self.transValEdit.setText(self.data[1])
-            self.flagBitEdit.setText(self.data[2])
-            self.tightTorqueEdit.setText(self.data[3])
-            self.tightAngleEdit.setText(self.data[4])
-            my_data = (self.data[2], self.data[3], self.data[4])
-            
-            if len(self.dataList) == int(self.group_count)*2:
-                self.dataList.clear()
-            self.dataList.append(my_data)
-
-        else:
-            self.transValEdit.setText("")
-            self.flagBitEdit.setText("")
-            self.tightTorqueEdit.setText("")
-            self.tightAngleEdit.setText("")
         # 显示状态位
         self.showState()
+        if self.data[2] == 2 or self.data[2] == 3:
+            self.recvHexEdit.setText(str(self.data[0]))
+            self.transValEdit.setText(str(self.data[1]))
+            self.flagBitEdit.setText(str(self.data[2]))
+            self.tightTorqueEdit.setText(str(self.data[3]))
+            self.tightAngleEdit.setText(str(self.data[4]))
         self.showDataOnPanel()
 
     # 显示状态位
@@ -180,42 +163,51 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
-        if self.dataListPanel.item(0) is None:
-            header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
-            self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))
-        count = len(self.dataList)
-        for i in range(count):
-            flagBit = self.dataList[count - i - 1][2]            
-            tightTorque = self.dataList[count - i - 1][3]
-            tightAngle = self.dataList[count - i - 1][4]
-            item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
-                tightAngle) + "{:>22}".format(flagBit)
-            item = QtWidgets.QListWidgetItem(item_text)
-            if i in range(0, 2):
-                item.setBackground(QtGui.QColor("#7fc97f"))
-            elif i in range(2, 4):
-                item.setBackground(QtGui.QColor("#beaed4"))
-            elif i in range(4, 6):
-                item.setBackground(QtGui.QColor("#fdc086"))
-            elif i in range(6, 8):
-                item.setBackground(QtGui.QColor("#ffff99"))
-            self.dataListPanel.addItem(item)
-        
+        if self.data[2] == 2 or self.data[2] == 3:
+            my_data = [self.data[0], self.data[1],
+                       self.data[2], self.data[3], self.data[4]]
+            # 如果满8个数据,就清空dataList
+            if len(self.dataList) == int(self.group_count) * 2:
+                self.dataList.clear()
+                self.isNewItem = True
+            self.dataList.append(my_data)
+            # 清空面板
+            self.dataListPanel.clear()
+            if self.dataListPanel.item(0) is None:
+                header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
+                self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))          
+            for i, item in enumerate(reversed(self.dataList)):
+                flagBit = self.dataList[i][2]
+                tightTorque = self.dataList[i][3]
+                tightAngle = self.dataList[i][4]
+                item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
+                    tightAngle) + "{:>22}".format(flagBit)
+                item = QtWidgets.QListWidgetItem(item_text)
+                if i in range(0, 2):
+                    item.setBackground(QtGui.QColor("#7fc97f"))
+                elif i in range(2, 4):
+                    item.setBackground(QtGui.QColor("#beaed4"))
+                elif i in range(4, 6):
+                    item.setBackground(QtGui.QColor("#fdc086"))
+                elif i in range(6, 8):
+                    item.setBackground(QtGui.QColor("#ffff99"))
+                self.dataListPanel.addItem(item)
+        print("datalist_len = ", len(self.dataList))
+        print("datalist = ", self.dataList)
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
     def on_showPre(self):
         self.productID -= 1
-        # logger.info("pre_id = {}".format(self.productID))
         productInfo = serialdb.query_productInfoByID(self.productID)
         self.showInfo(productInfo)
 
     def on_showNext(self):
         self.productID += 1
-        # logger.info("next_id = {}".format(self.productID))
         productInfo = serialdb.query_productInfoByID(self.productID)
         self.showInfo(productInfo)
 
     def on_showProductInfo(self):
         productInfo = serialdb.query_productInfo()
-        # logger.info(productInfo)
         self.showInfo(productInfo)
 
     def showInfo(self, productInfo):
@@ -228,29 +220,25 @@ class MainWindow(QDialog, serialDlg):
             tightAngle = "拧紧角度:  {}".format(productInfo["tight_angle"])
             date_time = "日期-时间: {}".format(productInfo["record_date"])
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品信息明细:"))
-            # logger.info("productID = {}".format(self.productID))
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(product_id))
+            self.productInfoPanel.addItem(
+                QtWidgets.QListWidgetItem(product_id))
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(barcode))
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightTorque))
-            self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(tightAngle))
+            self.productInfoPanel.addItem(
+                QtWidgets.QListWidgetItem(tightTorque))
+            self.productInfoPanel.addItem(
+                QtWidgets.QListWidgetItem(tightAngle))
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
         else:
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
-
+        
     def get_barcode(self):
-        pass
+        read_txt(self.barcode_path)
+        # pass
         # barcode = self.barcodeEdit.text()
         # if len(barcode) == 21 or len(barcode) == 18:
         #     return barcode
         # else:
         #     return ""
-
-    # def get_barcode2(self):
-    #     barcode = self.barcodeEdit_2.text()
-    #     if len(barcode) == 21 or len(barcode) == 18:
-    #         return barcode
-    #     else:
-    #         return ""
 
     def get_flagbit(self):
         flags = []
@@ -268,30 +256,25 @@ class MainWindow(QDialog, serialDlg):
         angles = []
         for item in self.dataList:
             angles.append(item[4])
+        return angles
 
     def saveData(self):
-        if self.isNewItem:
-            serialdb.insert_productItem(barcode=self.get_barcode(),
-                                        tight_torque=self.get_tight_torque(),
-                                        tight_angle=self.get_tight_angle())
-        else:
-            serialdb.update_productItem(barcode=self.get_barcode(),
-                                        tight_torque=self.get_tight_torque(),
-                                        tight_angle=self.get_tight_angle())
-
-    # def on_setSingle(self):
-    #     self.isBoth = False
-    #     self.singleRadioBtn.setChecked(True)
-    #     self.barcodeEdit.setEnabled(True)
-    #     self.barcodeEdit_2.setEnabled(False)
-    #     self.barcodeEdit.setFocus()
-
-    # def on_setBoth(self):
-    #     self.isBoth = True
-    #     self.bothRadioBtn.setChecked(True)
-    #     self.barcodeEdit.setEnabled(True)
-    #     self.barcodeEdit_2.setEnabled(True)
-    #     self.barcodeEdit.setFocus()
+        barcodes = self.get_barcode()
+        flags = self.get_flagbit()
+        torques = self.get_tight_torque()
+        angles = self.get_tight_angle()
+        if barcodes or (flags and torques and angles):
+            if self.isNewItem:
+                serialdb.insert_productItem(barcode=barcodes,
+                                            flag_bit=flags,
+                                            tight_torque=torques,
+                                            tight_angle=angles)
+                self.isNewItem = False
+            else:
+                serialdb.update_productItem(barcode=barcodes,
+                                            flag_bit=flags,
+                                            tight_torque=torques,
+                                            tight_angle=angles)
 
     def done(self, result):
         super(MainWindow, self).done(result)

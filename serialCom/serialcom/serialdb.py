@@ -13,25 +13,27 @@ class SerialComTable(db.BaseModel):
     __tablename__ = "serialdata"
     id = Column(Integer, primary_key=True)
     barcode = Column(String(64))
+    flag_bit = Column(Text)
     tight_torque = Column(Text)
     tight_angle = Column(Text)
     record_date = Column(DateTime)
 
 
-def insert_productItem(barcode=None, tight_torque=None, tight_angle=None):
+def insert_productItem(barcode=None, flag_bit=None, tight_torque=None, tight_angle=None):
     product_data = SerialComTable(barcode=barcode,
+                                  flag_bit=json.dumps(flag_bit),
                                   tight_torque=json.dumps(tight_torque),
                                   tight_angle=json.dumps(tight_angle),
                                   record_date=datetime.now())
     db.add(product_data)
 
 
-def update_productItem(barcode=None, tight_torque=None, tight_angle=None):
+def update_productItem(barcode=None, flag_bit=None, tight_torque=None, tight_angle=None):
     with db.getQuery(SerialComTable) as query:
         res = query.order_by(SerialComTable.id.desc()).first()
-        # assert res is not None
         if res:
             res.barcode = barcode
+            res.flag_bit = json.dumps(flag_bit)
             res.tight_torque = json.dumps(tight_torque)
             res.tight_angle = json.dumps(tight_angle)
             res.record_date = datetime.now()
@@ -50,21 +52,13 @@ def query_productInfo():
             res = query.order_by(SerialComTable.id.desc()).first()
             if res is not None:
                 product_info["id"] = res.id
-                logger.info("id = ".format(product_info["id"]))
                 product_info["barcode"] = res.barcode
-                logger.info("barcode = ".format(res.barcode))
-
-                tight_torque_dict = json.loads(res.tight_torque)
-                logger.info("tight_torque = ".format(
-                    json.loads(res.tight_torque)))
-                product_info["tight_torque"] = tight_torque_dict["tight_torque"]
-                tight_angle_dict = json.loads(res.tight_angle)
-                product_info["tight_angle"] = tight_angle_dict["tight_angle"]
+                product_info["tight_torque"] = json.loads(res.flag_bit)
+                product_info["tight_torque"] = json.loads(res.tight_torque)
+                product_info["tight_angle"] = json.loads(res.tight_angle)
                 product_info["record_date"] = res.record_date.strftime(
                     "%Y-%m-%d %H:%M:%S")
                 return product_info
-            else:
-                return None
     except Exception as e:
         logger.warning(e)
         return
@@ -78,15 +72,12 @@ def query_productInfoByID(id):
             if res:
                 product_info["id"] = res.id
                 product_info["barcode"] = res.barcode
-                tight_torque_dict = json.loads(res.tight_torque)
-                product_info["tight_torque"] = tight_torque_dict["tight_torque"]
-                tight_angle_dict = json.loads(res.tight_angle)
-                product_info["tight_angle"] = tight_angle_dict["tight_angle"]
+                product_info["tight_torque"] = json.loads(res.flag_bit)
+                product_info["tight_torque"] = json.loads(res.tight_torque)
+                product_info["tight_angle"] = json.loads(res.tight_angle)
                 product_info["record_date"] = res.record_date.strftime(
-                    "%Y-%m-%d %H:%M:%S") if res else None
+                    "%Y-%m-%d %H:%M:%S")
                 return product_info
-            else:
-                return None
     except Exception as e:
         logger.warning(e)
         return
@@ -159,42 +150,8 @@ def query_assigned_ID(begin_id, end_id):
 
 def queryByDate(begin_date, end_date):
     with db.getQuery(SerialComTable) as query:
-        res = query(SerialComTable).filter(SerialComTable.record_date >= begin_date,
-                                           SerialComTable.record_date <= end_date).order_by(
+        res = query(SerialComTable).filter(
+            SerialComTable.record_date >= begin_date,
+            SerialComTable.record_date <= end_date).order_by(
             SerialComTable.id).all()
         return res
-
-
-# def updateProductItem():
-#     with basic.db.getQuery(ProductInfoTable) as query:
-#         res = query.order_by(ProductInfoTable.id.desc()).first()
-#         assert res is not None
-#         last_gross_count = res.gross_count
-#         last_sum_time = res.all_process_time
-#         if res:
-#             res.gross_count = getGrossCount(last_gross_count)
-#             res.all_process_time = getAllProcessTime(last_sum_time)
-#             res.end_time = getProcessEndTime()
-#             if isCoordinationChanged():
-#                 coords = json.loads(res.coordination)
-#                 coord = coordinationInfo()
-#                 coords.append(coord)
-#                 res.coordination = json.dumps(coords)
-
-
-# def updateProductName(item_id, value):
-#     with basic.db.getQuery(ProductInfoTable) as query:
-#         query.filter(ProductInfoTable.id == item_id).update(
-#                 {ProductInfoTable.product_name: value})
-
-
-# def updateWasteCount(item_id, value):
-#     with basic.db.getQuery(ProductInfoTable) as query:
-#         query.filter(ProductInfoTable.id == item_id).update(
-#                 {ProductInfoTable.waste_count: value})
-
-
-# def updateClipFile(item_id, value):
-#     with basic.db.getQuery(ProductInfoTable) as query:
-#         query.filter(ProductInfoTable.id == item_id).update(
-#                 {ProductInfoTable.clip_file: value})
