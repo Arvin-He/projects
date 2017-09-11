@@ -32,11 +32,15 @@ def update_productItem(barcode=None, flag_bit=None, tight_torque=None, tight_ang
     with db.getQuery(SerialComTable) as query:
         res = query.order_by(SerialComTable.id.desc()).first()
         if res:
-            res.barcode = barcode
-            res.flag_bit = json.dumps(flag_bit)
-            res.tight_torque = json.dumps(tight_torque)
-            res.tight_angle = json.dumps(tight_angle)
-            res.record_date = datetime.now()
+            if barcode:
+                res.barcode = barcode
+            if flag_bit:
+                res.flag_bit = json.dumps(flag_bit)
+            if tight_torque:
+                res.tight_torque = json.dumps(tight_torque)
+            if tight_angle:
+                res.tight_angle = json.dumps(tight_angle)
+            # res.record_date = datetime.now()
 
 
 def query_productItem(session):

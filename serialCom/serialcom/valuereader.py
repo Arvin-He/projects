@@ -3,13 +3,14 @@ import os
 import sys
 import time
 import copy
+from operator import itemgetter
 from datetime import datetime
 from PyQt5 import QtGui
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 
-from utils import read_config, write_config, read_txt
+from utils import read_config, write_config
 from log import logger, fh
 import serialcom as serCom
 from serialcom_ui import Ui_serialDlg as serialDlg
@@ -109,20 +110,6 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
-    # def on_readBarcode(self):
-    #     pass
-        # if self.isBoth:
-        #     pass
-        # else:
-        #     if not self.barcodeEdit.hasFocus():
-        #         self.barcodeEdit.setFocus()
-        #     if len(self.barcodeEdit.text()) != 21:
-        #         if len(self.barcodeEdit.text()) > 21:
-        #             # 截取最后21位字符串
-        #             self.barcodeEdit.setText(self.barcodeEdit.text()[-21:])
-        #         else:
-        #             self.barcodeEdit.setText("")
-
     # 定时写数据读数据
     def on_readData(self):
         if serCom.writeData():
@@ -136,7 +123,7 @@ class MainWindow(QDialog, serialDlg):
             self.timer.stop()
 
     # 显示数据
-    def showData(self):
+    def showData(self):    
         # 显示状态位
         self.showState()
         if self.data[2] == 2 or self.data[2] == 3:
@@ -192,9 +179,6 @@ class MainWindow(QDialog, serialDlg):
                 elif i in range(6, 8):
                     item.setBackground(QtGui.QColor("#ffff99"))
                 self.dataListPanel.addItem(item)
-        print("datalist_len = ", len(self.dataList))
-        print("datalist = ", self.dataList)
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     def on_showPre(self):
         self.productID -= 1
@@ -230,16 +214,35 @@ class MainWindow(QDialog, serialDlg):
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem(date_time))
         else:
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
-        
-    def get_barcode(self):
-        read_txt(self.barcode_path)
-        # pass
-        # barcode = self.barcodeEdit.text()
-        # if len(barcode) == 21 or len(barcode) == 18:
-        #     return barcode
-        # else:
-        #     return ""
 
+    def show_barcode(self, barcode_name, barcode):
+        if barcode_name == "barcode1":
+            self.barcodeEdit.setText(barcode)
+        if barcode_name == "barcode2":
+            self.barcodeEdit_2.setText(barcode)
+
+    def get_barcode(self):
+        txt_files = os.listdir(self.barcode_path)
+        if len(txt_files) > 1:
+            temp_list = []
+            for txt in txt_files:
+                txt_name = os.path.join(self.barcode_path, txt)
+                ctime = os.path.getctime(os.path.join(self.barcode_path, txt))
+                temp_list.append({"txt": txt_name, "ctime": ctime})
+            for i, item in enumerate(sorted(temp_list,  key=itemgetter('ctime'))[:-1]):
+                os.remove(item['txt'])
+        txt_list = os.listdir(self.barcode_path)
+        barcode = ""
+        barcode_name = ""
+        for txt in txt_list:
+            barcode_info = os.path.splitext(txt)[0].split('_')
+            barcode_name = barcode_info[0]
+            barcode = barcode_info[1]
+            os.remove(os.path.join(self.barcode_path, txt))
+        if barcode:
+            self.show_barcode(barcode_name, barcode)
+        return barcode
+            
     def get_flagbit(self):
         flags = []
         for item in self.dataList:
