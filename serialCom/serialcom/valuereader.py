@@ -123,7 +123,7 @@ class MainWindow(QDialog, serialDlg):
             self.timer.stop()
 
     # 显示数据
-    def showData(self):    
+    def showData(self):
         # 显示状态位
         self.showState()
         if self.data[2] == 2 or self.data[2] == 3:
@@ -222,27 +222,20 @@ class MainWindow(QDialog, serialDlg):
             self.barcodeEdit_2.setText(barcode)
 
     def get_barcode(self):
-        txt_files = os.listdir(self.barcode_path)
-        if len(txt_files) > 1:
-            temp_list = []
-            for txt in txt_files:
-                txt_name = os.path.join(self.barcode_path, txt)
-                ctime = os.path.getctime(os.path.join(self.barcode_path, txt))
-                temp_list.append({"txt": txt_name, "ctime": ctime})
-            for i, item in enumerate(sorted(temp_list,  key=itemgetter('ctime'))[:-1]):
-                os.remove(item['txt'])
-        txt_list = os.listdir(self.barcode_path)
+        file_lists = os.listdir(self.barcode_path)
         barcode = ""
-        barcode_name = ""
-        for txt in txt_list:
-            barcode_info = os.path.splitext(txt)[0].split('_')
+        if file_lists:
+            file_lists.sort(key=lambda fn: os.path.getmtime(os.path.join(self.barcode_path, fn))
+                        if not os.path.isdir(os.path.join(self.barcode_path, fn)) else 0)
+            newest_file = file_lists[-1]      
+            barcode_info = os.path.splitext(newest_file)[0].split('_')
             barcode_name = barcode_info[0]
             barcode = barcode_info[1]
-            os.remove(os.path.join(self.barcode_path, txt))
-        if barcode:
             self.show_barcode(barcode_name, barcode)
+            for txt_file in file_lists:
+                os.remove(os.path.join(self.barcode_path, txt_file))
         return barcode
-            
+             
     def get_flagbit(self):
         flags = []
         for item in self.dataList:
