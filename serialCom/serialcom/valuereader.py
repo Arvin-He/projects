@@ -152,7 +152,7 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
-        print(self.data)
+        # print(self.data)
         if self.data[2] == "2" or self.data[2] == "3":
             my_data = [self.data[0], self.data[1],
                        self.data[2], self.data[3], self.data[4]]

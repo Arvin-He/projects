@@ -79,7 +79,7 @@ def readData():
                     res.append(flag)
                     res.append(torque)
                     res.append(angle)
-                    print("res = {}".format(res))
+                    # print("res = {}".format(res))
                     return res
     else:
         logger.error("串口没有打开!")
