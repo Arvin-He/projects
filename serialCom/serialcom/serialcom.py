@@ -6,6 +6,7 @@ from log import logger
 
 ser = None
 last_raw_data = ""
+last_int_data = ""
 
 
 def openCom(port, baud_rate, time_out):
@@ -54,7 +55,7 @@ def writeData():
 
 
 def readData():
-    global ser, last_raw_data
+    global ser, last_raw_data, last_int_data
     if ser and ser.is_open:
         data = ser.read(13)
         if len(data) == 13:
@@ -70,23 +71,15 @@ def readData():
                 temp2 = "".join(templist)
                 int_data = str(int(temp2, 16)).zfill(8)
                 res.append(int_data)
-                if len(int_data) == 9:
-                    flag = int(int_data[0])
+                if len(int_data) == 9 and int_data != last_int_data:     
+                    flag = int_data[0]
                     temp3 = int(int_data[1:5])
-                    torque = temp3 * \
-                        0.01 if temp3 in range(0, 2000) else temp3 * 0.001
-                    angle = int(int_data[5:])
+                    torque = "{:.2f}".format(temp3 * 0.01) if temp3 in range(0, 2000) else "{:.3f}".format(temp3 * 0.001)
+                    angle = int_data[5:]
                     res.append(flag)
                     res.append(torque)
                     res.append(angle)
-                    # print("raw_data=", raw_data)
-                    # print("temp=", temp)
-                    # print("reverse temp=", temp2)
-                    # print("int_data = ", int_data)
-                    # print("flag = ", flag)
-                    # print("torque = ", torque)
-                    # print("angle = ", angle)
-                    # print("xxxxxxxxxxxxxx result =", res)
+                    print("res = {}".format(res))
                     return res
     else:
         logger.error("串口没有打开!")

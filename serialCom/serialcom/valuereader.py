@@ -31,6 +31,7 @@ class MainWindow(QDialog, serialDlg):
         self.data = None
         self.dataList = []
         self.isNewItem = True
+        self.lastdata = ["", ""]
         self.productID = 0
         self.initUI()
 
@@ -126,21 +127,22 @@ class MainWindow(QDialog, serialDlg):
     def showData(self):
         # 显示状态位
         self.showState()
-        if self.data[2] == 2 or self.data[2] == 3:
-            self.recvHexEdit.setText(str(self.data[0]))
-            self.transValEdit.setText(str(self.data[1]))
-            self.flagBitEdit.setText(str(self.data[2]))
-            self.tightTorqueEdit.setText(str(self.data[3]))
-            self.tightAngleEdit.setText(str(self.data[4]))
+        if self.data[2] == "2" or self.data[2] == "3":
+            self.recvHexEdit.setText(self.data[0])
+            self.transValEdit.setText(self.data[1])
+            self.flagBitEdit.setText(self.data[2])
+            self.tightTorqueEdit.setText(self.data[3])
+            self.tightAngleEdit.setText(self.data[4])
         self.showDataOnPanel()
+        self.showBarcode()
 
     # 显示状态位
     def showState(self):
-        if self.data[2] == 2:
+        if self.data[2] == "2":
             self.flagBitLabel.setText("OK")
             self.flagBitLabel.setStyleSheet(
                 "QLabel{color: green; background-color: black;}")
-        elif self.data[2] == 3:
+        elif self.data[2] == "3":
             self.flagBitLabel.setText("NG")
             self.flagBitLabel.setStyleSheet(
                 "QLabel{color: red; background-color: black;}")
@@ -150,35 +152,40 @@ class MainWindow(QDialog, serialDlg):
                 "QLabel{background-color: transparent;}")
 
     def showDataOnPanel(self):
-        if self.data[2] == 2 or self.data[2] == 3:
+        print(self.data)
+        if self.data[2] == "2" or self.data[2] == "3":
             my_data = [self.data[0], self.data[1],
                        self.data[2], self.data[3], self.data[4]]
             # 如果满8个数据,就清空dataList
             if len(self.dataList) == int(self.group_count) * 2:
                 self.dataList.clear()
                 self.isNewItem = True
-            self.dataList.append(my_data)
-            # 清空面板
-            self.dataListPanel.clear()
-            if self.dataListPanel.item(0) is None:
-                header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
-                self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))          
-            for i, item in enumerate(reversed(self.dataList)):
-                flagBit = self.dataList[i][2]
-                tightTorque = self.dataList[i][3]
-                tightAngle = self.dataList[i][4]
-                item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
-                    tightAngle) + "{:>22}".format(flagBit)
-                item = QtWidgets.QListWidgetItem(item_text)
-                if i in range(0, 2):
-                    item.setBackground(QtGui.QColor("#7fc97f"))
-                elif i in range(2, 4):
-                    item.setBackground(QtGui.QColor("#beaed4"))
-                elif i in range(4, 6):
-                    item.setBackground(QtGui.QColor("#fdc086"))
-                elif i in range(6, 8):
-                    item.setBackground(QtGui.QColor("#ffff99"))
-                self.dataListPanel.addItem(item)
+            if self.lastdata and (self.lastdata[0] != my_data[3] or self.lastdata[1] != my_data[4]):         
+                self.dataList.append(my_data)
+                # 清空面板
+                self.dataListPanel.clear()
+                if self.dataListPanel.item(0) is None:
+                    header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
+                    self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))          
+                for i, item in enumerate(reversed(self.dataList)):
+                    flagBit = self.dataList[i][2]
+                    tightTorque = self.dataList[i][3]
+                    tightAngle = self.dataList[i][4]
+                    item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
+                        tightAngle) + "{:>22}".format(flagBit)
+                    item = QtWidgets.QListWidgetItem(item_text)
+                    if i in range(0, 2):
+                        item.setBackground(QtGui.QColor("#7fc97f"))
+                    elif i in range(2, 4):
+                        item.setBackground(QtGui.QColor("#beaed4"))
+                    elif i in range(4, 6):
+                        item.setBackground(QtGui.QColor("#fdc086"))
+                    elif i in range(6, 8):
+                        item.setBackground(QtGui.QColor("#ffff99"))
+                    self.dataListPanel.addItem(item)
+            # 保存上一次的值
+            self.lastdata[0] = my_data[3]
+            self.lastdata[1] = my_data[4]
 
     def on_showPre(self):
         self.productID -= 1
@@ -215,43 +222,69 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
 
-    def show_barcode(self, barcode_name, barcode):
-        if barcode_name == "barcode1":
-            self.barcodeEdit.setText(barcode)
-        if barcode_name == "barcode2":
-            self.barcodeEdit_2.setText(barcode)
+    def showBarcode(self):
+        file_lists = os.listdir(self.barcode_path)
+        if file_lists:
+            # 排序,最新创建的文件放在列表最后面
+            file_lists.sort(key=lambda fn: os.path.getmtime(os.path.join(self.barcode_path, fn))
+                        if not os.path.isdir(os.path.join(self.barcode_path, fn)) else 0)
+            # 多于2个则保留最新的2两个文件,其他的都删除
+            if len(file_lists) > 2:
+                for txt_file in file_lists[:-2]:
+                    os.remove(os.path.join(self.barcode_path, txt_file))
+                if file_lists[-1].starswith("barCode1") and file_lists[-2].starswith("barCode1"):
+                    os.remove(os.path.join(self.barcode_path, file_lists[-2]))
+                if file_lists[-1].starswith("barCode2") and file_lists[-2].starswith("barCode2"):
+                    os.remove(os.path.join(self.barcode_path, file_lists[-2]))     
+        # 再次获取文件列表,并显示barcode
+        txt_list = os.listdir(self.barcode_path)
+        for txt in txt_list:
+            barcode_info = os.path.splitext(txt)[0].split('_')
+            barcode_name = barcode_info[0]
+            barcode = barcode_info[1]
+            if barcode_name == "barCode1":
+                self.barcodeEdit.setText(barcode)
+            if barcode_name == "barCode2":
+                self.barcodeEdit_2.setText(barcode)
 
     def get_barcode(self):
+        # 一次只能获取一个barcode,当存在两个barcode时,优先取barcode1
         file_lists = os.listdir(self.barcode_path)
         barcode = ""
         if file_lists:
-            file_lists.sort(key=lambda fn: os.path.getmtime(os.path.join(self.barcode_path, fn))
-                        if not os.path.isdir(os.path.join(self.barcode_path, fn)) else 0)
-            newest_file = file_lists[-1]      
-            barcode_info = os.path.splitext(newest_file)[0].split('_')
-            barcode_name = barcode_info[0]
-            barcode = barcode_info[1]
-            self.show_barcode(barcode_name, barcode)
-            for txt_file in file_lists:
-                os.remove(os.path.join(self.barcode_path, txt_file))
+            if len(file_lists) == 2:
+                for txt in file_lists:      
+                    barcode_info = os.path.splitext(txt)[0].split('_')
+                    barcode_name = barcode_info[0]
+                    barcode = barcode_info[1]
+                    if barcode_name == "barCode1":
+                        os.remove(os.path.join(self.barcode_path, txt))
+                        return barcode
+            else:
+                for txt in file_lists:      
+                    barcode_info = os.path.splitext(txt)[0].split('_')
+                    barcode_name = barcode_info[0]
+                    barcode = barcode_info[1]
+                    os.remove(os.path.join(self.barcode_path, txt))
+                    return barcode
         return barcode
              
     def get_flagbit(self):
         flags = []
         for item in self.dataList:
-            flags.append(item[2])
+            flags.append(int(item[2]))
         return flags
 
     def get_tight_torque(self):
         torques = []
         for item in self.dataList:
-            torques.append(item[3])
+            torques.append(float(item[3]))
         return torques
 
     def get_tight_angle(self):
         angles = []
         for item in self.dataList:
-            angles.append(item[4])
+            angles.append(int(item[4]))
         return angles
 
     def saveData(self):
