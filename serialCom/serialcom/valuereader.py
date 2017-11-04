@@ -98,7 +98,7 @@ class MainWindow(QDialog, serialDlg):
         if self.com_open is True:
             self.infoLabel.setText("信息:开始读取串口数据...")
             # 启动定时器
-            self.timer.start(50)
+            self.timer.start(200)
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
@@ -115,9 +115,14 @@ class MainWindow(QDialog, serialDlg):
         if serCom.writeData():
             time.sleep(0.005)
             self.data = serCom.readData()
-            if self.data is not None:
-                self.showData()
-                self.saveData()
+            logger.info("self.data = {}".format(self.data))
+            try:
+                if self.data:
+                    self.showData()
+                    self.saveData()
+            except Exception as e:
+                logger.error(e)
+                return
         else:
             logger.info("发送指令失败,定时器关闭...")
             self.timer.stop()
@@ -215,27 +220,47 @@ class MainWindow(QDialog, serialDlg):
         else:
             self.productInfoPanel.addItem(QtWidgets.QListWidgetItem("产品明细: 无"))
 
-    def show_barcode(self, barcode_name, barcode):
-        if barcode_name == "barcode1":
-            self.barcodeEdit.setText(barcode)
-        if barcode_name == "barcode2":
-            self.barcodeEdit_2.setText(barcode)
-
-    def get_barcode(self):
-        file_lists = os.listdir(self.barcode_path)
-        barcode = ""
-        if file_lists:
-            file_lists.sort(key=lambda fn: os.path.getmtime(os.path.join(self.barcode_path, fn))
-                        if not os.path.isdir(os.path.join(self.barcode_path, fn)) else 0)
-            newest_file = file_lists[-1]      
-            barcode_info = os.path.splitext(newest_file)[0].split('_')
+    def show_barcode(self):
+        self.check_barcodefiles(self.barcode_path)
+        for txt in os.listdir(self.barcode_path):
+            barcode_info = os.path.splitext(txt)[0].split('_')
             barcode_name = barcode_info[0]
             barcode = barcode_info[1]
-            self.show_barcode(barcode_name, barcode)
-            for txt_file in file_lists:
-                os.remove(os.path.join(self.barcode_path, txt_file))
-        return barcode
-             
+            if barcode_name == "barCode1":
+                self.barcodeEdit.setText(barcode)
+            if barcode_name == "barCode2":
+                self.barcodeEdit_2.setText(barcode)
+
+    def get_barcode(self):
+        self.show_barcode()
+        barcode = ''
+        barcode1 = self.barcodeEdit.text()
+        barcode2 = self.barcodeEdit_2.text()
+        if barcode1 and barcode2:
+            self.delete_file('barCode1')
+            return barcode1
+        elif barcode1 and not barcode2:
+            return barcode1
+        elif barcode2 and not barcode1:
+            return barcode2
+        else:
+            return barcode
+
+    def delete_file(self, file_name):
+        for txt in os.listdir(self.barcode_path):
+            if txt.startswith(file_name):
+                os.remove(os.path.join(self.barcode_path, txt))
+
+    def check_barcodefiles(self, barcodes_path):
+        file_list = os.listdir(barcodes_path)
+        # 将文件按照修改时间排序, 最新修改的排在最前面
+        file_list.sort(key=lambda fn: os.path.getmtime(os.path.join(barcodes_path, fn))
+            if not os.path.isdir(os.path.join(barcodes_path, fn)) else 0)
+        if len(file_list) > 2:
+            for i, txt_file in enumerate(file_list):
+                if i > 1:
+                    os.remove(os.path.join(barcodes_path, txt_file))
+
     def get_flagbit(self):
         flags = []
         for item in self.dataList:

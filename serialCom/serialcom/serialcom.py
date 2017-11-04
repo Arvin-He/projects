@@ -6,6 +6,8 @@ from log import logger
 
 ser = None
 last_raw_data = ""
+last_torque = ""
+last_angle = ""
 
 
 def openCom(port, baud_rate, time_out):
@@ -54,39 +56,42 @@ def writeData():
 
 
 def readData():
-    global ser, last_raw_data
+    global ser, last_raw_data, last_torque, last_angle
     if ser and ser.is_open:
         data = ser.read(13)
+        res = []
         if len(data) == 13:
             # 将bytes的内容转16进制表示的bytes
             raw_data = binascii.hexlify(data).decode('utf-8')
             if raw_data != last_raw_data:
+                logger.info("last_raw_data = {}".format(last_raw_data))
+                logger.info("raw_data = {}".format(raw_data))
+
                 last_raw_data = raw_data
-                res = []
                 res.append(raw_data)
+
                 temp = raw_data.replace(" ", "")[14:22]
                 templist = reversed([temp[i:i + 2]
                                      for i in range(0, len(temp), 2)])
                 temp2 = "".join(templist)
                 int_data = str(int(temp2, 16)).zfill(8)
                 res.append(int_data)
+
                 if len(int_data) == 9:
                     flag = int(int_data[0])
                     temp3 = int(int_data[1:5])
-                    torque = temp3 * \
-                        0.01 if temp3 in range(0, 2000) else temp3 * 0.001
+                    torque = temp3 * 0.01 if temp3 in range(0, 2000) else temp3 * 0.001
                     angle = int(int_data[5:])
-                    res.append(flag)
-                    res.append(torque)
-                    res.append(angle)
-                    # print("raw_data=", raw_data)
-                    # print("temp=", temp)
-                    # print("reverse temp=", temp2)
-                    # print("int_data = ", int_data)
-                    # print("flag = ", flag)
-                    # print("torque = ", torque)
-                    # print("angle = ", angle)
-                    # print("xxxxxxxxxxxxxx result =", res)
-                    return res
+                    logger.info("lt = {}, la = {}, t = {}, a = {}".format(last_torque, last_angle, torque, angle))
+                    if (str(torque) != last_angle) or (str(angle) != last_angle):
+                        last_torque = str(torque)
+                        last_angle = str(angle)
+                        logger.info("{}/{}".format(torque, angle))
+                        res.append(flag)
+                        res.append(torque)
+                        res.append(angle)
+        logger.info("read_data = {}".format(res))
+        if len(res) == 5:
+            return res
     else:
         logger.error("串口没有打开!")
