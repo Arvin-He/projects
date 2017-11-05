@@ -27,6 +27,7 @@ class MainWindow(QDialog, serialDlg):
         # self.data = None
         # self.dataList = []
         self.isNewItem = True
+        self.lastdata = ["", ""]
         self.productID = 0
         self.lastdata = ["", ""]
         self.showdata = []
