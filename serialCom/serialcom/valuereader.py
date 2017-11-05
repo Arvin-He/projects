@@ -24,13 +24,10 @@ class MainWindow(QDialog, serialDlg):
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint |
                             Qt.WindowCloseButtonHint)
         self.com_open = False
-        # self.data = None
-        # self.dataList = []
         self.isNewItem = True
-        self.lastdata = ["", ""]
         self.productID = 0
         self.lastdata = ["", ""]
-        self.showdata = []
+        self.datalist = []
         self.initUI()
 
         self.timer = QtCore.QTimer()
@@ -97,7 +94,7 @@ class MainWindow(QDialog, serialDlg):
         if self.com_open is True:
             self.infoLabel.setText("信息:开始读取串口数据...")
             # 启动定时器
-            self.timer.start(200)
+            self.timer.start(50)
         else:
             self.infoLabel.setText("信息:串口{}没有通讯成功!".format(self.port))
 
@@ -129,26 +126,24 @@ class MainWindow(QDialog, serialDlg):
                 self.recvHexEdit.setText(recv_data)
                 # 转换收到的数据
                 trans_data = serCom.transformData(recv_data)
-                self.transValEdit.setText(trans_data)
                 process_data = serCom.processData(trans_data)
+                self.transValEdit.setText(process_data)                
                 flagBit = serCom.getFlagBit(process_data)
                 self.flagBitEdit.setText(flagBit)
                 self.updateFlag(flagBit)
-
                 tightTorque = serCom.getTightTorque(process_data)
                 tightAngle = serCom.getTightAngle(process_data)
                 if flagBit == "2" or flagBit == "3":
                     self.tightTorqueEdit.setText(tightTorque)
                     self.tightAngleEdit.setText(tightAngle)
-
-                    if self.lastdata and (self.lastdata[0] != tightTorque or self.lastdata[1] != tightAngle):
+                    if self.lastdata[0] != tightTorque or self.lastdata[1] != tightAngle:
                         if len(self.showdata) < 8:
-                            self.showdata.append([flagBit, tightTorque, tightAngle])
+                            self.datalist.append([flagBit, tightTorque, tightAngle])
                         else:
-                            # self.showdata.remove(self.showdata[0])
-                            self.showdata.clear()
-                            self.showdata.append([flagBit, tightTorque, tightAngle])
+                            self.datalist.clear()
+                            self.datalist.append([flagBit, tightTorque, tightAngle])
                         self.showData()
+                        self.saveData()
                 else:
                     self.tightTorqueEdit.setText("")
                     self.tightAngleEdit.setText("")
@@ -168,7 +163,7 @@ class MainWindow(QDialog, serialDlg):
         if self.dataListPanel.item(0) is None:
             header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))          
-        for i, item in enumerate(reversed(self.showdata)):
+        for i, item in enumerate(reversed(self.datalist)):
             if i in range(0, 2):
                 item.setBackground(QtGui.QColor("#7fc97f"))
             elif i in range(2, 4):
@@ -178,87 +173,9 @@ class MainWindow(QDialog, serialDlg):
             elif i in range(6, 8):
                 item.setBackground(QtGui.QColor("#ffff99"))
             flagBit, tightTorque, tightAngle = item[0], item[1], item[2]
-            item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
-                tightAngle) + "{:>22}".format(flagBit)
-            list_item = QtWidgets.QListWidgetItem(item_text)
-            self.dataListPanel.addItem(list_item)
-
-
-    # # 定时写数据读数据
-    # def on_readData(self):
-    #     if serCom.writeData():
-    #         time.sleep(0.005)
-    #         self.data = serCom.readData()
-    #         logger.info("self.data = {}".format(self.data))
-    #         try:
-    #             if self.data:
-    #                 self.showData()
-    #                 self.saveData()
-    #         except Exception as e:
-    #             logger.error(e)
-    #             return
-    #     else:
-    #         logger.info("发送指令失败,定时器关闭...")
-    #         self.timer.stop()
-
-    # 显示数据
-    # def showData(self):
-    #     # 显示状态位
-    #     self.showState()
-    #     if self.data[2] == 2 or self.data[2] == 3:
-    #         self.recvHexEdit.setText(str(self.data[0]))
-    #         self.transValEdit.setText(str(self.data[1]))
-    #         self.flagBitEdit.setText(str(self.data[2]))
-    #         self.tightTorqueEdit.setText(str(self.data[3]))
-    #         self.tightAngleEdit.setText(str(self.data[4]))
-    #     self.showDataOnPanel()
-
-    # 显示状态位
-    # def showState(self):
-    #     if self.data[2] == 2:
-    #         self.flagBitLabel.setText("OK")
-    #         self.flagBitLabel.setStyleSheet(
-    #             "QLabel{color: green; background-color: black;}")
-    #     elif self.data[2] == 3:
-    #         self.flagBitLabel.setText("NG")
-    #         self.flagBitLabel.setStyleSheet(
-    #             "QLabel{color: red; background-color: black;}")
-    #     else:
-    #         self.flagBitLabel.setText("")
-    #         self.flagBitLabel.setStyleSheet(
-    #             "QLabel{background-color: transparent;}")
-
-    # def showDataOnPanel(self):
-    #     if self.data[2] == 2 or self.data[2] == 3:
-    #         my_data = [self.data[0], self.data[1],
-    #                    self.data[2], self.data[3], self.data[4]]
-    #         # 如果满8个数据,就清空dataList
-    #         if len(self.dataList) == int(self.group_count) * 2:
-    #             self.dataList.clear()
-    #             self.isNewItem = True
-    #         self.dataList.append(my_data)
-    #         # 清空面板
-    #         self.dataListPanel.clear()
-    #         if self.dataListPanel.item(0) is None:
-    #             header = "拧紧力矩".rjust(8) + "拧紧角度".rjust(16) + "状态位".rjust(16)
-    #             self.dataListPanel.addItem(QtWidgets.QListWidgetItem(header))          
-    #         for i, item in enumerate(reversed(self.dataList)):
-    #             flagBit = self.dataList[i][2]
-    #             tightTorque = self.dataList[i][3]
-    #             tightAngle = self.dataList[i][4]
-    #             item_text = "{:>11}".format(tightTorque) + "{:>20}".format(
-    #                 tightAngle) + "{:>22}".format(flagBit)
-    #             item = QtWidgets.QListWidgetItem(item_text)
-    #             if i in range(0, 2):
-    #                 item.setBackground(QtGui.QColor("#7fc97f"))
-    #             elif i in range(2, 4):
-    #                 item.setBackground(QtGui.QColor("#beaed4"))
-    #             elif i in range(4, 6):
-    #                 item.setBackground(QtGui.QColor("#fdc086"))
-    #             elif i in range(6, 8):
-    #                 item.setBackground(QtGui.QColor("#ffff99"))
-    #             self.dataListPanel.addItem(item)
-
+            item_text = "{:>11}".format(tightTorque) + "{:>20}".format(tightAngle) + "{:>22}".format(flagBit)
+            self.dataListPanel.addItem(QtWidgets.QListWidgetItem(item_text))
+    
     def on_showPre(self):
         self.productID -= 1
         productInfo = serialdb.query_productInfoByID(self.productID)
@@ -337,23 +254,19 @@ class MainWindow(QDialog, serialDlg):
 
     def get_flagbit(self):
         flags = []
-        for item in self.showdata():
+        for item in self.datalist:
             flags.append(item[0])
-        # for item in self.dataList:
-        #     flags.append(item[2])
         return flags
 
     def get_tight_torque(self):
         torques = []
-        for item in self.showdata():
+        for item in self.datalist:
             torques.append(item[1])
-        # for item in self.dataList:
-        #     torques.append(item[3])
         return torques
 
     def get_tight_angle(self):
         angles = []
-        for item in self.showdata():
+        for item in self.datalist:
             angles.append(item[2])
         return angles
 

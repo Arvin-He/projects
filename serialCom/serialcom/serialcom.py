@@ -59,19 +59,18 @@ def writeData():
 def readData():
     global ser
     if ser and ser.is_open:
-        try:
-            data = ser.read(13)
-            # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
+        data = ser.read(13)
+        # data = bytes.fromhex('53 0b 01 01 04 30 02 b2 4a 58 09 6b 45')
+        if len(data) == 13:
             # 将bytes的内容转16进制表示的bytes
             data2 = binascii.hexlify(data)
             # 将bytes转字符串,并返回
             return data2.decode('utf-8')
-        except Exception as e:
-            logger.error("read data failed: {}".format(e))
-            return
+        else:
+            return ''
     else:
         logger.info("串口没有打开!")
-        return None
+        return ''
 
 
 # 读到的数据字符串"53 0B  01 01 04 30 02 B2 4A 58 09 6B 45",取其中的第8~11个16进制数
@@ -82,13 +81,20 @@ def transformData(data):
         data2 = data[14:22]
         data3 = reversed([data2[i:i + 2] for i in range(0, len(data2), 2)])
         return "".join(data3)
+    else:
+        return ''
 
 
 # 将16进制的字符串转换成10进制字符串
 def processData(data):
     if data:
         data2 = str(int(data, 16)).zfill(8)
-        return data2
+        if len(data2) == 9:
+            return data2
+        else:
+            return ''
+    else:
+        return ''
 
 
 def getFlagBit(data):
@@ -96,6 +102,7 @@ def getFlagBit(data):
         return data[0]
     else:
         logger.error("getFlagBit wrong data, data = {}".format(data))
+        return ''
 
 
 def getTightTorque(data):
@@ -105,6 +112,7 @@ def getTightTorque(data):
         return "{:.3f}".format(data3)
     else:
         logger.error("getTightTorque wrong data, data = {}".format(data))
+        return ''
 
 
 def getTightAngle(data):
@@ -113,6 +121,7 @@ def getTightAngle(data):
         return data2
     else:
         logger.error("getTightAngle wrong data, data = {}".format(data))
+        return ''
 
 
 
